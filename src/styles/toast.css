@@ -1,3 +1,11 @@
+/**
+ * Styles for the toast messages.
+ * @remarks
+ * - A toast message is a fixed position block element that is displayed in the top right corner of the screen.
+ * - The toast message is red with white text and a 10px padding.
+ * - The toast message is rounded with a 5px border radius.
+ * - The toast message has a z-index of 1000 to ensure that it is displayed on top of other elements.
+ */
 .toast {
   position: fixed;
   top: 10px;

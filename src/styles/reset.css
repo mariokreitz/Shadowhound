@@ -1,13 +1,25 @@
-/* Box Model */
-
+/**
+ * Box Model
+ *
+ * @remarks
+ * - Applies the border-box box model to all elements, including ::before and ::after pseudo-elements.
+ * - This ensures that padding and border are always included in the element's width and height.
+ */
 *,
 *::before,
 *::after {
   box-sizing: inherit;
 }
 
-/* Reset */
-
+/**
+ * Reset
+ *
+ * @remarks
+ * - Applies the border-box box model to the root element.
+ * - Sets the font family to sans-serif and the line height to 1.15.
+ * - Prevents the font size from being resized in Internet Explorer.
+ * - Prevents the text size from being resized in Safari on iOS.
+ */
 html {
   box-sizing: border-box;
   font-family: sans-serif;
@@ -16,10 +28,22 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+/**
+ * Reset
+ *
+ * @remarks
+ * - Sets the margin to 0 on the body element.
+ */
 body {
   margin: 0;
 }
 
+/**
+ * Reset
+ *
+ * @remarks
+ * - Ensures that the display property is set to block on all elements that are typically block-level.
+ */
 article,
 aside,
 figcaption,
@@ -32,6 +56,12 @@ section {
   display: block;
 }
 
+/**
+ * Reset
+ *
+ * @remarks
+ * - Ensures that the margin property is set to 0 on all elements that are typically block-level.
+ */
 body,
 h1,
 h2,
@@ -44,19 +74,47 @@ pre {
   margin: 0;
 }
 
+/**
+ * Reset
+ *
+ * @remarks
+ * - Sets the font size to 2em on all h1 elements.
+ * - Sets the margin to 0.67em on all h1 elements.
+ */
 h1 {
   font-size: 2em;
   margin: 0.67em 0;
 }
 
+/**
+ * Reset
+ *
+ * @remarks
+ * - Prevents the border from being displayed on all img elements.
+ */
 img {
   border-style: none;
 }
 
+/**
+ * Reset
+ *
+ * @remarks
+ * - Ensures that the overflow property is set to hidden on all svg elements that are not the root element.
+ */
 svg:not(:root) {
   overflow: hidden;
 }
 
+/**
+ * Reset
+ *
+ * @remarks
+ * - Ensures that the font family is set to sans-serif on all button, input, optgroup, select, and textarea elements.
+ * - Ensures that the font size is set to 100% on all button, input, optgroup, select, and textarea elements.
+ * - Ensures that the line height is set to 1.15 on all button, input, optgroup, select, and textarea elements.
+ * - Ensures that the margin property is set to 0 on all button, input, optgroup, select, and textarea elements.
+ */
 button,
 input,
 optgroup,
@@ -68,16 +126,25 @@ textarea {
   margin: 0;
 }
 
+/**
+ * Reset
+ *
+ * @remarks
+ * - Ensures that the overflow property is set to visible on all button and input elements.
+ */
 button,
 input {
   overflow: visible;
 }
 
-button,
-select {
-  text-transform: none;
-}
-
+/**
+ * Reset
+ *
+ * @remarks
+ * - Ensures that the appearance property is set to textfield on all button and input elements.
+ * - Ensures that the -webkit-appearance property is set to button on all button and input elements.
+ * - Ensures that the cursor property is set to pointer on all button and input elements.
+ */
 button,
 html [type="button"],
 [type="reset"],
@@ -87,38 +154,89 @@ html [type="button"],
   cursor: pointer;
 }
 
+/**
+ * Reset
+ *
+ * @remarks
+ * - Prevents the border from being displayed on all button and input elements in Firefox.
+ */
 button::-moz-focus-inner,
 input::-moz-focus-inner {
   border-style: none;
   padding: 0;
 }
 
+/**
+ * Reset
+ *
+ * @remarks
+ * - Ensures that the overflow property is set to visible on all input elements.
+ */
 input {
   overflow: visible;
 }
 
+/**
+ * Reset
+ *
+ * @remarks
+ * - Ensures that the box-sizing property is set to border-box on all input elements of type checkbox and radio.
+ * - Ensures that the padding property is set to 0 on all input elements of type checkbox and radio.
+ */
 input[type="checkbox"],
 input[type="radio"] {
   box-sizing: border-box;
   padding: 0;
 }
 
+/**
+ * Reset
+ *
+ * @remarks
+ * - Ensures that the height property is set to auto on all input elements of type number.
+ * - Ensures that the -webkit-inner-spin-button and -webkit-outer-spin-button pseudo-elements have a height of auto.
+ */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   height: auto;
 }
 
+/**
+ * Reset
+ *
+ * @remarks
+ * - Ensures that the appearance property is set to textfield on all input elements of type search.
+ * - Ensures that the -webkit-appearance property is set to textfield on all input elements of type search.
+ * - Ensures that the outline-offset property is set to -2px on all input elements of type search.
+ */
 input[type="search"] {
   appearance: textfield;
   -webkit-appearance: textfield;
   outline-offset: -2px;
 }
 
+/**
+ * Reset
+ *
+ * @remarks
+ * - Ensures that the -webkit-search-cancel-button and -webkit-search-decoration-box pseudo-elements have a display property of none.
+ */
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-decoration-box {
   -webkit-appearance: none;
 }
 
+/**
+ * Reset
+ *
+ * @remarks
+ * - Ensures that the box-sizing property is set to border-box on all legend elements.
+ * - Ensures that the color property is set to inherit on all legend elements.
+ * - Ensures that the display property is set to table on all legend elements.
+ * - Ensures that the max-width property is set to 100% on all legend elements.
+ * - Ensures that the padding property is set to 0 on all legend elements.
+ * - Ensures that the white-space property is set to normal on all legend elements.
+ */
 legend {
   box-sizing: border-box;
   color: inherit;
@@ -128,65 +246,33 @@ legend {
   white-space: normal;
 }
 
+/**
+ * Reset
+ *
+ * @remarks
+ * - Ensures that the vertical-align property is set to baseline on all progress elements.
+ */
 progress {
   vertical-align: baseline;
 }
 
+/**
+ * Reset
+ *
+ * @remarks
+ * - Ensures that the overflow property is set to auto on all textarea elements.
+ */
 textarea {
   overflow: auto;
 }
 
+/**
+ * Reset
+ *
+ * @remarks
+ * - Ensures that the display property is set to none on all [hidden] and template elements.
+ */
 [hidden],
 template {
   display: none;
-}
-
-/* Extended Styles */
-
-blockquote,
-q {
-  quotes: none;
-}
-
-blockquote::before,
-blockquote::after,
-q::before,
-q::after {
-  content: "";
-  content: none;
-}
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-caption,
-th,
-td {
-  text-align: left;
-  font-weight: normal;
-  vertical-align: middle;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-ol,
-ul {
-  list-style: none;
-}
-
-strong {
-  font-weight: bold;
-}
-
-code,
-kbd,
-pre,
-samp {
-  font-family: monospace, monospace;
-  font-size: 1em;
 }
