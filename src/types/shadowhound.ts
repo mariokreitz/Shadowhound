@@ -2,6 +2,7 @@ export interface IGame {
   width: number;
   height: number;
   player: IPlayer;
+  input: IInputHandler;
   update(): void;
   draw(ctx: CanvasRenderingContext2D): void;
 }
@@ -13,9 +14,16 @@ export interface IPlayer {
   x: number;
   y: number;
   image: HTMLImageElement;
-  update(): void;
+  speed: number;
+  maxSpeed: number;
+  update(input: string[]): void;
   draw(ctx: CanvasRenderingContext2D): void;
   getPlayerImage(): HTMLImageElement;
+}
+
+export interface IInputHandler {
+  keys: string[];
+  addEventListeners(): void;
 }
 
 export type CanvasDimensions = {
