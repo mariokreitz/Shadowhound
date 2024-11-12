@@ -2,7 +2,7 @@ import "./styles/reset.css";
 import "./styles/toast.css";
 import "./style.css";
 import { Toast } from "./class/toast.class";
-import { IGame, CanvasDimensions } from "./types/shadowhound";
+import { IGame, IPlayer, CanvasDimensions } from "./types/shadowhound";
 import { Player } from "./class/player.class";
 
 window.addEventListener("load", function () {
@@ -21,7 +21,7 @@ window.addEventListener("load", function () {
   class Game implements IGame {
     width: number;
     height: number;
-    player: Player;
+    player: IPlayer;
 
     constructor({ width, height }: CanvasDimensions) {
       this.width = width;
@@ -33,12 +33,17 @@ window.addEventListener("load", function () {
       // Implementation for updating the game state
     }
 
-    draw() {
-      // Implementation for drawing the game on the canvas
+    draw(ctx: CanvasRenderingContext2D): void {
       this.player.draw(ctx);
     }
   }
 
   const game = new Game({ width: canvas.width, height: canvas.height });
-  game.draw();
+
+  function animate() {
+    game.draw(ctx);
+    requestAnimationFrame(animate);
+  }
+
+  animate();
 });
