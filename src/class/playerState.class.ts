@@ -6,9 +6,16 @@ enum states {
   JUMPING = 3,
 }
 
-export class State implements IState {
-  constructor({ state }: CurrentState) {
+class State implements IState {
+  constructor(state: string) {
     this.state = state;
   }
   state: string;
+}
+
+export class Sitting extends State {
+  constructor(player) {
+    super("SITTING");
+    this.player = player;
+  }
 }
