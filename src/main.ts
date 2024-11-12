@@ -2,7 +2,8 @@ import "./styles/reset.css";
 import "./styles/toast.css";
 import "./style.css";
 import { hideLoadingScreen, getCanvasAndContext } from "./utils/misc";
-import { IGame, IPlayer, CanvasDimensions } from "./types/shadowhound";
+import { IGame, IPlayer, IInputHandler, CanvasDimensions } from "./types/shadowhound";
+import { InputHandler } from "./class/input.class";
 import { Player } from "./class/player.class";
 
 window.addEventListener("load", function () {
@@ -14,18 +15,20 @@ window.addEventListener("load", function () {
   canvas.height = 500;
 
   class Game implements IGame {
-    width: number;
-    height: number;
-    player: IPlayer;
-
     constructor({ width, height }: CanvasDimensions) {
       this.width = width;
       this.height = height;
       this.player = new Player(this);
+      this.input = new InputHandler();
     }
 
+    width: number;
+    height: number;
+    player: IPlayer;
+    input: IInputHandler;
+
     update() {
-      this.player.update();
+      this.player.update(this.input.keys);
     }
 
     draw(ctx: CanvasRenderingContext2D): void {
