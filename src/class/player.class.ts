@@ -13,10 +13,11 @@ export class Player implements IPlayer {
     this.x = 0;
     this.y = this.game.height - this.height;
     this.vy = 0;
-    this.weight = Player.DEFAULT_WEIGHT;
-    this.image = this.getPlayerImage();
     this.speed = 0;
+    this.image = this.getPlayerImage();
+    this.weight = Player.DEFAULT_WEIGHT;
     this.maxSpeed = Player.DEFAULT_MAX_SPEED;
+    this.jumpForce = Player.DEFAULT_JUMP_FORCE;
   }
 
   game: IGame;
@@ -29,6 +30,7 @@ export class Player implements IPlayer {
   image: HTMLImageElement;
   speed: number;
   maxSpeed: number;
+  jumpForce: number;
 
   update(input: string[]): void {
     //horizontal movement
@@ -40,7 +42,7 @@ export class Player implements IPlayer {
     if (this.x < 0) this.x = 0;
     if (this.x > this.game.width - this.width) this.x = this.game.width - this.width;
     //vertical movement
-    if (input.includes("ArrowUp") && this.onGround()) this.vy -= Player.DEFAULT_JUMP_FORCE;
+    if (input.includes("ArrowUp") && this.onGround()) this.vy -= this.jumpForce;
     this.y += this.vy;
     if (!this.onGround()) this.vy += this.weight;
     else this.vy = 0;
