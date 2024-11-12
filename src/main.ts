@@ -7,7 +7,7 @@ import { Player } from "./class/player.class";
 
 window.addEventListener("load", function () {
   hideLoadingScreen("loading");
-  const { canvas, ctx } = getCanvasAndContext("canvas1");
+  const { canvas, ctx } = getCanvasAndContext("canvas1") || { canvas: undefined, ctx: undefined };
   if (!canvas || !ctx) return;
 
   canvas.width = 500;
@@ -25,7 +25,7 @@ window.addEventListener("load", function () {
     }
 
     update() {
-      // Implementation for updating the game state
+      this.player.update();
     }
 
     draw(ctx: CanvasRenderingContext2D): void {
@@ -36,6 +36,8 @@ window.addEventListener("load", function () {
   const game = new Game({ width: canvas.width, height: canvas.height });
 
   function animate() {
+    ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
+    game.update();
     game.draw(ctx!);
     requestAnimationFrame(animate);
   }
