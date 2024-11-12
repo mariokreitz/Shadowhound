@@ -2,13 +2,6 @@ import { IGame, IPlayer } from "../types/shadowhound";
 import { showError } from "../utils/misc";
 
 export class Player implements IPlayer {
-  game: IGame;
-  width: number;
-  height: number;
-  x: number;
-  y: number;
-  image: HTMLImageElement;
-
   constructor(game: IGame) {
     this.game = game;
     this.width = 100;
@@ -16,10 +9,22 @@ export class Player implements IPlayer {
     this.x = 0;
     this.y = this.game.height - this.height;
     this.image = this.getPlayerImage();
+    this.speed = 0;
+    this.maxSpeed = 10;
   }
 
-  update() {
-    // this.x++;
+  game: IGame;
+  width: number;
+  height: number;
+  x: number;
+  y: number;
+  image: HTMLImageElement;
+  speed: number;
+  maxSpeed: number;
+
+  update(input: string[]): void {
+    if (input.includes("ArrowRight")) this.x++;
+    else if (input.includes("ArrowLeft")) this.x--;
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
