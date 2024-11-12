@@ -1,17 +1,28 @@
-import { ToastOptions } from "./../types/toast.ts";
+import { IToast, ToastOptions } from "./../types/toast.ts";
 
-export class Toast {
+/**
+ * The Toast class implements the IToast interface and provides a service for displaying temporary messages on the screen.
+ */
+export class Toast implements IToast {
   toasts: ToastOptions[] = [];
   timeout: number | null = null;
 
   constructor() {}
 
-  add(message: string, duration: number = 3000) {
+  /**
+   * Adds a toast message to the service.
+   * @param {string} message - The text of the toast message.
+   * @param {number} [duration=30000] - The duration of the toast message in milliseconds.
+   */
+  add(message: string, duration: number = 30000): void {
     this.toasts.push({ message, duration });
     this.show();
   }
 
-  show() {
+  /**
+   * Shows the toast message.
+   */
+  show(): void {
     if (this.timeout) {
       clearTimeout(this.timeout);
     }
