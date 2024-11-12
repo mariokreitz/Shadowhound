@@ -12,7 +12,7 @@ export class Player implements IPlayer {
     this.width = 100;
     this.height = 91.3;
     this.x = 0;
-    this.y = 100;
+    this.y = this.game.height - this.height;
   }
   update() {}
 
