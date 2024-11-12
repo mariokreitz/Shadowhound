@@ -24,22 +24,18 @@ export function showError(id: string): void {
 }
 
 /**
- * Retrieves an HTMLCanvasElement and its associated CanvasRenderingContext2D
- * based on the canvas ID.
- * @param {string} canvasID - The ID of the canvas element to retrieve.
- * @returns {{canvas: HTMLCanvasElement | null, ctx: CanvasRenderingContext2D | null}}
- * An object containing the canvas element and its context.
+ * Retrieves a canvas element and its 2D context based on the given canvas ID.
+ * @param {string} canvasId - The ID of the canvas element to retrieve.
+ * @returns {{ canvas: HTMLCanvasElement; ctx: CanvasRenderingContext2D }} - The HTMLCanvasElement and its 2D context, or undefined if the element was not found.
  */
-export function getCanvasAndContext(canvasID: string): {
-  canvas: HTMLCanvasElement | null;
-  ctx: CanvasRenderingContext2D | null;
-} {
-  const canvas = document.getElementById(canvasID) as HTMLCanvasElement;
-  if (!canvas) {
-    showError(canvasID);
-    return { canvas: null, ctx: null };
+export function getCanvasAndContext(
+  canvasId: string
+): { canvas: HTMLCanvasElement; ctx: CanvasRenderingContext2D } | undefined {
+  const canvasElement = document.getElementById(canvasId) as HTMLCanvasElement;
+  if (!canvasElement) {
+    return;
   }
 
-  const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
-  return { canvas, ctx };
+  const canvasContext = canvasElement.getContext("2d") as CanvasRenderingContext2D;
+  return { canvas: canvasElement, ctx: canvasContext };
 }
