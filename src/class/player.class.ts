@@ -18,11 +18,12 @@ export class Player implements IPlayer {
     this.image = this.getPlayerImage();
   }
 
-  update() {}
+  update() {
+    // this.x++;
+  }
 
   draw(ctx: CanvasRenderingContext2D): void {
-    ctx.fillRect(this.x, this.y, this.width, this.height);
-    ctx.drawImage(this.image, this.x, this.y);
+    ctx.drawImage(this.image, 0, 0, this.width, this.height, this.x, this.y, this.width, this.height);
   }
 
   getPlayerImage(): HTMLImageElement {
