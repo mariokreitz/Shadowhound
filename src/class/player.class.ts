@@ -4,7 +4,7 @@ import { showError } from "../utils/misc";
 export class Player implements IPlayer {
   private static readonly DEFAULT_WEIGHT = 1;
   private static readonly DEFAULT_MAX_SPEED = 10;
-  private static readonly DEFAULT_JUMP_FORCE = 20;
+  private static readonly DEFAULT_JUMP_FORCE = 30;
 
   constructor(game: IGame) {
     this.game = game;
