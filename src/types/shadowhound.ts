@@ -13,12 +13,15 @@ export interface IPlayer {
   height: number;
   x: number;
   y: number;
+  weight: number;
+  vy: number;
   image: HTMLImageElement;
   speed: number;
   maxSpeed: number;
   update(input: string[]): void;
   draw(ctx: CanvasRenderingContext2D): void;
   getPlayerImage(): HTMLImageElement;
+  onGround(): boolean;
 }
 
 export interface IInputHandler {
