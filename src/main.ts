@@ -1,20 +1,15 @@
 import "./styles/reset.css";
 import "./styles/toast.css";
 import "./style.css";
-import { Toast } from "./class/toast.class";
+import { hideLoadingScreen, getCanvasAndContext } from "./utils/misc";
 import { IGame, IPlayer, CanvasDimensions } from "./types/shadowhound";
 import { Player } from "./class/player.class";
 
 window.addEventListener("load", function () {
-  const canvasID = "canvas1";
-  const canvas = document.getElementById(canvasID) as HTMLCanvasElement;
-  if (!canvas) {
-    const toast = new Toast();
-    toast.add(`id: ${canvasID} not found`, 30000);
-    return;
-  }
+  hideLoadingScreen("loading");
+  const { canvas, ctx } = getCanvasAndContext("canvas1");
+  if (!canvas || !ctx) return;
 
-  const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
   canvas.width = 500;
   canvas.height = 500;
 
@@ -41,7 +36,7 @@ window.addEventListener("load", function () {
   const game = new Game({ width: canvas.width, height: canvas.height });
 
   function animate() {
-    game.draw(ctx);
+    game.draw(ctx!);
     requestAnimationFrame(animate);
   }
 
