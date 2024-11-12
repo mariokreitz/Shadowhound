@@ -1,6 +1,9 @@
 export interface IGame {
   width: number;
   height: number;
+  player: IPlayer;
+  update: () => void;
+  draw(ctx: CanvasRenderingContext2D): void;
 }
 
 export interface IPlayer {
