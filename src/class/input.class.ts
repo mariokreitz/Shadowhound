@@ -19,7 +19,6 @@ export class InputHandler implements IInputHandler {
         this.keys.indexOf(e.key) === -1
       )
         this.keys.push(e.key);
-      console.log(this.keys);
     });
 
     window.addEventListener("keyup", (e) => {
@@ -31,7 +30,6 @@ export class InputHandler implements IInputHandler {
         e.key === "Enter"
       )
         this.keys.splice(this.keys.indexOf(e.key), 1);
-      console.log(this.keys);
     });
   }
 }
