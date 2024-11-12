@@ -2,6 +2,9 @@ import { IGame, IPlayer } from "../types/shadowhound";
 import { showError } from "../utils/misc";
 
 export class Player implements IPlayer {
+  private static readonly DEFAULT_WEIGHT = 1;
+  private static readonly DEFAULT_MAX_SPEED = 10;
+
   constructor(game: IGame) {
     this.game = game;
     this.width = 100;
@@ -9,10 +12,10 @@ export class Player implements IPlayer {
     this.x = 0;
     this.y = this.game.height - this.height;
     this.vy = 0;
-    this.weight = 1;
+    this.weight = Player.DEFAULT_WEIGHT;
     this.image = this.getPlayerImage();
     this.speed = 0;
-    this.maxSpeed = 10;
+    this.maxSpeed = Player.DEFAULT_MAX_SPEED;
   }
 
   game: IGame;
@@ -36,8 +39,10 @@ export class Player implements IPlayer {
     if (this.x < 0) this.x = 0;
     if (this.x > this.game.width - this.width) this.x = this.game.width - this.width;
     //vertical movement
-    this.y += this.vy;
     if (input.includes("ArrowUp") && this.onGround()) this.vy -= 10;
+    this.y += this.vy;
+    if (!this.onGround()) this.vy += this.weight;
+    else this.vy = 0;
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
