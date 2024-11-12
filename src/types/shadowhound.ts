@@ -18,6 +18,7 @@ export interface IPlayer {
   image: HTMLImageElement;
   speed: number;
   maxSpeed: number;
+  jumpForce: number;
   update(input: string[]): void;
   draw(ctx: CanvasRenderingContext2D): void;
   getPlayerImage(): HTMLImageElement;
@@ -29,7 +30,15 @@ export interface IInputHandler {
   addEventListeners(): void;
 }
 
+export interface IState {
+  state: string;
+}
+
 export type CanvasDimensions = {
   width: number;
   height: number;
+};
+
+export type CurrentState = {
+  state: string;
 };
