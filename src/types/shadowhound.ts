@@ -16,13 +16,18 @@ export interface IPlayer {
   weight: number;
   vy: number;
   image: HTMLImageElement;
+  frameX: number;
+  frameY: number;
   speed: number;
   maxSpeed: number;
   jumpForce: number;
+  states: ISitting[];
+  currentState: ISitting;
   update(input: string[]): void;
   draw(ctx: CanvasRenderingContext2D): void;
   getPlayerImage(): HTMLImageElement;
   onGround(): boolean;
+  setState(state: number): void;
 }
 
 export interface IInputHandler {
@@ -32,6 +37,12 @@ export interface IInputHandler {
 
 export interface IState {
   state: string;
+}
+
+export interface ISitting extends IState {
+  player: IPlayer;
+  enter(): void;
+  handleInput(input: any): void;
 }
 
 export type CanvasDimensions = {
