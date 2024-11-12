@@ -1,4 +1,4 @@
-import { IState, CurrentState } from "../types/shadowhound";
+import { IPlayer, ISitting, IState } from "../types/shadowhound";
 
 enum states {
   SITTING = 0,
@@ -13,9 +13,16 @@ class State implements IState {
   state: string;
 }
 
-export class Sitting extends State {
-  constructor(player) {
+export class Sitting extends State implements ISitting {
+  player: IPlayer;
+  constructor(player: IPlayer) {
     super("SITTING");
     this.player = player;
   }
+
+  enter() {
+    this.player.frameY = 5;
+  }
+
+  handleInput(input) {}
 }
