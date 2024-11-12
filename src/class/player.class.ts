@@ -4,6 +4,7 @@ import { showError } from "../utils/misc";
 export class Player implements IPlayer {
   private static readonly DEFAULT_WEIGHT = 1;
   private static readonly DEFAULT_MAX_SPEED = 10;
+  private static readonly DEFAULT_JUMP_FORCE = 20;
 
   constructor(game: IGame) {
     this.game = game;
@@ -39,7 +40,7 @@ export class Player implements IPlayer {
     if (this.x < 0) this.x = 0;
     if (this.x > this.game.width - this.width) this.x = this.game.width - this.width;
     //vertical movement
-    if (input.includes("ArrowUp") && this.onGround()) this.vy -= 10;
+    if (input.includes("ArrowUp") && this.onGround()) this.vy -= Player.DEFAULT_JUMP_FORCE;
     this.y += this.vy;
     if (!this.onGround()) this.vy += this.weight;
     else this.vy = 0;
