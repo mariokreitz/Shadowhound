@@ -1,5 +1,6 @@
 import { IGame, IPlayer } from "../types/shadowhound";
 import { showError } from "../utils/misc";
+import { Sitting } from "./playerState.class";
 
 export class Player implements IPlayer {
   private static readonly DEFAULT_WEIGHT = 1;
@@ -15,6 +16,11 @@ export class Player implements IPlayer {
     this.vy = 0;
     this.speed = 0;
     this.image = this.getPlayerImage();
+    this.frameX = 0;
+    this.frameY = 0;
+    this.states = [new Sitting(this)];
+    this.currentState = this.states[0];
+    this.currentState.enter();
     this.weight = Player.DEFAULT_WEIGHT;
     this.maxSpeed = Player.DEFAULT_MAX_SPEED;
     this.jumpForce = Player.DEFAULT_JUMP_FORCE;
@@ -28,9 +34,13 @@ export class Player implements IPlayer {
   weight: number;
   vy: number;
   image: HTMLImageElement;
+  frameX: number;
+  frameY: number;
   speed: number;
   maxSpeed: number;
   jumpForce: number;
+  states: Sitting[];
+  currentState: Sitting;
 
   update(input: string[]): void {
     //horizontal movement
@@ -49,7 +59,17 @@ export class Player implements IPlayer {
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
-    ctx.drawImage(this.image, 0, 0, this.width, this.height, this.x, this.y, this.width, this.height);
+    ctx.drawImage(
+      this.image,
+      this.frameX + this.width,
+      this.frameY * this.height,
+      this.width,
+      this.height,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
   }
 
   getPlayerImage(): HTMLImageElement {
@@ -65,5 +85,9 @@ export class Player implements IPlayer {
 
   onGround(): boolean {
     return this.y >= this.game.height - this.height;
+  }
+
+  setState(state: number): void {
+    this.currentState = this.states[state];
   }
 }
