@@ -11,6 +11,7 @@ window.addEventListener("load", function () {
   if (!canvas) {
     const toast = new Toast();
     toast.add(`id: ${canvasID} not found`, 30000);
+    return;
   }
 
   const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
