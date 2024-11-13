@@ -1,6 +1,7 @@
 export interface IGame {
   width: number;
   height: number;
+  groundMargin: number;
   player: IPlayer;
   input: IInputHandler;
   update(deltaTime: number): void;
