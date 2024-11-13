@@ -4,6 +4,8 @@ export interface IGame {
   groundMargin: number;
   speed: number;
   maxSpeed: number;
+  enemyTimer: number;
+  enemyInterval: number;
   background: IBackground;
   player: IPlayer;
   input: IInputHandler;
@@ -19,8 +21,24 @@ interface IAnimations {
   frameTimer: number;
 }
 export interface IEnemy extends IAnimations {
+  game: IGame;
+  heigh: number;
+  width: number;
+  x: number;
+  y: number;
+  image: HTMLImageElement;
+  speedX: number;
+  speedY: number;
+  maxFrame: number;
+  markedForDeletion: boolean;
   update(deltaTime: number): void;
   draw(ctx: CanvasRenderingContext2D): void;
+}
+
+export interface IFlyingEnemy extends IEnemy {
+  angle: number;
+  va: number;
+  update(deltaTime: number): void;
 }
 
 export interface IPlayer extends IAnimations {
