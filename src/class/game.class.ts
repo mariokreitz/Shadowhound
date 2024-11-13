@@ -8,6 +8,7 @@ export class Game implements IGame {
   private static readonly DEFAULT_GROUNDMARGIN = 80;
   private static readonly DEFAULT_SPEED = 0;
   private static readonly DEFAULT_MAX_SPEED = 3;
+  private static readonly CHANCE_TO_SPAWN_GROUNDENEMY = 0.5;
   enemies: IEnemy[];
 
   constructor({ width, height }: CanvasDimensions) {
@@ -59,6 +60,7 @@ export class Game implements IGame {
   }
 
   addEnemy() {
+    if (this.speed > 0 && Math.random() < Game.CHANCE_TO_SPAWN_GROUNDENEMY) this.enemies.push(new GroundEnemy(this));
     this.enemies.push(new FlyingEnemy(this));
     console.log(this.enemies);
   }
