@@ -15,8 +15,8 @@ export class Game implements IGame {
   player: IPlayer;
   input: IInputHandler;
 
-  update() {
-    this.player.update(this.input.keys);
+  update(deltaTime: number) {
+    this.player.update(this.input.keys, deltaTime);
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
