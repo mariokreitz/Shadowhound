@@ -44,23 +44,29 @@ To try **Shadowhound** locally:
    ```bash
    cd Shadowhound
    ```
-3. **Open `index.html` in your browser**:
+3. **Install dependencies**:
    ```bash
-   open index.html
+   npm install
    ```
-   Or simply drag and drop `index.html` into your browser or open it directly from your file manager.
+4. **Start the development server**:
+   ```bash
+   npm run dev
+   ```
+5. **Open the project** in your browser:
+   - The game should now be running locally on `http://localhost:3000`.
 
 ---
 
 ## 🎛️ Controls
 
-- **Move Left**: `A`
-- **Move Down**: `S`
-- **Move Right**: `D`
-- **Jump**: `Space`
-- **Fullscreen Mode**: `F`
+- **Move Left**: `←` (Left Arrow)
+- **Move Right**: `→` (Right Arrow)
+- **Move Up**: `↑` (Up Arrow)
+- **Move Down**: `↓` (Down Arrow)
+- **Special Move**: `Enter`
 - **Debug Mode**: `D`
-- **Restart Game**: `Enter` (desktop) or tap screen (mobile)
+- **Fullscreen Mode**: `F`
+- **Restart Game**: `Space` (desktop) or tap (mobile)
 
 ---
 
@@ -68,6 +74,7 @@ To try **Shadowhound** locally:
 
 Shadowhound is developed with:
 
+- **Vite** for fast build and development environment.
 - **TypeScript, HTML, CSS** for core game mechanics.
 - **Canvas API** for graphics rendering.
 - **Git & GitHub** for version control.
