@@ -74,6 +74,7 @@ export class Player implements IPlayer {
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
+    if (this.game.debug) ctx.strokeRect(this.x, this.y, this.width, this.height);
     ctx.drawImage(
       this.image,
       this.frameX * this.width,
