@@ -1,4 +1,5 @@
 export interface IGame {
+  debug: boolean;
   width: number;
   height: number;
   groundMargin: number;
@@ -39,6 +40,11 @@ export interface IFlyingEnemy extends IEnemy {
   angle: number;
   va: number;
   update(deltaTime: number): void;
+}
+
+export interface IClimbingEnemy extends IEnemy {
+  update(deltaTime: number): void;
+  draw(ctx: CanvasRenderingContext2D): void;
 }
 
 export interface IPlayer extends IAnimations {
