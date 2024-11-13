@@ -53,7 +53,7 @@ To try **Shadowhound** locally:
    npm run dev
    ```
 5. **Open the project** in your browser:
-   - The game should now be running locally on `http://localhost:3000`.
+   - The game should now be running locally on `http://localhost:5173`.
 
 ---
 
