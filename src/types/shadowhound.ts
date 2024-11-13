@@ -18,11 +18,12 @@ export interface IPlayer {
   image: HTMLImageElement;
   frameX: number;
   frameY: number;
+  maxFrame: number;
   speed: number;
   maxSpeed: number;
   jumpForce: number;
-  states: ISitting[];
-  currentState: ISitting;
+  states: IStateAction[];
+  currentState: IStateAction;
   update(input: string[]): void;
   draw(ctx: CanvasRenderingContext2D): void;
   getPlayerImage(): HTMLImageElement;
@@ -39,10 +40,10 @@ export interface IState {
   state: string;
 }
 
-export interface ISitting extends IState {
+export interface IStateAction extends IState {
   player: IPlayer;
   enter(): void;
-  handleInput(input: any): void;
+  handleInput(input: string[]): void;
 }
 
 export type CanvasDimensions = {
