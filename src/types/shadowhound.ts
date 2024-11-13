@@ -3,6 +3,7 @@ export interface IGame {
   height: number;
   groundMargin: number;
   speed: number;
+  maxSpeed: number;
   background: IBackground;
   player: IPlayer;
   input: IInputHandler;
@@ -33,7 +34,7 @@ export interface IPlayer {
   update(input: string[], deltaTime: number): void;
   draw(ctx: CanvasRenderingContext2D): void;
   onGround(): boolean;
-  setState(state: number): void;
+  setState(state: number, speed: number): void;
 }
 
 export interface IInputHandler {
@@ -67,8 +68,16 @@ export interface IBackground {
   game: IGame;
   width: number;
   height: number;
+  layer1Image: HTMLImageElement;
+  layer2Image: HTMLImageElement;
+  layer3Image: HTMLImageElement;
+  layer4Image: HTMLImageElement;
   layer5Image: HTMLImageElement;
   layer1: ILayer;
+  layer2: ILayer;
+  layer3: ILayer;
+  layer4: ILayer;
+  layer5: ILayer;
   backgroundLayers: ILayer[];
   draw(ctx: CanvasRenderingContext2D): void;
   update(): void;
