@@ -83,6 +83,8 @@ export class FlyingEnemy extends Enemy implements IFlyingEnemy {
 
   update(deltaTime: number): void {
     super.update(deltaTime);
+    this.angle += this.va;
+    this.y += Math.sin(this.angle);
   }
 }
 
