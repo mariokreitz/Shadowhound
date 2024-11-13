@@ -3,7 +3,7 @@ export interface IGame {
   height: number;
   player: IPlayer;
   input: IInputHandler;
-  update(): void;
+  update(deltaTime: number): void;
   draw(ctx: CanvasRenderingContext2D): void;
 }
 
@@ -19,12 +19,15 @@ export interface IPlayer {
   frameX: number;
   frameY: number;
   maxFrame: number;
+  fps: number;
+  frameInterval: number;
+  frameTimer: number;
   speed: number;
   maxSpeed: number;
   jumpForce: number;
   states: IStateAction[];
   currentState: IStateAction;
-  update(input: string[]): void;
+  update(input: string[], deltaTime: number): void;
   draw(ctx: CanvasRenderingContext2D): void;
   getPlayerImage(): HTMLImageElement;
   onGround(): boolean;
