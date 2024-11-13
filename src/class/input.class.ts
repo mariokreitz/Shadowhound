@@ -1,11 +1,12 @@
-import { IInputHandler } from "../types/shadowhound";
+import { IGame, IInputHandler } from "../types/shadowhound";
 
 export class InputHandler implements IInputHandler {
-  constructor() {
+  constructor(game: IGame) {
+    this.game = game;
     this.keys = [];
     this.addEventListeners();
   }
-
+  game: IGame;
   keys: string[];
 
   addEventListeners(): void {
@@ -19,6 +20,7 @@ export class InputHandler implements IInputHandler {
         this.keys.indexOf(e.key) === -1
       )
         this.keys.push(e.key);
+      else if (e.key === "d") this.game.debug = !this.game.debug;
     });
 
     window.addEventListener("keyup", (e) => {
