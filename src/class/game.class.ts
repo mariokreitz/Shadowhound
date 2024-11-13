@@ -19,12 +19,14 @@ export class Game implements IGame {
     this.maxSpeed = Game.DEFAULT_MAX_SPEED;
     this.background = new Background(this);
     this.player = new Player(this);
-    this.input = new InputHandler();
+    this.input = new InputHandler(this);
     this.enemies = [];
     this.enemyTimer = 0;
     this.enemyInterval = 1000;
+    this.debug = true;
   }
 
+  debug: boolean;
   width: number;
   height: number;
   groundMargin: number;
@@ -61,7 +63,7 @@ export class Game implements IGame {
 
   addEnemy() {
     if (this.speed > 0 && Math.random() < Game.CHANCE_TO_SPAWN_GROUNDENEMY) this.enemies.push(new GroundEnemy(this));
+    else if (this.speed > 0) this.enemies.push(new ClimbingEnemy(this));
     this.enemies.push(new FlyingEnemy(this));
-    console.log(this.enemies);
   }
 }
