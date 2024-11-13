@@ -5,13 +5,15 @@ import { Player } from "./player.class";
 
 export class Game implements IGame {
   private static readonly DEFAULT_GROUNDMARGIN = 80;
-  private static readonly DEFAULT_SPEED = 3;
+  private static readonly DEFAULT_SPEED = 0;
+  private static readonly DEFAULT_MAX_SPEED = 3;
 
   constructor({ width, height }: CanvasDimensions) {
     this.width = width;
     this.height = height;
     this.groundMargin = Game.DEFAULT_GROUNDMARGIN;
     this.speed = Game.DEFAULT_SPEED;
+    this.maxSpeed = Game.DEFAULT_MAX_SPEED;
     this.background = new Background(this);
     this.player = new Player(this);
     this.input = new InputHandler();
@@ -21,6 +23,7 @@ export class Game implements IGame {
   height: number;
   groundMargin: number;
   speed: number;
+  maxSpeed: number;
   background: IBackground;
   player: IPlayer;
   input: IInputHandler;
