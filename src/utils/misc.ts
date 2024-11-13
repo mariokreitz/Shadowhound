@@ -39,3 +39,18 @@ export function getCanvasAndContext(
   const canvasContext = canvasElement.getContext("2d") as CanvasRenderingContext2D;
   return { canvas: canvasElement, ctx: canvasContext };
 }
+
+/**
+ * Retrieves an image element based on the given ID.
+ * @param {string} playerID - The ID of the image element to retrieve.
+ * @returns {HTMLImageElement} - The image element if found, otherwise creates a new Image object.
+ */
+export function getImage(playerID: string): HTMLImageElement {
+  const playerImage = document.getElementById(playerID) as HTMLImageElement;
+  if (!playerImage) {
+    showError(playerID);
+    return new Image();
+  }
+
+  return playerImage;
+}

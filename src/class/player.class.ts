@@ -1,5 +1,5 @@
+import { getImage } from "../utils/misc";
 import { IGame, IPlayer, IStateAction } from "../types/shadowhound";
-import { showError } from "../utils/misc";
 import { Sitting, Running, Jumping, Falling } from "./playerState.class";
 
 export class Player implements IPlayer {
@@ -20,7 +20,7 @@ export class Player implements IPlayer {
     this.y = this.game.height - this.height - this.game.groundMargin;
     this.vy = 0;
     this.speed = 0;
-    this.image = this.getPlayerImage();
+    this.image = getImage("player");
     this.frameX = 0;
     this.frameY = 0;
     this.maxFrame = 0;
@@ -85,17 +85,6 @@ export class Player implements IPlayer {
       this.width,
       this.height
     );
-  }
-
-  getPlayerImage(): HTMLImageElement {
-    const playerID = "player";
-    const playerImage = document.getElementById(playerID) as HTMLImageElement;
-    if (!playerImage) {
-      showError(playerID);
-      return new Image();
-    }
-
-    return playerImage;
   }
 
   onGround(): boolean {
