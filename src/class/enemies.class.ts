@@ -5,7 +5,7 @@ class Enemy implements IEnemy {
   constructor(game: IGame) {
     this.game = game;
     this.width = 0;
-    this.heigh = 0;
+    this.height = 0;
     this.x = 0;
     this.y = 0;
     this.image = new Image();
@@ -20,7 +20,7 @@ class Enemy implements IEnemy {
     this.markedForDeletion = false;
   }
   game: IGame;
-  heigh: number;
+  height: number;
   width: number;
   x: number;
   y: number;
@@ -54,11 +54,11 @@ class Enemy implements IEnemy {
       this.frameX * this.width,
       0,
       this.width,
-      this.heigh,
+      this.height,
       this.x,
       this.y,
       this.width,
-      this.heigh
+      this.height
     );
   }
 }
@@ -67,7 +67,7 @@ export class FlyingEnemy extends Enemy implements IFlyingEnemy {
   constructor(game: IGame) {
     super(game);
     this.width = 60;
-    this.heigh = 44;
+    this.height = 44;
     this.x = this.game.width + Math.random() * this.game.width * 0.5;
     this.y = Math.random() * this.game.height * 0.5;
     this.speedX = Math.random() + 1;
@@ -88,6 +88,16 @@ export class FlyingEnemy extends Enemy implements IFlyingEnemy {
   }
 }
 
-export class GroundEnemy extends Enemy {}
+export class GroundEnemy extends Enemy {
+  constructor(game: IGame) {
+    super(game);
+    this.width = 60;
+    this.height = 87;
+    this.x = this.game.width;
+    this.y = this.game.height - this.height - this.game.groundMargin;
+    this.image = getImage("enemy_plant");
+    this.maxFrame = 1;
+  }
+}
 
 export class ClimbingEnemy extends Enemy {}
