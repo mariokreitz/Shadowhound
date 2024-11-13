@@ -6,12 +6,14 @@ export class Game implements IGame {
   constructor({ width, height }: CanvasDimensions) {
     this.width = width;
     this.height = height;
+    this.groundMargin = 50;
     this.player = new Player(this);
     this.input = new InputHandler();
   }
 
   width: number;
   height: number;
+  groundMargin: number;
   player: IPlayer;
   input: IInputHandler;
 
