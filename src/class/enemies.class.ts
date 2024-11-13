@@ -1,4 +1,4 @@
-import { IEnemy, IFlyingEnemy, IGame } from "../types/shadowhound";
+import { IClimbingEnemy, IEnemy, IFlyingEnemy, IGame } from "../types/shadowhound";
 import { getImage } from "../utils/misc";
 
 class Enemy implements IEnemy {
@@ -49,6 +49,7 @@ class Enemy implements IEnemy {
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
+    if (this.game.debug) ctx.strokeRect(this.x, this.y, this.width, this.height);
     ctx.drawImage(
       this.image,
       this.frameX * this.width,
@@ -100,4 +101,29 @@ export class GroundEnemy extends Enemy {
   }
 }
 
-export class ClimbingEnemy extends Enemy {}
+export class ClimbingEnemy extends Enemy implements IClimbingEnemy {
+  constructor(game: IGame) {
+    super(game);
+    this.width = 120;
+    this.height = 144;
+    this.x = this.game.width;
+    this.y = Math.random() * this.game.height * 0.5;
+    this.image = getImage("enemy_spider_big");
+    this.speedY = Math.random() > 0.5 ? 1 : -1;
+    this.maxFrame = 5;
+  }
+
+  update(deltaTime: number): void {
+    super.update(deltaTime);
+    if (this.y > this.game.height - this.height - this.game.groundMargin) this.speedY *= -1;
+    if (this.y < -this.height) this.markedForDeletion = true;
+  }
+
+  draw(ctx: CanvasRenderingContext2D): void {
+    super.draw(ctx);
+    ctx.beginPath();
+    ctx.moveTo(this.x + this.width / 2, 0);
+    ctx.lineTo(this.x + this.width / 2, this.y + 50);
+    ctx.stroke();
+  }
+}
