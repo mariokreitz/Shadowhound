@@ -1,9 +1,10 @@
-import { IPlayer, ISitting, IState } from "../types/shadowhound";
+import { IPlayer, IStateAction, IState } from "../types/shadowhound";
 
 enum states {
   SITTING = 0,
-  RUNNING = 2,
-  JUMPING = 3,
+  RUNNING = 1,
+  JUMPING = 2,
+  FALLING = 3,
 }
 
 class State implements IState {
@@ -13,7 +14,7 @@ class State implements IState {
   state: string;
 }
 
-export class Sitting extends State implements ISitting {
+export class Sitting extends State implements IStateAction {
   player: IPlayer;
   constructor(player: IPlayer) {
     super("SITTING");
@@ -24,5 +25,57 @@ export class Sitting extends State implements ISitting {
     this.player.frameY = 5;
   }
 
-  handleInput(input) {}
+  handleInput(input: string[]) {
+    if (input.includes("ArrowLeft") || input.includes("ArrowRight")) this.player.setState(states.RUNNING);
+  }
+}
+
+export class Running extends State implements IStateAction {
+  player: IPlayer;
+  constructor(player: IPlayer) {
+    super("RUNNING");
+    this.player = player;
+  }
+
+  enter() {
+    this.player.frameY = 3;
+  }
+
+  handleInput(input: string[]) {
+    if (input.includes("ArrowDown")) this.player.setState(states.SITTING);
+    else if (input.includes("ArrowUp")) this.player.setState(states.JUMPING);
+  }
+}
+
+export class Jumping extends State implements IStateAction {
+  player: IPlayer;
+  constructor(player: IPlayer) {
+    super("JUMPING");
+    this.player = player;
+  }
+
+  enter() {
+    if (this.player.onGround()) this.player.vy -= this.player.jumpForce;
+    this.player.frameY = 1;
+  }
+
+  handleInput() {
+    if (this.player.vy > this.player.weight) this.player.setState(states.FALLING);
+  }
+}
+
+export class Falling extends State implements IStateAction {
+  player: IPlayer;
+  constructor(player: IPlayer) {
+    super("FALLING");
+    this.player = player;
+  }
+
+  enter() {
+    this.player.frameY = 2;
+  }
+
+  handleInput() {
+    if (this.player.onGround()) this.player.setState(states.RUNNING);
+  }
 }
