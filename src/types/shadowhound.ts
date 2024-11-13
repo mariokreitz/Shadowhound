@@ -11,7 +11,19 @@ export interface IGame {
   draw(ctx: CanvasRenderingContext2D): void;
 }
 
-export interface IPlayer {
+interface IAnimations {
+  frameX: number;
+  frameY: number;
+  fps: number;
+  frameInterval: number;
+  frameTimer: number;
+}
+export interface IEnemy extends IAnimations {
+  update(deltaTime: number): void;
+  draw(ctx: CanvasRenderingContext2D): void;
+}
+
+export interface IPlayer extends IAnimations {
   game: IGame;
   width: number;
   height: number;
@@ -20,12 +32,7 @@ export interface IPlayer {
   weight: number;
   vy: number;
   image: HTMLImageElement;
-  frameX: number;
-  frameY: number;
   maxFrame: number;
-  fps: number;
-  frameInterval: number;
-  frameTimer: number;
   speed: number;
   maxSpeed: number;
   jumpForce: number;
