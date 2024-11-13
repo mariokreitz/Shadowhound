@@ -4,11 +4,14 @@ import { InputHandler } from "./input.class";
 import { Player } from "./player.class";
 
 export class Game implements IGame {
+  private static readonly DEFAULT_GROUNDMARGIN = 80;
+  private static readonly DEFAULT_SPEED = 3;
+
   constructor({ width, height }: CanvasDimensions) {
     this.width = width;
     this.height = height;
-    this.groundMargin = 50;
-    this.speed = 3;
+    this.groundMargin = Game.DEFAULT_GROUNDMARGIN;
+    this.speed = Game.DEFAULT_SPEED;
     this.background = new Background(this);
     this.player = new Player(this);
     this.input = new InputHandler();
