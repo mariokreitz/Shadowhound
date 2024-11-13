@@ -17,7 +17,7 @@ export class Player implements IPlayer {
     this.width = 100;
     this.height = 91.3;
     this.x = 0;
-    this.y = this.game.height - this.height;
+    this.y = this.game.height - this.height - this.game.groundMargin;
     this.vy = 0;
     this.speed = 0;
     this.image = this.getPlayerImage();
@@ -99,7 +99,7 @@ export class Player implements IPlayer {
   }
 
   onGround(): boolean {
-    return this.y >= this.game.height - this.height;
+    return this.y >= this.game.height - this.height - this.game.groundMargin;
   }
 
   setState(state: number): void {
