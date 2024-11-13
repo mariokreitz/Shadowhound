@@ -22,7 +22,7 @@ interface IAnimations {
 }
 export interface IEnemy extends IAnimations {
   game: IGame;
-  heigh: number;
+  height: number;
   width: number;
   x: number;
   y: number;
