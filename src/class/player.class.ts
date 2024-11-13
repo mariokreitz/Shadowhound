@@ -1,11 +1,11 @@
 import { IGame, IPlayer } from "../types/shadowhound";
 import { showError } from "../utils/misc";
-import { Sitting } from "./playerState.class";
+import { Sitting, Running, Jumping, Falling } from "./playerState.class";
 
 export class Player implements IPlayer {
   private static readonly DEFAULT_WEIGHT = 1;
   private static readonly DEFAULT_MAX_SPEED = 10;
-  private static readonly DEFAULT_JUMP_FORCE = 30;
+  private static readonly DEFAULT_JUMP_FORCE = 27;
 
   constructor(game: IGame) {
     this.game = game;
@@ -18,7 +18,8 @@ export class Player implements IPlayer {
     this.image = this.getPlayerImage();
     this.frameX = 0;
     this.frameY = 0;
-    this.states = [new Sitting(this)];
+    this.maxFrame = 5;
+    this.states = [new Sitting(this), new Running(this), new Jumping(this), new Falling(this)];
     this.currentState = this.states[0];
     this.currentState.enter();
     this.weight = Player.DEFAULT_WEIGHT;
@@ -36,6 +37,7 @@ export class Player implements IPlayer {
   image: HTMLImageElement;
   frameX: number;
   frameY: number;
+  maxFrame: number;
   speed: number;
   maxSpeed: number;
   jumpForce: number;
@@ -43,6 +45,7 @@ export class Player implements IPlayer {
   currentState: Sitting;
 
   update(input: string[]): void {
+    this.currentState.handleInput(input);
     //horizontal movement
     this.x += this.speed;
     if (input.includes("ArrowRight")) this.speed = this.maxSpeed;
@@ -52,16 +55,18 @@ export class Player implements IPlayer {
     if (this.x < 0) this.x = 0;
     if (this.x > this.game.width - this.width) this.x = this.game.width - this.width;
     //vertical movement
-    if (input.includes("ArrowUp") && this.onGround()) this.vy -= this.jumpForce;
     this.y += this.vy;
     if (!this.onGround()) this.vy += this.weight;
     else this.vy = 0;
+    //sprite animation
+    if (this.frameX < this.maxFrame) this.frameX++;
+    else this.frameX = 0;
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
     ctx.drawImage(
       this.image,
-      this.frameX + this.width,
+      this.frameX * this.width,
       this.frameY * this.height,
       this.width,
       this.height,
@@ -89,5 +94,6 @@ export class Player implements IPlayer {
 
   setState(state: number): void {
     this.currentState = this.states[state];
+    this.currentState.enter();
   }
 }
