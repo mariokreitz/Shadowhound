@@ -1,15 +1,18 @@
-import { IGame } from "../types/shadowhound";
+import { IGame, IUI } from "../types/shadowhound";
+import { getImage } from "../utils/misc";
 
-export class UI {
+export class UI implements IUI {
   constructor(game: IGame) {
     this.game = game;
     this.fontSize = 30;
-    this.fontFamily = "Helvetica";
+    this.fontFamily = "Creepster";
+    this.liveImage = getImage("lives");
   }
 
   game: IGame;
   fontSize: number;
   fontFamily: string;
+  liveImage: HTMLImageElement;
 
   draw(ctx: CanvasRenderingContext2D) {
     ctx.save();
@@ -25,6 +28,10 @@ export class UI {
     //timer
     ctx.font = `${this.fontSize * 0.8}px ${this.fontFamily}`;
     ctx.fillText(`Time: ${(this.game.time * 0.001).toFixed(1)}`, 20, 80);
+    // lives
+    for (let index = 0; index < this.game.lives; index++) {
+      ctx.drawImage(this.liveImage, 25 * index + 20, 95, 25, 25);
+    }
     //game over messages
     if (this.game.gameOver) {
       ctx.textAlign = "center";
