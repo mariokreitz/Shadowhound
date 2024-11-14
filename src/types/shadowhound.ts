@@ -22,6 +22,7 @@ export interface IGame {
   maxParticles: number;
   enemies: IEnemy[];
   collisions: ICollisionAnimation[];
+  floatingMessages: IFloatingMessage[];
   update(deltaTime: number): void;
   draw(ctx: CanvasRenderingContext2D): void;
 }
@@ -74,7 +75,7 @@ export interface IPlayer extends IAnimations {
   maxSpeed: number;
   jumpForce: number;
   states: IStateAction[];
-  currentState: IStateAction;
+  currentState: IStateAction | null;
   update(input: string[], deltaTime: number): void;
   draw(ctx: CanvasRenderingContext2D): void;
   onGround(): boolean;
@@ -161,6 +162,18 @@ export interface ICollisionAnimation extends IAnimations {
   markedForDelection: boolean;
   draw(ctx: CanvasRenderingContext2D): void;
   update(deltaTime: number): void;
+}
+
+export interface IFloatingMessage {
+  value: string;
+  x: number;
+  y: number;
+  targetX: number;
+  targetY: number;
+  markedForDeletion: boolean;
+  timer: number;
+  update(): void;
+  draw(ctx: CanvasRenderingContext2D): void;
 }
 
 export type CanvasDimensions = {
