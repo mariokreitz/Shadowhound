@@ -7,6 +7,7 @@ import {
   IEnemy,
   IUI,
   IParticle,
+  ICollisionAnimation,
 } from "./../types/shadowhound";
 import { Background } from "./background.class";
 import { InputHandler } from "./input.class";
@@ -33,9 +34,10 @@ export class Game implements IGame {
     this.UI = new UI(this);
     this.enemies = [];
     this.particles = [];
+    this.collisions = [];
     this.enemyTimer = 0;
     this.enemyInterval = 1000;
-    this.debug = true;
+    this.debug = false;
     this.score = 0;
     this.fontColor = "black";
     this.player.currentState = this.player.states[0];
@@ -60,6 +62,7 @@ export class Game implements IGame {
   particles: IParticle[];
   maxParticles: number;
   enemies: IEnemy[];
+  collisions: ICollisionAnimation[];
 
   update(deltaTime: number) {
     this.background.update();
@@ -81,6 +84,12 @@ export class Game implements IGame {
         this.particles = this.particles.filter((particle) => !particle.markedForDelection);
     });
     if (this.particles.length > this.maxParticles) this.particles = this.particles.slice(0, this.maxParticles);
+    // handle collision sprites
+    this.collisions.forEach((collision) => {
+      collision.update(deltaTime);
+      if (collision.markedForDelection)
+        this.collisions = this.collisions.filter((collision) => !collision.markedForDelection);
+    });
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
@@ -90,6 +99,7 @@ export class Game implements IGame {
       enemy.draw(ctx);
     });
     this.particles.forEach((particle) => particle.draw(ctx));
+    this.collisions.forEach((collision) => collision.draw(ctx));
     this.UI.draw(ctx);
   }
 
