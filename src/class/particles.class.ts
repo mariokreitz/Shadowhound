@@ -9,6 +9,7 @@ class Particle implements IParticle {
     this.speedX = 0;
     this.speedY = 0;
     this.size = 0;
+    this.color = "black";
   }
 
   game: IGame;
@@ -17,6 +18,7 @@ class Particle implements IParticle {
   speedX: number;
   speedY: number;
   size: number;
+  color: string;
   markedForDelection: boolean;
 
   update() {
@@ -24,6 +26,13 @@ class Particle implements IParticle {
     this.y -= this.speedY;
     this.size *= 0.95;
     if (this.size < 0.5) this.markedForDelection = true;
+  }
+
+  draw(ctx: CanvasRenderingContext2D): void {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = this.color;
+    ctx.fill();
   }
 }
 
@@ -35,16 +44,7 @@ export class Dust extends Particle {
     this.y = y;
     this.speedX = Math.random();
     this.speedY = Math.random();
-    this.color = "black";
-  }
-
-  color: string;
-
-  draw(ctx: CanvasRenderingContext2D) {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = this.color;
-    ctx.fill();
+    this.color = "rgba(0,0,0,0.2)";
   }
 }
 
