@@ -1,4 +1,5 @@
 import "./styles/reset.css";
+import "./styles/font.css";
 import "./styles/toast.css";
 import "./style.css";
 import { hideLoadingScreen, getCanvasAndContext } from "./utils/misc";
