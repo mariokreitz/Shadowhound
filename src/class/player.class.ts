@@ -1,6 +1,6 @@
 import { getImage } from "../utils/misc";
 import { IGame, IPlayer, IStateAction } from "../types/shadowhound";
-import { Sitting, Running, Jumping, Falling, Rolling } from "./playerState.class";
+import { Sitting, Running, Jumping, Falling, Rolling, Diving, Hit } from "./playerState.class";
 
 export class Player implements IPlayer {
   private static readonly DEFAULT_WEIGHT = 1;
@@ -32,6 +32,8 @@ export class Player implements IPlayer {
       new Jumping(this.game),
       new Falling(this.game),
       new Rolling(this.game),
+      new Diving(this.game),
+      new Hit(this.game),
     ];
     this.currentState = this.states[0];
   }
@@ -71,6 +73,9 @@ export class Player implements IPlayer {
     this.y += this.vy;
     if (!this.onGround()) this.vy += this.weight;
     else this.vy = 0;
+    // vertical boundaries
+    if (this.y > this.game.height - this.height - this.game.groundMargin)
+      this.y = this.game.height - this.height - this.game.groundMargin;
     //sprite animation
     if (this.frameTimer > this.frameInterval) {
       this.frameTimer = 0;
@@ -113,8 +118,10 @@ export class Player implements IPlayer {
         enemy.y + enemy.height > this.y
       ) {
         enemy.markedForDeletion = true;
-        this.game.score++;
-      } else {
+        if (this.currentState === this.states[4] || this.currentState === this.states[5]) this.game.score++;
+        else {
+          this.setState(6, 0);
+        }
       }
     });
   }
