@@ -11,7 +11,7 @@ export class CollisionAnimation implements ICollisionAnimation {
     this.width = this.spriteWidth * this.sizeModifier;
     this.height = this.spriteHeight * this.sizeModifier;
     this.x = x - this.width * 0.5;
-    this.y = y - this.width * 0.5;
+    this.y = y - this.height * 0.5;
     this.frameX = 0;
     this.frameY = 0;
     this.fps = Math.random() * 10 + 5;
