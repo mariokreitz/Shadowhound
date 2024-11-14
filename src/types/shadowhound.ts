@@ -1,9 +1,8 @@
 export interface IGame {
   UI: IUI;
-  enemies: IEnemy[];
+  debug: boolean;
   score: number;
   fontColor: string;
-  debug: boolean;
   width: number;
   height: number;
   groundMargin: number;
@@ -14,6 +13,8 @@ export interface IGame {
   background: IBackground;
   player: IPlayer;
   input: IInputHandler;
+  particles: IParticle[];
+  enemies: IEnemy[];
   update(deltaTime: number): void;
   draw(ctx: CanvasRenderingContext2D): void;
 }
@@ -25,6 +26,7 @@ interface IAnimations {
   frameInterval: number;
   frameTimer: number;
 }
+
 export interface IEnemy extends IAnimations {
   game: IGame;
   height: number;
@@ -134,6 +136,7 @@ export interface IParticle {
   size: number;
   markedForDelection: boolean;
   update(): void;
+  draw(ctx: CanvasRenderingContext2D): void;
 }
 
 export type CanvasDimensions = {
