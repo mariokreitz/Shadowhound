@@ -2,6 +2,7 @@ import { getImage } from "../utils/misc";
 import { IGame, IPlayer, IStateAction } from "../types/shadowhound";
 import { Sitting, Running, Jumping, Falling, Rolling, Diving, Hit } from "./playerState.class";
 import { CollisionAnimation } from "./collisionAnimation.class";
+import { FloatingMessage } from "./floatingMessages.class";
 
 export class Player implements IPlayer {
   private static readonly DEFAULT_WEIGHT = 1;
@@ -36,7 +37,7 @@ export class Player implements IPlayer {
       new Diving(this.game),
       new Hit(this.game),
     ];
-    this.currentState = this.states[0];
+    this.currentState = null;
   }
 
   game: IGame;
@@ -57,11 +58,12 @@ export class Player implements IPlayer {
   maxSpeed: number;
   jumpForce: number;
   states: IStateAction[];
-  currentState: IStateAction;
+  currentState: IStateAction | null;
 
   update(input: string[], deltaTime: number): void {
     this.checkCollisions();
-    this.currentState.handleInput(input);
+    if (this.currentState) this.currentState.handleInput(input);
+    else return;
     //horizontal movement
     this.x += this.speed;
     if (input.includes("ArrowRight") && this.currentState !== this.states[6]) this.speed = this.maxSpeed;
@@ -122,8 +124,10 @@ export class Player implements IPlayer {
         this.game.collisions.push(
           new CollisionAnimation(this.game, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5)
         );
-        if (this.currentState === this.states[4] || this.currentState === this.states[5]) this.game.score++;
-        else {
+        if (this.currentState === this.states[4] || this.currentState === this.states[5]) {
+          this.game.score++;
+          this.game.floatingMessages.push(new FloatingMessage("+1", enemy.x, enemy.y, 100, 50));
+        } else {
           this.setState(6, 0);
           this.game.lives--;
           if (this.game.lives <= 0) this.game.gameOver = true;
