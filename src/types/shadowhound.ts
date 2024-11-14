@@ -1,5 +1,6 @@
 export interface IGame {
   UI: IUI;
+  lives: number;
   debug: boolean;
   score: number;
   minScore: number;
@@ -130,6 +131,7 @@ export interface IUI {
   game: IGame;
   fontSize: number;
   fontFamily: string;
+  liveImage: HTMLImageElement;
   draw(ctx: CanvasRenderingContext2D): void;
 }
 
