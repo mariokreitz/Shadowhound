@@ -49,6 +49,13 @@ export class Running extends State implements IStateAction {
   }
 
   handleInput(input: string[]) {
+    this.game.particles.push(
+      new Dust(
+        this.game,
+        this.game.player.x + this.game.player.width * 0.5,
+        this.game.player.y + this.game.player.height
+      )
+    );
     if (input.includes("ArrowDown")) this.game.player.setState(states.SITTING, 0);
     else if (input.includes("ArrowUp")) this.game.player.setState(states.JUMPING, 1);
     else if (input.includes("Enter")) this.game.player.setState(states.ROLLING, 2);
