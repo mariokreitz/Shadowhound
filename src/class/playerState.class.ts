@@ -121,7 +121,7 @@ export class Rolling extends State implements IStateAction {
     else if (!input.includes("Enter") && !this.game.player.onGround()) this.game.player.setState(states.FALLING, 1);
     else if (input.includes("Enter") && input.includes("ArrowUp") && this.game.player.onGround())
       this.game.player.setState(states.JUMPING, 1);
-    else if (input.includes("ArrowDown")) this.game.player.setState(states.DIVING, 0);
+    else if (input.includes("ArrowDown") && !this.game.player.onGround()) this.game.player.setState(states.DIVING, 0);
   }
 }
 
