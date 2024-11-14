@@ -171,7 +171,7 @@ export class Hit extends State implements IStateAction {
     this.game.player.frameY = 4;
   }
 
-  handleInput(input: string[]) {
+  handleInput() {
     if (this.game.player.frameX >= 10 && this.game.player.onGround()) this.game.player.setState(states.RUNNING, 1);
     else if (this.game.player.frameX >= 10 && !this.game.player.onGround())
       this.game.player.setState(states.FALLING, 1);
