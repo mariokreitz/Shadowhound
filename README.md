@@ -1,5 +1,7 @@
 # 🌑 Shadowhound
 
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/mariokreitz/Shadowhound?label=version)
+
 **Shadowhound** is an immersive side-scrolling, jump-and-run adventure game where players control a small black dog navigating a dark, mysterious forest. Defeat monsters with special abilities, earn points, and explore a world crafted in an atmospheric monochrome palette of black, gray, and white.
 
 ---
@@ -11,6 +13,7 @@
 - [🚀 Getting Started](#-getting-started)
 - [🎛️ Controls](#-controls)
 - [💻 Development](#-development)
+- [⚠️ Missing Features (WIP)](#-missing-features-wip)
 - [📜 License](#-license)
 
 ---
@@ -84,6 +87,20 @@ Shadowhound is developed with:
 - **Assets**: Houses images for the player, enemies, and background.
 - **Classes**: Contains TypeScript classes for game components like player, enemy, background, and input handling.
 - **State Management**: Includes files for managing player states using the state design pattern, inspired by DoFactory's design pattern resources.
+
+---
+
+## ⚠️ Missing Features (WIP)
+
+The following features are still under development and not yet available in this release (v1.0):
+
+- **Landing Page**: The landing page for the game is still being developed.
+- **Menu**: A main menu is not yet implemented.
+- **Sounds**: Sound effects and music will be added in future versions.
+- **Documentation**: More detailed documentation and guides are planned for future updates.
+- **Endboss**: The endboss functionality is still a work in progress.
+- **Settings**: Settings for performance, level changes, and difficulty adjustments are planned.
+- **Mobile Version**: Mobile version is still a work in progress; only limited controls (jump) are available at this stage.
 
 ---
 
