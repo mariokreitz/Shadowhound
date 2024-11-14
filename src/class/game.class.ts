@@ -1,4 +1,13 @@
-import { IGame, IPlayer, IInputHandler, CanvasDimensions, IBackground, IEnemy, IUI } from "./../types/shadowhound";
+import {
+  IGame,
+  IPlayer,
+  IInputHandler,
+  CanvasDimensions,
+  IBackground,
+  IEnemy,
+  IUI,
+  IParticle,
+} from "./../types/shadowhound";
 import { Background } from "./background.class";
 import { InputHandler } from "./input.class";
 import { Player } from "./player.class";
@@ -10,7 +19,6 @@ export class Game implements IGame {
   private static readonly DEFAULT_SPEED = 0;
   private static readonly DEFAULT_MAX_SPEED = 3;
   private static readonly CHANCE_TO_SPAWN_GROUNDENEMY = 0.5;
-  enemies: IEnemy[];
 
   constructor({ width, height }: CanvasDimensions) {
     this.width = width;
@@ -23,6 +31,7 @@ export class Game implements IGame {
     this.input = new InputHandler(this);
     this.UI = new UI(this);
     this.enemies = [];
+    this.particles = [];
     this.enemyTimer = 0;
     this.enemyInterval = 1000;
     this.debug = true;
@@ -46,6 +55,8 @@ export class Game implements IGame {
   background: IBackground;
   player: IPlayer;
   input: IInputHandler;
+  particles: IParticle[];
+  enemies: IEnemy[];
 
   update(deltaTime: number) {
     this.background.update();
@@ -60,6 +71,13 @@ export class Game implements IGame {
       enemy.update(deltaTime);
       if (enemy.markedForDeletion) this.enemies = this.enemies.filter((enemy) => !enemy.markedForDeletion);
     });
+    // handle particles
+    this.particles.forEach((particle) => {
+      particle.update();
+      if (particle.markedForDelection)
+        this.particles = this.particles.filter((particle) => !particle.markedForDelection);
+    });
+    console.log(this.particles);
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
@@ -68,6 +86,7 @@ export class Game implements IGame {
     this.enemies.forEach((enemy) => {
       enemy.draw(ctx);
     });
+    this.particles.forEach((particle) => particle.draw(ctx));
     this.UI.draw(ctx);
   }
 
