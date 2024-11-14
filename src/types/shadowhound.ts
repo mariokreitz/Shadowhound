@@ -79,10 +79,10 @@ export interface IInputHandler {
 
 export interface IState {
   state: string;
+  game: IGame;
 }
 
 export interface IStateAction extends IState {
-  player: IPlayer;
   enter(): void;
   handleInput(input: string[]): void;
 }
@@ -123,6 +123,17 @@ export interface IUI {
   fontSize: number;
   fontFamily: string;
   draw(ctx: CanvasRenderingContext2D): void;
+}
+
+export interface IParticle {
+  game: IGame;
+  x: number;
+  y: number;
+  speedX: number;
+  speedY: number;
+  size: number;
+  markedForDelection: boolean;
+  update(): void;
 }
 
 export type CanvasDimensions = {
