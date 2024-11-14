@@ -1,4 +1,5 @@
 import { IGame, IParticle } from "../types/shadowhound";
+import { getImage } from "../utils/misc";
 
 class Particle implements IParticle {
   constructor(game: IGame) {
@@ -50,4 +51,34 @@ export class Dust extends Particle {
 
 export class Splash extends Particle {}
 
-export class Fire extends Particle {}
+export class Fire extends Particle {
+  constructor(game: IGame, x: number, y: number) {
+    super(game);
+    this.image = getImage("fire");
+    this.size = Math.random() * 100 + 100;
+    this.x = x;
+    this.y = y;
+    this.speedX = 1;
+    this.speedY = 1;
+    this.angle = 0;
+    this.va = Math.random() * 0.2 - 0.1;
+  }
+
+  angle: number;
+  va: number;
+  image: HTMLImageElement;
+
+  update() {
+    super.update();
+    this.angle += this.va;
+    this.x += Math.sin(this.angle * 10);
+  }
+
+  draw(ctx: CanvasRenderingContext2D): void {
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.angle);
+    ctx.drawImage(this.image, -this.size * 0.5, -this.size * 0.5, this.size, this.size);
+    ctx.restore();
+  }
+}
