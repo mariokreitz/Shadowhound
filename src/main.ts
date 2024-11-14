@@ -10,7 +10,7 @@ window.addEventListener("load", function () {
   const { canvas, ctx } = getCanvasAndContext("canvas1") || { canvas: undefined, ctx: undefined };
   if (!canvas || !ctx) return;
 
-  canvas.width = 800;
+  canvas.width = 900;
   canvas.height = 500;
 
   const game = new Game(canvas);
