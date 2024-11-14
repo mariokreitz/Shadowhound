@@ -14,7 +14,9 @@ export interface IGame {
   player: IPlayer;
   input: IInputHandler;
   particles: IParticle[];
+  maxParticles: number;
   enemies: IEnemy[];
+  collisions: ICollisionAnimation[];
   update(deltaTime: number): void;
   draw(ctx: CanvasRenderingContext2D): void;
 }
@@ -137,6 +139,22 @@ export interface IParticle {
   markedForDelection: boolean;
   update(): void;
   draw(ctx: CanvasRenderingContext2D): void;
+}
+
+export interface ICollisionAnimation extends IAnimations {
+  game: IGame;
+  image: HTMLImageElement;
+  spriteWidth: number;
+  spriteHeight: number;
+  sizeModifier: number;
+  width: number;
+  height: number;
+  y: number;
+  x: number;
+  maxFrame: number;
+  markedForDelection: boolean;
+  draw(ctx: CanvasRenderingContext2D): void;
+  update(deltaTime: number): void;
 }
 
 export type CanvasDimensions = {
