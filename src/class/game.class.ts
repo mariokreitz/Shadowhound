@@ -1,8 +1,9 @@
-import { IGame, IPlayer, IInputHandler, CanvasDimensions, IBackground, IEnemy } from "./../types/shadowhound";
+import { IGame, IPlayer, IInputHandler, CanvasDimensions, IBackground, IEnemy, IUI } from "./../types/shadowhound";
 import { Background } from "./background.class";
 import { InputHandler } from "./input.class";
 import { Player } from "./player.class";
 import { FlyingEnemy, ClimbingEnemy, GroundEnemy } from "./enemies.class";
+import { UI } from "./UI.class";
 
 export class Game implements IGame {
   private static readonly DEFAULT_GROUNDMARGIN = 80;
@@ -20,13 +21,19 @@ export class Game implements IGame {
     this.background = new Background(this);
     this.player = new Player(this);
     this.input = new InputHandler(this);
+    this.UI = new UI(this);
     this.enemies = [];
     this.enemyTimer = 0;
     this.enemyInterval = 1000;
     this.debug = true;
+    this.score = 0;
+    this.fontColor = "black";
   }
 
+  UI: IUI;
   debug: boolean;
+  score: number;
+  fontColor: string;
   width: number;
   height: number;
   groundMargin: number;
@@ -59,6 +66,7 @@ export class Game implements IGame {
     this.enemies.forEach((enemy) => {
       enemy.draw(ctx);
     });
+    this.UI.draw(ctx);
   }
 
   addEnemy() {
