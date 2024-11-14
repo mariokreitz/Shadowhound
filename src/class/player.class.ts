@@ -1,6 +1,7 @@
 import { getImage } from "../utils/misc";
 import { IGame, IPlayer, IStateAction } from "../types/shadowhound";
 import { Sitting, Running, Jumping, Falling, Rolling, Diving, Hit } from "./playerState.class";
+import { CollisionAnimation } from "./collisionAnimation.class";
 
 export class Player implements IPlayer {
   private static readonly DEFAULT_WEIGHT = 1;
@@ -118,6 +119,9 @@ export class Player implements IPlayer {
         enemy.y + enemy.height > this.y
       ) {
         enemy.markedForDeletion = true;
+        this.game.collisions.push(
+          new CollisionAnimation(this.game, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5)
+        );
         if (this.currentState === this.states[4] || this.currentState === this.states[5]) this.game.score++;
         else {
           this.setState(6, 0);
