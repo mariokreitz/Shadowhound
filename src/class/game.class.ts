@@ -8,6 +8,7 @@ import {
   IUI,
   IParticle,
   ICollisionAnimation,
+  IFloatingMessage,
 } from "./../types/shadowhound";
 import { Background } from "./background.class";
 import { InputHandler } from "./input.class";
@@ -39,6 +40,7 @@ export class Game implements IGame {
     this.enemies = [];
     this.particles = [];
     this.collisions = [];
+    this.floatingMessages = [];
     this.enemyTimer = 0;
     this.enemyInterval = 1000;
     this.debug = false;
@@ -76,6 +78,7 @@ export class Game implements IGame {
   maxParticles: number;
   enemies: IEnemy[];
   collisions: ICollisionAnimation[];
+  floatingMessages: IFloatingMessage[];
 
   update(deltaTime: number) {
     this.time += deltaTime;
@@ -88,23 +91,21 @@ export class Game implements IGame {
       this.enemyTimer = 0;
     } else this.enemyTimer += deltaTime;
 
-    this.enemies.forEach((enemy) => {
-      enemy.update(deltaTime);
-      if (enemy.markedForDeletion) this.enemies = this.enemies.filter((enemy) => !enemy.markedForDeletion);
-    });
+    this.enemies.forEach((enemy) => enemy.update(deltaTime));
+    // handle messages
+    this.floatingMessages.forEach((message) => message.update());
+
     // handle particles
-    this.particles.forEach((particle) => {
-      particle.update();
-      if (particle.markedForDelection)
-        this.particles = this.particles.filter((particle) => !particle.markedForDelection);
-    });
+    this.particles.forEach((particle) => particle.update());
     if (this.particles.length > this.maxParticles) this.particles = this.particles.slice(0, this.maxParticles);
     // handle collision sprites
-    this.collisions.forEach((collision) => {
-      collision.update(deltaTime);
-      if (collision.markedForDelection)
-        this.collisions = this.collisions.filter((collision) => !collision.markedForDelection);
-    });
+    this.collisions.forEach((collision) => collision.update(deltaTime));
+
+    // handle filter for arrays
+    this.enemies = this.enemies.filter((enemy) => !enemy.markedForDeletion);
+    this.particles = this.particles.filter((particle) => !particle.markedForDelection);
+    this.collisions = this.collisions.filter((collision) => !collision.markedForDelection);
+    this.floatingMessages = this.floatingMessages.filter((message) => !message.markedForDeletion);
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
@@ -115,6 +116,7 @@ export class Game implements IGame {
     });
     this.particles.forEach((particle) => particle.draw(ctx));
     this.collisions.forEach((collision) => collision.draw(ctx));
+    this.floatingMessages.forEach((message) => message.draw(ctx));
     this.UI.draw(ctx);
   }
 
