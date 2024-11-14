@@ -1,5 +1,5 @@
 import { IStateAction, IState, IGame } from "../types/shadowhound";
-import { Dust, Fire } from "./particles.class";
+import { Dust, Fire, Splash } from "./particles.class";
 
 enum states {
   SITTING = 0,
@@ -77,6 +77,7 @@ export class Jumping extends State implements IStateAction {
   handleInput(input: string[]) {
     if (this.game.player.vy > this.game.player.weight) this.game.player.setState(states.FALLING, 1);
     else if (input.includes("Enter")) this.game.player.setState(states.ROLLING, 2);
+    else if (input.includes("ArrowDown")) this.game.player.setState(states.DIVING, 0);
   }
 }
 
@@ -91,8 +92,9 @@ export class Falling extends State implements IStateAction {
     this.game.player.frameY = 2;
   }
 
-  handleInput() {
+  handleInput(input: string[]) {
     if (this.game.player.onGround()) this.game.player.setState(states.RUNNING, 1);
+    else if (input.includes("ArrowDown")) this.game.player.setState(states.DIVING, 0);
   }
 }
 
@@ -119,5 +121,59 @@ export class Rolling extends State implements IStateAction {
     else if (!input.includes("Enter") && !this.game.player.onGround()) this.game.player.setState(states.FALLING, 1);
     else if (input.includes("Enter") && input.includes("ArrowUp") && this.game.player.onGround())
       this.game.player.setState(states.JUMPING, 1);
+    else if (input.includes("ArrowDown")) this.game.player.setState(states.DIVING, 0);
+  }
+}
+
+export class Diving extends State implements IStateAction {
+  constructor(game: IGame) {
+    super("DIVING", game);
+  }
+
+  enter() {
+    this.game.player.frameX = 0;
+    this.game.player.maxFrame = 6;
+    this.game.player.frameY = 6;
+    this.game.player.vy = 15;
+  }
+
+  handleInput(input: string[]) {
+    this.game.particles.unshift(
+      new Fire(
+        this.game,
+        this.game.player.x + this.game.player.width * 0.5,
+        this.game.player.y + this.game.player.height * 0.5
+      )
+    );
+    if (this.game.player.onGround()) {
+      this.game.player.setState(states.RUNNING, 1);
+      for (let i = 0; i < 30; i++) {
+        this.game.particles.unshift(
+          new Splash(
+            this.game,
+            this.game.player.x + this.game.player.width * 0.5,
+            this.game.player.y + this.game.player.height
+          )
+        );
+      }
+    } else if (input.includes("Enter") && this.game.player.onGround()) this.game.player.setState(states.ROLLING, 2);
+  }
+}
+
+export class Hit extends State implements IStateAction {
+  constructor(game: IGame) {
+    super("HIT", game);
+  }
+
+  enter() {
+    this.game.player.frameX = 0;
+    this.game.player.maxFrame = 10;
+    this.game.player.frameY = 4;
+  }
+
+  handleInput(input: string[]) {
+    if (this.game.player.frameX >= 10 && this.game.player.onGround()) this.game.player.setState(states.RUNNING, 1);
+    else if (this.game.player.frameX >= 10 && !this.game.player.onGround())
+      this.game.player.setState(states.FALLING, 1);
   }
 }
