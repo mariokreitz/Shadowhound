@@ -19,6 +19,7 @@ export class Game implements IGame {
   private static readonly DEFAULT_SPEED = 0;
   private static readonly DEFAULT_MAX_SPEED = 3;
   private static readonly CHANCE_TO_SPAWN_GROUNDENEMY = 0.5;
+  private static readonly DEFAULT_MAX_PARTICLES = 200;
 
   constructor({ width, height }: CanvasDimensions) {
     this.width = width;
@@ -39,6 +40,7 @@ export class Game implements IGame {
     this.fontColor = "black";
     this.player.currentState = this.player.states[0];
     this.player.currentState.enter();
+    this.maxParticles = Game.DEFAULT_MAX_PARTICLES;
   }
 
   UI: IUI;
@@ -56,6 +58,7 @@ export class Game implements IGame {
   player: IPlayer;
   input: IInputHandler;
   particles: IParticle[];
+  maxParticles: number;
   enemies: IEnemy[];
 
   update(deltaTime: number) {
@@ -77,7 +80,7 @@ export class Game implements IGame {
       if (particle.markedForDelection)
         this.particles = this.particles.filter((particle) => !particle.markedForDelection);
     });
-    console.log(this.particles);
+    if (this.particles.length > this.maxParticles) this.particles = this.particles.slice(0, this.maxParticles);
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
