@@ -16,13 +16,14 @@ import { FlyingEnemy, ClimbingEnemy, GroundEnemy } from "./enemies.class";
 import { UI } from "./UI.class";
 
 export class Game implements IGame {
-  private static readonly DEFAULT_GROUNDMARGIN = 80;
+  private static readonly DEFAULT_GROUNDMARGIN = 40;
   private static readonly DEFAULT_SPEED = 0;
   private static readonly DEFAULT_MAX_SPEED = 3;
   private static readonly CHANCE_TO_SPAWN_GROUNDENEMY = 0.5;
   private static readonly DEFAULT_MAX_PARTICLES = 200;
   private static readonly DEFAULT_NEED_SCORE = 40;
-  private static readonly DEFAULT_MAX_TIME = 200000;
+  private static readonly DEFAULT_MAX_TIME = 30000;
+  private static readonly DEFAULT_LIVES = 5;
 
   constructor({ width, height }: CanvasDimensions) {
     this.width = width;
@@ -34,6 +35,7 @@ export class Game implements IGame {
     this.player = new Player(this);
     this.input = new InputHandler(this);
     this.UI = new UI(this);
+    this.lives = Game.DEFAULT_LIVES;
     this.enemies = [];
     this.particles = [];
     this.collisions = [];
@@ -52,6 +54,7 @@ export class Game implements IGame {
   }
 
   UI: IUI;
+  lives: number;
   debug: boolean;
   score: number;
   minScore: number;
