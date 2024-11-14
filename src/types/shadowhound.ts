@@ -2,6 +2,7 @@ export interface IGame {
   UI: IUI;
   debug: boolean;
   score: number;
+  minScore: number;
   fontColor: string;
   width: number;
   height: number;
@@ -9,7 +10,10 @@ export interface IGame {
   speed: number;
   maxSpeed: number;
   enemyTimer: number;
+  gameOver: boolean;
   enemyInterval: number;
+  time: number;
+  maxTime: number;
   background: IBackground;
   player: IPlayer;
   input: IInputHandler;
