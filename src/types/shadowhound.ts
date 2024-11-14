@@ -1,4 +1,8 @@
 export interface IGame {
+  UI: IUI;
+  enemies: IEnemy[];
+  score: number;
+  fontColor: string;
   debug: boolean;
   width: number;
   height: number;
@@ -112,6 +116,13 @@ export interface IBackground {
   backgroundLayers: ILayer[];
   draw(ctx: CanvasRenderingContext2D): void;
   update(): void;
+}
+
+export interface IUI {
+  game: IGame;
+  fontSize: number;
+  fontFamily: string;
+  draw(ctx: CanvasRenderingContext2D): void;
 }
 
 export type CanvasDimensions = {
