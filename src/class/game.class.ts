@@ -21,6 +21,8 @@ export class Game implements IGame {
   private static readonly DEFAULT_MAX_SPEED = 3;
   private static readonly CHANCE_TO_SPAWN_GROUNDENEMY = 0.5;
   private static readonly DEFAULT_MAX_PARTICLES = 200;
+  private static readonly DEFAULT_NEED_SCORE = 40;
+  private static readonly DEFAULT_MAX_TIME = 200000;
 
   constructor({ width, height }: CanvasDimensions) {
     this.width = width;
@@ -39,7 +41,11 @@ export class Game implements IGame {
     this.enemyInterval = 1000;
     this.debug = false;
     this.score = 0;
+    this.minScore = Game.DEFAULT_NEED_SCORE;
     this.fontColor = "black";
+    this.time = 0;
+    this.maxTime = Game.DEFAULT_MAX_TIME;
+    this.gameOver = false;
     this.player.currentState = this.player.states[0];
     this.player.currentState.enter();
     this.maxParticles = Game.DEFAULT_MAX_PARTICLES;
@@ -48,6 +54,7 @@ export class Game implements IGame {
   UI: IUI;
   debug: boolean;
   score: number;
+  minScore: number;
   fontColor: string;
   width: number;
   height: number;
@@ -56,6 +63,9 @@ export class Game implements IGame {
   maxSpeed: number;
   enemyTimer: number;
   enemyInterval: number;
+  time: number;
+  maxTime: number;
+  gameOver: boolean;
   background: IBackground;
   player: IPlayer;
   input: IInputHandler;
@@ -65,6 +75,8 @@ export class Game implements IGame {
   collisions: ICollisionAnimation[];
 
   update(deltaTime: number) {
+    this.time += deltaTime;
+    if (this.time > this.maxTime) this.gameOver = true;
     this.background.update();
     this.player.update(this.input.keys, deltaTime);
     // handle enemies
