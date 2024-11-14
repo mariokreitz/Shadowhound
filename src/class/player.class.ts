@@ -26,9 +26,14 @@ export class Player implements IPlayer {
     this.maxFrame = 0;
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
-    this.states = [new Sitting(this), new Running(this), new Jumping(this), new Falling(this), new Rolling(this)];
+    this.states = [
+      new Sitting(this.game),
+      new Running(this.game),
+      new Jumping(this.game),
+      new Falling(this.game),
+      new Rolling(this.game),
+    ];
     this.currentState = this.states[0];
-    this.currentState.enter();
   }
 
   game: IGame;
