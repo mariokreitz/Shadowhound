@@ -9,7 +9,7 @@ window.addEventListener("load", function () {
   const { canvas, ctx } = getCanvasAndContext("canvas1") || { canvas: undefined, ctx: undefined };
   if (!canvas || !ctx) return;
 
-  canvas.width = 500;
+  canvas.width = 800;
   canvas.height = 500;
 
   const game = new Game(canvas);
@@ -21,7 +21,7 @@ window.addEventListener("load", function () {
     ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
     game.update(deltaTime);
     game.draw(ctx!);
-    requestAnimationFrame(animate);
+    if (!game.gameOver) requestAnimationFrame(animate);
   }
 
   animate(0);
