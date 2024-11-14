@@ -1,4 +1,5 @@
-import { IPlayer, IStateAction, IState } from "../types/shadowhound";
+import { IStateAction, IState, IGame } from "../types/shadowhound";
+import { Dust } from "./particles.class";
 
 enum states {
   SITTING = 0,
@@ -11,106 +12,98 @@ enum states {
 }
 
 class State implements IState {
-  constructor(state: string) {
+  constructor(state: string, game: IGame) {
     this.state = state;
+    this.game = game;
   }
   state: string;
+  game: IGame;
 }
 
 export class Sitting extends State implements IStateAction {
-  player: IPlayer;
-  constructor(player: IPlayer) {
-    super("SITTING");
-    this.player = player;
+  constructor(game: IGame) {
+    super("SITTING", game);
   }
 
   enter() {
-    this.player.frameX = 0;
-    this.player.maxFrame = 4;
-    this.player.frameY = 5;
+    this.game.player.frameX = 0;
+    this.game.player.maxFrame = 4;
+    this.game.player.frameY = 5;
   }
 
   handleInput(input: string[]) {
-    if (input.includes("ArrowLeft") || input.includes("ArrowRight")) this.player.setState(states.RUNNING, 1);
-    else if (input.includes("Enter")) this.player.setState(states.ROLLING, 2);
+    if (input.includes("ArrowLeft") || input.includes("ArrowRight")) this.game.player.setState(states.RUNNING, 1);
+    else if (input.includes("Enter")) this.game.player.setState(states.ROLLING, 2);
   }
 }
 
 export class Running extends State implements IStateAction {
-  player: IPlayer;
-  constructor(player: IPlayer) {
-    super("RUNNING");
-    this.player = player;
+  constructor(game: IGame) {
+    super("RUNNING", game);
   }
 
   enter() {
-    this.player.frameX = 0;
-    this.player.maxFrame = 8;
-    this.player.frameY = 3;
+    this.game.player.frameX = 0;
+    this.game.player.maxFrame = 8;
+    this.game.player.frameY = 3;
   }
 
   handleInput(input: string[]) {
-    if (input.includes("ArrowDown")) this.player.setState(states.SITTING, 0);
-    else if (input.includes("ArrowUp")) this.player.setState(states.JUMPING, 1);
-    else if (input.includes("Enter")) this.player.setState(states.ROLLING, 2);
+    if (input.includes("ArrowDown")) this.game.player.setState(states.SITTING, 0);
+    else if (input.includes("ArrowUp")) this.game.player.setState(states.JUMPING, 1);
+    else if (input.includes("Enter")) this.game.player.setState(states.ROLLING, 2);
   }
 }
 
 export class Jumping extends State implements IStateAction {
-  player: IPlayer;
-  constructor(player: IPlayer) {
-    super("JUMPING");
-    this.player = player;
+  constructor(game: IGame) {
+    super("JUMPING", game);
   }
 
   enter() {
-    if (this.player.onGround()) this.player.vy -= this.player.jumpForce;
-    this.player.frameX = 0;
-    this.player.maxFrame = 6;
-    this.player.frameY = 1;
+    if (this.game.player.onGround()) this.game.player.vy -= this.game.player.jumpForce;
+    this.game.player.frameX = 0;
+    this.game.player.maxFrame = 6;
+    this.game.player.frameY = 1;
   }
 
   handleInput(input: string[]) {
-    if (this.player.vy > this.player.weight) this.player.setState(states.FALLING, 1);
-    else if (input.includes("Enter")) this.player.setState(states.ROLLING, 2);
+    if (this.game.player.vy > this.game.player.weight) this.game.player.setState(states.FALLING, 1);
+    else if (input.includes("Enter")) this.game.player.setState(states.ROLLING, 2);
   }
 }
 
 export class Falling extends State implements IStateAction {
-  player: IPlayer;
-  constructor(player: IPlayer) {
-    super("FALLING");
-    this.player = player;
+  constructor(game: IGame) {
+    super("FALLING", game);
   }
 
   enter() {
-    this.player.frameX = 0;
-    this.player.maxFrame = 6;
-    this.player.frameY = 2;
+    this.game.player.frameX = 0;
+    this.game.player.maxFrame = 6;
+    this.game.player.frameY = 2;
   }
 
   handleInput() {
-    if (this.player.onGround()) this.player.setState(states.RUNNING, 1);
+    if (this.game.player.onGround()) this.game.player.setState(states.RUNNING, 1);
   }
 }
 
 export class Rolling extends State implements IStateAction {
-  player: IPlayer;
-  constructor(player: IPlayer) {
-    super("ROLLING");
-    this.player = player;
+  constructor(game: IGame) {
+    super("ROLLING", game);
   }
 
   enter() {
-    this.player.frameX = 0;
-    this.player.maxFrame = 6;
-    this.player.frameY = 6;
+    this.game.player.frameX = 0;
+    this.game.player.maxFrame = 6;
+    this.game.player.frameY = 6;
   }
 
   handleInput(input: string[]) {
-    if (!input.includes("Enter") && this.player.onGround()) this.player.setState(states.RUNNING, 1);
-    else if (!input.includes("Enter") && !this.player.onGround()) this.player.setState(states.FALLING, 1);
-    else if (input.includes("Enter") && input.includes("ArrowUp") && this.player.onGround())
-      this.player.setState(states.JUMPING, 1);
+    if (!input.includes("Enter") && this.game.player.onGround()) this.game.player.setState(states.RUNNING, 1);
+    else if (!input.includes("Enter") && !this.game.player.onGround()) this.game.player.setState(states.FALLING, 1);
+    else if (input.includes("Enter") && input.includes("ArrowUp") && this.game.player.onGround())
+      this.game.player.setState(states.JUMPING, 1);
   }
 }
