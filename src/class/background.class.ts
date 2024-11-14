@@ -52,28 +52,28 @@ export class Background implements IBackground {
       game: this.game,
       width: this.width,
       height: this.height,
-      speedModifier: 0.2,
+      speedModifier: 0.1,
       image: this.layer2Image,
     });
     this.layer3 = new Layer({
       game: this.game,
       width: this.width,
       height: this.height,
-      speedModifier: 0.4,
+      speedModifier: 0.2,
       image: this.layer3Image,
     });
     this.layer4 = new Layer({
       game: this.game,
       width: this.width,
       height: this.height,
-      speedModifier: 0.8,
+      speedModifier: 0.4,
       image: this.layer4Image,
     });
     this.layer5 = new Layer({
       game: this.game,
       width: this.width,
       height: this.height,
-      speedModifier: 1,
+      speedModifier: 0.8,
       image: this.layer5Image,
     });
     this.backgroundLayers = [this.layer1, this.layer2, this.layer3, this.layer4, this.layer5];
