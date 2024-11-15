@@ -130,7 +130,7 @@ export class Player implements IPlayer {
         } else {
           this.setState(6, 0);
           this.game.lives--;
-          if (this.game.lives <= 0) this.game.gameOver = true;
+          if (this.game.lives <= 0) this.game.isGameOver = true;
         }
       }
     });
