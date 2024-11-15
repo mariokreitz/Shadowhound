@@ -2,7 +2,6 @@ import {
   IGame,
   IPlayer,
   IInputHandler,
-  CanvasDimensions,
   IBackground,
   IEnemy,
   IUI,
@@ -23,12 +22,13 @@ export class Game implements IGame {
   private static readonly CHANCE_TO_SPAWN_GROUNDENEMY = 0.5;
   private static readonly DEFAULT_MAX_PARTICLES = 200;
   private static readonly DEFAULT_NEED_SCORE = 40;
-  private static readonly DEFAULT_MAX_TIME = 30000;
+  private static readonly DEFAULT_MAX_TIME = 60000;
   private static readonly DEFAULT_LIVES = 5;
 
-  constructor({ width, height }: CanvasDimensions) {
+  constructor(width: number, height: number, ctx: CanvasRenderingContext2D) {
     this.width = width;
     this.height = height;
+    this.ctx = ctx;
     this.groundMargin = Game.DEFAULT_GROUNDMARGIN;
     this.speed = Game.DEFAULT_SPEED;
     this.maxSpeed = Game.DEFAULT_MAX_SPEED;
@@ -49,6 +49,7 @@ export class Game implements IGame {
     this.fontColor = "black";
     this.time = 0;
     this.maxTime = Game.DEFAULT_MAX_TIME;
+    this.lastTime = 0;
     this.gameOver = false;
     this.player.currentState = this.player.states[0];
     this.player.currentState.enter();
@@ -63,6 +64,7 @@ export class Game implements IGame {
   fontColor: string;
   width: number;
   height: number;
+  ctx: CanvasRenderingContext2D;
   groundMargin: number;
   speed: number;
   maxSpeed: number;
@@ -71,6 +73,7 @@ export class Game implements IGame {
   time: number;
   maxTime: number;
   gameOver: boolean;
+  lastTime: number;
   background: IBackground;
   player: IPlayer;
   input: IInputHandler;
@@ -124,5 +127,18 @@ export class Game implements IGame {
     if (this.speed > 0 && Math.random() < Game.CHANCE_TO_SPAWN_GROUNDENEMY) this.enemies.push(new GroundEnemy(this));
     else if (this.speed > 0) this.enemies.push(new ClimbingEnemy(this));
     this.enemies.push(new FlyingEnemy(this));
+  }
+
+  start() {
+    this.animate(0);
+  }
+
+  animate(timestamp: number) {
+    const deltaTime = timestamp - this.lastTime;
+    this.lastTime = timestamp;
+    this.ctx.clearRect(0, 0, this.width, this.height);
+    this.update(deltaTime);
+    this.draw(this.ctx);
+    if (!this.gameOver) requestAnimationFrame(this.animate.bind(this));
   }
 }
