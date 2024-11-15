@@ -2,6 +2,55 @@ body {
   min-height: 100vh;
 }
 
+#main-menu {
+  min-height: inherit;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  font-family: "Creepster";
+}
+
+#game-menu {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#game-title {
+  font-size: 80px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 1), -1px -1px 2px rgba(255, 255, 255, 1),
+    1px -1px 2px rgba(255, 255, 255, 1), -1px 1px 2px rgba(255, 255, 255, 1);
+}
+
+#start-btn,
+#help-btn {
+  font-size: 44px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), -1px -1px 2px rgba(0, 0, 0, 1), 1px -1px 2px rgba(0, 0, 0, 1),
+    -1px 1px 2px rgba(0, 0, 0, 1);
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 10px;
+  padding: 10px 40px;
+  color: white;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#start-btn:hover,
+#help-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
 #canvas1 {
   position: absolute;
   top: 50%;
@@ -9,10 +58,7 @@ body {
   transform: translate(-50%, -50%);
   max-width: 100%;
   max-height: 100%;
-}
-
-.d_none {
-  display: none;
+  z-index: -1;
 }
 
 @media (max-width: 599px) and (orientation: portrait), (max-width: 899px) and (orientation: landscape) {
