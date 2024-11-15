@@ -11,7 +11,7 @@ export function hideLoadingScreen(loadingElementID: string): void {
     return;
   }
 
-  loadingElement.classList.add("d_none");
+  loadingElement.style.display = loadingElement.style.display === "none" ? "" : "none";
 }
 
 /**
@@ -55,4 +55,33 @@ export function getImage(playerID: string): HTMLImageElement {
   return playerImage;
 }
 
-export function toggleMenu(menuID: string): void {}
+/**
+ * Toggles the display of a menu element with the given ID in the DOM.
+ * @param {string} menuId - The ID of the menu element to toggle.
+ */
+export function toggleMenu(menuId: string): void {
+  const menuElement = document.getElementById(menuId);
+
+  if (!menuElement) {
+    showError(menuId);
+    return;
+  }
+
+  menuElement.style.display = menuElement.style.display === "none" ? "" : "none";
+}
+
+/**
+ * Retrieves the start and help button elements from the DOM.
+ * @returns An object containing the start and help buttons as HTMLElements, or undefined if any button is not found.
+ */
+export function getMenuElements(): { startBtn: HTMLElement; helpBtn: HTMLElement } | undefined {
+  const startElement = document.getElementById("start-btn");
+  const helpElement = document.getElementById("help-btn");
+
+  if (!startElement || !helpElement) {
+    showError("<start | help>Btn");
+    return;
+  }
+
+  return { startBtn: startElement, helpBtn: helpElement };
+}
