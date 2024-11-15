@@ -16,7 +16,7 @@
         left: 50%;
         transform: translate(-50%, -50%);
         background-color: rgba(0, 0, 0, 0.7);
-        padding: 10px 30px;
+        padding: 20px 30px;
         border-radius: 10px;
         color: white;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
@@ -33,14 +33,20 @@
         height: 100vh;
         object-fit: cover;
         transform: translate(-50%, -50%);
-        z-index: -1;
+        z-index: -9999;
       "
-      id="background_page"
+      id="background-page"
       src="./img/background/background_page.jpg"
       alt="background_page"
       loading="eager" />
 
-    <header class="heading"></header>
+    <div id="main-menu" style="display: none">
+      <h1 id="game-title">Shadowhound</h1>
+      <div id="game-menu">
+        <button id="start-btn">Start Game</button>
+        <button id="help-btn">Help</button>
+      </div>
+    </div>
 
     <canvas id="canvas1"></canvas>
 
@@ -51,11 +57,11 @@
     <img style="display: none" id="layer-3" src="./img/background/forest/layer-3.png" alt="layer-3" />
     <img style="display: none" id="layer-4" src="./img/background/forest/layer-4.png" alt="layer-4" />
     <img style="display: none" id="layer-5" src="./img/background/forest/layer-5.png" alt="layer-5" />
-    <img style="display: none" id="enemy_fly" src="./img/enemies/flying/enemy_fly.png" alt="enemy_fly" />
-    <img style="display: none" id="enemy_plant" src="./img/enemies/ground/enemy_plant.png" alt="enemy_plant" />
+    <img style="display: none" id="enemy-fly" src="./img/enemies/flying/enemy_fly.png" alt="enemy_fly" />
+    <img style="display: none" id="enemy-plant" src="./img/enemies/ground/enemy_plant.png" alt="enemy_plant" />
     <img
       style="display: none"
-      id="enemy_spider_big"
+      id="enemy-spider-big"
       src="./img/enemies/ceiling/enemy_spider_big.png"
       alt="enemy_spider_big" />
     <img style="display: none" id="fire" src="./img/particles/fire.png" alt="fire" />
