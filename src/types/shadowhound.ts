@@ -7,14 +7,16 @@ export interface IGame {
   fontColor: string;
   width: number;
   height: number;
+  ctx: CanvasRenderingContext2D;
   groundMargin: number;
   speed: number;
   maxSpeed: number;
   enemyTimer: number;
-  gameOver: boolean;
   enemyInterval: number;
   time: number;
   maxTime: number;
+  gameOver: boolean;
+  lastTime: number;
   background: IBackground;
   player: IPlayer;
   input: IInputHandler;
@@ -25,6 +27,9 @@ export interface IGame {
   floatingMessages: IFloatingMessage[];
   update(deltaTime: number): void;
   draw(ctx: CanvasRenderingContext2D): void;
+  addEnemy(): void;
+  start(): void;
+  animate(timestamp: number): void;
 }
 
 interface IAnimations {
@@ -175,15 +180,6 @@ export interface IFloatingMessage {
   update(): void;
   draw(ctx: CanvasRenderingContext2D): void;
 }
-
-export type CanvasDimensions = {
-  width: number;
-  height: number;
-};
-
-export type CurrentState = {
-  state: string;
-};
 
 export type BackgroundConstructorParams = {
   game: IGame;
