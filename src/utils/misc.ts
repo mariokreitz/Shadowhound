@@ -54,3 +54,5 @@ export function getImage(playerID: string): HTMLImageElement {
 
   return playerImage;
 }
+
+export function toggleMenu(menuID: string): void {}
