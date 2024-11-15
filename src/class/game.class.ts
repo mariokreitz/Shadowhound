@@ -50,7 +50,7 @@ export class Game implements IGame {
     this.time = 0;
     this.maxTime = Game.DEFAULT_MAX_TIME;
     this.lastTime = 0;
-    this.gameOver = false;
+    this.isGameOver = false;
     this.player.currentState = this.player.states[0];
     this.player.currentState.enter();
     this.maxParticles = Game.DEFAULT_MAX_PARTICLES;
@@ -72,7 +72,7 @@ export class Game implements IGame {
   enemyInterval: number;
   time: number;
   maxTime: number;
-  gameOver: boolean;
+  isGameOver: boolean;
   lastTime: number;
   background: IBackground;
   player: IPlayer;
@@ -84,8 +84,9 @@ export class Game implements IGame {
   floatingMessages: IFloatingMessage[];
 
   update(deltaTime: number) {
-    this.time += deltaTime;
-    if (this.time > this.maxTime) this.gameOver = true;
+    // BUG: also shows the previous time
+    // this.time += deltaTime;
+    // if (this.time > this.maxTime) this.isGameOver = true;
     this.background.update();
     this.player.update(this.input.keys, deltaTime);
     // handle enemies
@@ -111,7 +112,7 @@ export class Game implements IGame {
     this.floatingMessages = this.floatingMessages.filter((message) => !message.markedForDeletion);
   }
 
-  draw(ctx: CanvasRenderingContext2D): void {
+  draw(ctx: CanvasRenderingContext2D, deltaTime: number): void {
     this.background.draw(ctx);
     this.player.draw(ctx);
     this.enemies.forEach((enemy) => {
@@ -120,7 +121,7 @@ export class Game implements IGame {
     this.particles.forEach((particle) => particle.draw(ctx));
     this.collisions.forEach((collision) => collision.draw(ctx));
     this.floatingMessages.forEach((message) => message.draw(ctx));
-    this.UI.draw(ctx);
+    this.UI.draw(ctx, deltaTime);
   }
 
   addEnemy() {
@@ -138,7 +139,7 @@ export class Game implements IGame {
     this.lastTime = timestamp;
     this.ctx.clearRect(0, 0, this.width, this.height);
     this.update(deltaTime);
-    this.draw(this.ctx);
-    if (!this.gameOver) requestAnimationFrame(this.animate.bind(this));
+    this.draw(this.ctx, deltaTime);
+    if (!this.isGameOver) requestAnimationFrame(this.animate.bind(this));
   }
 }
