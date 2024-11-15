@@ -74,7 +74,7 @@ export class FlyingEnemy extends Enemy implements IFlyingEnemy {
     this.speedX = Math.random() + 1;
     this.speedY = 0;
     this.maxFrame = 5;
-    this.image = getImage("enemy_fly");
+    this.image = getImage("enemy-fly");
     this.angle = 0;
     this.va = Math.random() * 0.1 + 0.1;
   }
@@ -96,7 +96,7 @@ export class GroundEnemy extends Enemy {
     this.height = 87;
     this.x = this.game.width;
     this.y = this.game.height - this.height - this.game.groundMargin;
-    this.image = getImage("enemy_plant");
+    this.image = getImage("enemy-plant");
     this.maxFrame = 1;
   }
 }
@@ -108,7 +108,7 @@ export class ClimbingEnemy extends Enemy implements IClimbingEnemy {
     this.height = 144;
     this.x = this.game.width;
     this.y = Math.random() * this.game.height * 0.5;
-    this.image = getImage("enemy_spider_big");
+    this.image = getImage("enemy-spider-big");
     this.speedY = Math.random() > 0.5 ? 1 : -1;
     this.maxFrame = 5;
   }
