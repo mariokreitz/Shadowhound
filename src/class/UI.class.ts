@@ -14,7 +14,7 @@ export class UI implements IUI {
   fontFamily: string;
   liveImage: HTMLImageElement;
 
-  draw(ctx: CanvasRenderingContext2D) {
+  draw(ctx: CanvasRenderingContext2D, deltaTime: number) {
     ctx.save();
     ctx.shadowOffsetX = 2;
     ctx.shadowOffsetY = 2;
@@ -25,15 +25,21 @@ export class UI implements IUI {
     ctx.fillStyle = this.game.fontColor;
     //score
     ctx.fillText(`Score: ${this.game.score}`, 20, 50);
+    // TODO: implement speedrun
     //timer
-    ctx.font = `${this.fontSize * 0.8}px ${this.fontFamily}`;
-    ctx.fillText(`Time: ${(this.game.time * 0.001).toFixed(1)}`, 20, 80);
+    // ctx.font = `${this.fontSize * 0.8}px ${this.fontFamily}`;
+    // ctx.fillText(`Time: ${(this.game.time * 0.001).toFixed(1)}`, 20, 80);
     // lives
     for (let index = 0; index < this.game.lives; index++) {
       ctx.drawImage(this.liveImage, 25 * index + 20, 95, 25, 25);
     }
+    //debug and fps
+    if (this.game.debug) {
+      ctx.font = `${this.fontSize * 0.8}px Arial`;
+      ctx.fillText(`FPS: ${Math.round(1000 / deltaTime)}`, this.game.width - 120, 40);
+    }
     //game over messages
-    if (this.game.gameOver) {
+    if (this.game.isGameOver) {
       ctx.textAlign = "center";
       ctx.font = `${this.fontSize * 2}px ${this.fontFamily}`;
       if (this.game.score > this.game.minScore) {
