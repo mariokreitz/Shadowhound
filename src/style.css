@@ -1,5 +1,8 @@
+body {
+  min-height: 100vh;
+}
+
 #canvas1 {
-  border: 5px solid black;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -8,13 +11,25 @@
   max-height: 100%;
 }
 
-#loading {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
 .d_none {
   display: none;
+}
+
+@media (max-width: 599px) and (orientation: portrait), (max-width: 899px) and (orientation: landscape) {
+  body {
+    min-height: 100dvh;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 899px) and (orientation: portrait),
+  (min-width: 900px) and (max-width: 1199px) and (orientation: landscape) {
+  body {
+    min-height: 100dvh;
+  }
+}
+
+@media (min-width: 900px) and (orientation: portrait), (min-width: 1200px) {
+  body {
+    min-height: 100dvh;
+  }
 }
