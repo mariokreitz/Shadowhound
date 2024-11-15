@@ -15,7 +15,7 @@ export interface IGame {
   enemyInterval: number;
   time: number;
   maxTime: number;
-  gameOver: boolean;
+  isGameOver: boolean;
   lastTime: number;
   background: IBackground;
   player: IPlayer;
@@ -26,7 +26,7 @@ export interface IGame {
   collisions: ICollisionAnimation[];
   floatingMessages: IFloatingMessage[];
   update(deltaTime: number): void;
-  draw(ctx: CanvasRenderingContext2D): void;
+  draw(ctx: CanvasRenderingContext2D, deltaTime: number): void;
   addEnemy(): void;
   start(): void;
   animate(timestamp: number): void;
@@ -138,7 +138,7 @@ export interface IUI {
   fontSize: number;
   fontFamily: string;
   liveImage: HTMLImageElement;
-  draw(ctx: CanvasRenderingContext2D): void;
+  draw(ctx: CanvasRenderingContext2D, deltaTime: number): void;
 }
 
 export interface IParticle {
