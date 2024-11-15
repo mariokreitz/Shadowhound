@@ -1,3 +1,8 @@
+/*
+ * This stylesheet is used to load the "Creepster" font, used in the Shadowhound game.
+ * The Creepster font is a free font, available for download at https://fonts.google.com/specimen/Creepster?preview.text_type=custom
+ */
+
 @font-face {
   font-family: "Creepster";
   src: url("./../fonts/Creepster-Regular.ttf") format("truetype");
