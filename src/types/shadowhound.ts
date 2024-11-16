@@ -25,6 +25,11 @@ export interface IGame {
   enemies: IEnemy[];
   collisions: ICollisionAnimation[];
   floatingMessages: IFloatingMessage[];
+  menuMusic: ISound;
+  menuHoverEffect: ISound;
+  menuClickEffect: ISound;
+  gameMusic: ISound;
+  gameEffect1: ISound;
   update(deltaTime: number): void;
   draw(ctx: CanvasRenderingContext2D, deltaTime: number): void;
   addEnemy(): void;
@@ -179,6 +184,14 @@ export interface IFloatingMessage {
   timer: number;
   update(): void;
   draw(ctx: CanvasRenderingContext2D): void;
+}
+
+export interface ISound {
+  audioFile: HTMLAudioElement;
+  volumeState: string[];
+  currentVolumeState: number;
+  start(): void;
+  stop(): void;
 }
 
 export type BackgroundConstructorParams = {
