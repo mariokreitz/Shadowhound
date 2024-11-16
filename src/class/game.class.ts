@@ -8,11 +8,13 @@ import {
   IParticle,
   ICollisionAnimation,
   IFloatingMessage,
+  ISound,
 } from "./../types/shadowhound";
 import { Background } from "./background.class";
 import { InputHandler } from "./input.class";
 import { Player } from "./player.class";
 import { FlyingEnemy, ClimbingEnemy, GroundEnemy } from "./enemies.class";
+import { GameEffect1, GameMusic, MenuMusic, MenuHoverEffect, MenuClickEffect } from "./sounds.class";
 import { UI } from "./UI.class";
 
 export class Game implements IGame {
@@ -36,6 +38,11 @@ export class Game implements IGame {
     this.player = new Player(this);
     this.input = new InputHandler(this);
     this.UI = new UI(this);
+    this.menuMusic = new MenuMusic();
+    this.menuHoverEffect = new MenuHoverEffect();
+    this.menuClickEffect = new MenuClickEffect();
+    this.gameMusic = new GameMusic();
+    this.gameEffect1 = new GameEffect1();
     this.lives = Game.DEFAULT_LIVES;
     this.enemies = [];
     this.particles = [];
@@ -82,11 +89,16 @@ export class Game implements IGame {
   enemies: IEnemy[];
   collisions: ICollisionAnimation[];
   floatingMessages: IFloatingMessage[];
+  menuMusic: ISound;
+  menuHoverEffect: ISound;
+  menuClickEffect: ISound;
+  gameMusic: ISound;
+  gameEffect1: ISound;
 
   update(deltaTime: number) {
-    // BUG: also shows the previous time
-    // this.time += deltaTime;
+    this.time += deltaTime;
     // if (this.time > this.maxTime) this.isGameOver = true;
+    this.gameEffect1.start();
     this.background.update();
     this.player.update(this.input.keys, deltaTime);
     // handle enemies
@@ -132,6 +144,8 @@ export class Game implements IGame {
 
   start() {
     this.animate(0);
+    this.menuMusic.stop();
+    this.gameMusic.start();
   }
 
   animate(timestamp: number) {
