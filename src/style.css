@@ -10,6 +10,7 @@ body {
   align-items: center;
   padding: 20px;
   font-family: "Creepster";
+  gap: 40px;
 }
 
 #game-menu {
@@ -21,6 +22,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 #game-title {
@@ -43,12 +46,54 @@ body {
   color: white;
   font-family: inherit;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 125ms;
 }
 
-#start-btn:hover,
-#help-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
+#help-btn:disabled {
+  cursor: not-allowed;
+}
+
+#volume-control,
+#sound-control {
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), -1px -1px 2px rgba(0, 0, 0, 1), 1px -1px 2px rgba(0, 0, 0, 1),
+    -1px 1px 2px rgba(0, 0, 0, 1);
+}
+
+#start-btn:not(:disabled):hover,
+#help-btn:not(:disabled):hover,
+#volume-control:not(:disabled):hover,
+#sound-control:not(:disabled):hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+#start-btn:not(:disabled):active,
+#help-btn:not(:disabled):active {
+  background: rgba(0, 0, 0, 0.3);
+  color: rgba(139, 0, 0, 1);
+}
+
+#controls {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.volume-control {
+  width: 44px;
+  height: 44px;
+}
+
+.volume-control svg {
+  width: 32px;
+  height: 32px;
 }
 
 #canvas1 {
@@ -59,6 +104,41 @@ body {
   max-width: 100%;
   max-height: 100%;
   z-index: -1;
+}
+
+#help-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#help-modal-content {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+}
+
+#help-modal-content h2 {
+  margin-top: 0;
+}
+
+#help-modal-close-btn {
+  background: none;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#help-modal-close-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 599px) and (orientation: portrait), (max-width: 899px) and (orientation: landscape) {
