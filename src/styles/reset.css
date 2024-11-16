@@ -36,6 +36,9 @@ html {
  */
 body {
   margin: 0;
+  user-select: none;
+  -moz-user-select: none;
+  -moz-user-select: none;
 }
 
 /**
