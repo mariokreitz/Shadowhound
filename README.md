@@ -96,15 +96,21 @@ Shadowhound is developed with:
 
 ## ⚠️ Missing Features (WIP)
 
-The following features are still under development and not yet available in this release (v1.0):
+The following features are still under development and not yet available in this release ![GitHub release (latest by date)](https://img.shields.io/github/v/release/mariokreitz/Shadowhound?label=version):
 
-- **Landing Page**: The landing page for the game is still being developed.
-- **Menu**: A main menu is not yet implemented.
-- **Sounds**: Sound effects and music will be added in future versions.
-- **Documentation**: More detailed documentation and guides are planned for future updates.
-- **Endboss**: The endboss functionality is still a work in progress.
-- **Settings**: Settings for performance, level changes, and difficulty adjustments are planned.
-- **Mobile Version**: Mobile version is still a work in progress; only limited controls (jump) are available at this stage.
+### ✅ Completed:
+
+- **Landing Page**: The basic structure is set up!
+- **Menu**: Almost complete – only the "Help" modal remains.
+- **Sounds & Effects**: Basic background music and click sounds are implemented.
+
+### 🔧 Still to Come:
+
+- **Finish Menu**: Complete the "Help" modal.
+- **Documentation**: Detailed documentation is coming soon.
+- **Endboss**: The final boss is still under development.
+- **Advanced Settings**: More settings, such as difficulty level, will be added.
+- **Mobile View & Controls**: Mobile compatibility and controls are still in progress.
 
 ---
 
