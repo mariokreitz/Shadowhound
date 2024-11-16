@@ -25,18 +25,17 @@ export class UI implements IUI {
     ctx.fillStyle = this.game.fontColor;
     //score
     ctx.fillText(`Score: ${this.game.score}`, 20, 50);
-    // TODO: implement speedrun
-    //timer
-    // ctx.font = `${this.fontSize * 0.8}px ${this.fontFamily}`;
-    // ctx.fillText(`Time: ${(this.game.time * 0.001).toFixed(1)}`, 20, 80);
     // lives
     for (let index = 0; index < this.game.lives; index++) {
       ctx.drawImage(this.liveImage, 25 * index + 20, 95, 25, 25);
     }
-    //debug and fps
+    //debug - FPS - TIMER
     if (this.game.debug) {
+      //fps
       ctx.font = `${this.fontSize * 0.8}px Arial`;
       ctx.fillText(`FPS: ${Math.round(1000 / deltaTime)}`, this.game.width - 120, 40);
+      //timer
+      ctx.fillText(`Time: ${(this.game.time * 0.001).toFixed(1)}`, this.game.width - 120, 80);
     }
     //game over messages
     if (this.game.isGameOver) {
