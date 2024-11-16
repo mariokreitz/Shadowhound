@@ -1,4 +1,6 @@
+import { GameMusic, MenuMusic } from "../class/sounds.class";
 import { Toast } from "../class/toast.class";
+import { volumeIcons, soundIcons } from "./svgIcons";
 
 /**
  * Hides an element with the given ID from the DOM.
@@ -71,17 +73,88 @@ export function toggleMenu(menuId: string): void {
 }
 
 /**
- * Retrieves the start and help button elements from the DOM.
- * @returns An object containing the start and help buttons as HTMLElements, or undefined if any button is not found.
+ * Retrieves the main menu buttons from the DOM.
+ * @returns {Object} An object with the start button, help button, volume control button, and sound control button.
+ * If any of the buttons are not found, the function will return undefined instead.
  */
-export function getMenuElements(): { startBtn: HTMLElement; helpBtn: HTMLElement } | undefined {
-  const startElement = document.getElementById("start-btn");
-  const helpElement = document.getElementById("help-btn");
+export function getMenuElements():
+  | {
+      startButton: HTMLButtonElement;
+      helpButton: HTMLButtonElement;
+      volumeControlButton: HTMLButtonElement;
+      soundControlButton: HTMLButtonElement;
+    }
+  | undefined {
+  const startButton = document.getElementById("start-btn") as HTMLButtonElement;
+  const helpButton = document.getElementById("help-btn") as HTMLButtonElement;
+  const volumeControlButton = document.getElementById("volume-control") as HTMLButtonElement;
+  const soundControlButton = document.getElementById("sound-control") as HTMLButtonElement;
 
-  if (!startElement || !helpElement) {
-    showError("<start | help>Btn");
+  if (!startButton || !helpButton || !volumeControlButton || !soundControlButton) {
     return;
   }
 
-  return { startBtn: startElement, helpBtn: helpElement };
+  return { startButton, helpButton, volumeControlButton, soundControlButton };
+}
+
+/**
+ * Retrieves an HTMLAudioElement based on the given ID.
+ * @param {string} audioID - The ID of the HTMLAudioElement to retrieve.
+ * @returns {HTMLAudioElement} - The HTMLAudioElement if found, otherwise creates a new Audio object.
+ */
+export function getAudioElement(audioID: string): HTMLAudioElement {
+  const audioElement = document.getElementById(audioID) as HTMLAudioElement;
+  if (!audioElement) {
+    showError(audioID);
+    return new Audio();
+  }
+
+  return audioElement;
+}
+
+/**
+ * Adds volume control buttons to a container element with the given ID.
+ * @param {string} volumeControlElementId - The ID of the container element to add the buttons to.
+ */
+export function addVolumeControl(volumeControlElementId: string): void {
+  const volumeControlElement = document.getElementById(volumeControlElementId) as HTMLElement | null;
+  if (!volumeControlElement) return;
+
+  const volumeControlButton: HTMLButtonElement = document.createElement("button");
+  volumeControlButton.id = "volume-control";
+  volumeControlButton.classList.add("volume-control");
+  volumeControlButton.innerHTML = volumeIcons.high;
+  volumeControlElement.appendChild(volumeControlButton);
+
+  const soundControlButton: HTMLButtonElement = document.createElement("button");
+  soundControlButton.id = "sound-control";
+  soundControlButton.classList.add("volume-control");
+  soundControlButton.innerHTML = soundIcons.on;
+  volumeControlElement.appendChild(soundControlButton);
+}
+
+/**
+ * Toggles the volume of the given audio effect.
+ * @param {{ currentVolumeState: number, volumeState: string[], audioFile: HTMLAudioElement }} effect - The audio effect to modify.
+ * @returns {void}
+ */
+export function toggleVolume(
+  effect:
+    | {
+        currentVolumeState: number;
+        volumeState: string[];
+        audioFile: HTMLAudioElement;
+      }
+    | GameMusic
+    | MenuMusic
+): void {
+  if (effect instanceof GameMusic || effect instanceof MenuMusic) {
+    effect.audioFile.volume = effect.audioFile.volume === 0.8 ? 0 : 0.8;
+    effect.currentVolumeState =
+      effect.audioFile.volume === 0.8 ? effect.volumeState.indexOf("high") : effect.volumeState.indexOf("off");
+  } else {
+    effect.currentVolumeState = (effect.currentVolumeState + 1) % effect.volumeState.length;
+    const currentState = effect.volumeState[effect.currentVolumeState];
+    effect.audioFile.volume = currentState === "high" ? 0.6 : currentState === "low" ? 0.3 : 0;
+  }
 }
