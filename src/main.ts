@@ -4,19 +4,17 @@ import "./styles/toast.css";
 import "./style.css";
 import {
   toggleMenu,
-  hideLoadingScreen,
+  hideLoadingAndShowMenu,
   getCanvasAndContext,
   getMenuElements,
   addVolumeControl,
-  toggleVolume,
 } from "./utils/misc";
 import { Game } from "./class/game.class";
 import { soundIcons, volumeIcons } from "./utils/svgIcons";
 
 window.addEventListener("load", function () {
-  hideLoadingScreen("loading");
+  hideLoadingAndShowMenu("loading", "main-menu");
   addVolumeControl("controls");
-  document.getElementById("main-menu")?.style.removeProperty("display");
 
   const { canvas, ctx } = getCanvasAndContext("canvas1") || {};
   if (!canvas || !ctx) return;
@@ -37,19 +35,19 @@ window.addEventListener("load", function () {
   });
 
   volumeControlButton.addEventListener("click", () => {
-    toggleVolume(game.menuClickEffect);
-    toggleVolume(game.menuHoverEffect);
-    if (game.menuClickEffect.currentVolumeState == 1) volumeControlButton.innerHTML = volumeIcons.low;
-    else if (game.menuClickEffect.currentVolumeState == 2) volumeControlButton.innerHTML = volumeIcons.off;
-    else volumeControlButton.innerHTML = volumeIcons.high;
+    game.menuHoverEffect.changeVolume();
+    game.menuClickEffect.changeVolume();
+
+    const volumeState = game.menuClickEffect.currentVolumeState;
+    volumeControlButton.innerHTML = volumeIcons[volumeState];
   });
 
   soundControlButton.addEventListener("click", () => {
-    toggleVolume(game.gameMusic);
-    toggleVolume(game.menuMusic);
+    game.gameMusic.toggleMute();
+    game.menuMusic.toggleMute();
 
-    if (game.menuMusic.currentVolumeState == 2) soundControlButton.innerHTML = soundIcons.off;
-    else soundControlButton.innerHTML = soundIcons.on;
+    const isNotMuted = game.menuMusic.audioFile.muted;
+    soundControlButton.innerHTML = isNotMuted ? soundIcons.off : soundIcons.on;
   });
 
   [startButton, helpButton, soundControlButton, volumeControlButton].forEach((button) => {
