@@ -1,19 +1,23 @@
-import { GameMusic, MenuMusic } from "../class/sounds.class";
 import { Toast } from "../class/toast.class";
 import { volumeIcons, soundIcons } from "./svgIcons";
 
 /**
- * Hides an element with the given ID from the DOM.
- * @param {string} loadingElementID - The ID of the element to hide.
+ * Hides the loading screen and shows the menu.
+ * @param {string} loadingId - The ID of the HTMLDivElement to hide.
+ * @param {string} menuId - The ID of the HTMLDivElement to show.
  */
-export function hideLoadingScreen(loadingElementID: string): void {
-  const loadingElement = document.getElementById(loadingElementID) as HTMLElement;
-  if (!loadingElement) {
-    showError(loadingElementID);
+export function hideLoadingAndShowMenu(loadingId: string, menuId: string): void {
+  const loadingElement = document.getElementById(loadingId) as HTMLDivElement;
+  const menuElement = document.getElementById(menuId) as HTMLDivElement;
+
+  if (!loadingElement || !menuElement) {
+    showError(loadingId);
+    showError(menuId);
     return;
   }
 
-  loadingElement.style.display = loadingElement.style.display === "none" ? "" : "none";
+  menuElement.style.removeProperty("display");
+  loadingElement.style.display = "none";
 }
 
 /**
@@ -131,30 +135,4 @@ export function addVolumeControl(volumeControlElementId: string): void {
   soundControlButton.classList.add("volume-control");
   soundControlButton.innerHTML = soundIcons.on;
   volumeControlElement.appendChild(soundControlButton);
-}
-
-/**
- * Toggles the volume of the given audio effect.
- * @param {{ currentVolumeState: number, volumeState: string[], audioFile: HTMLAudioElement }} effect - The audio effect to modify.
- * @returns {void}
- */
-export function toggleVolume(
-  effect:
-    | {
-        currentVolumeState: number;
-        volumeState: string[];
-        audioFile: HTMLAudioElement;
-      }
-    | GameMusic
-    | MenuMusic
-): void {
-  if (effect instanceof GameMusic || effect instanceof MenuMusic) {
-    effect.audioFile.volume = effect.audioFile.volume === 0.8 ? 0 : 0.8;
-    effect.currentVolumeState =
-      effect.audioFile.volume === 0.8 ? effect.volumeState.indexOf("high") : effect.volumeState.indexOf("off");
-  } else {
-    effect.currentVolumeState = (effect.currentVolumeState + 1) % effect.volumeState.length;
-    const currentState = effect.volumeState[effect.currentVolumeState];
-    effect.audioFile.volume = currentState === "high" ? 0.6 : currentState === "low" ? 0.3 : 0;
-  }
 }
