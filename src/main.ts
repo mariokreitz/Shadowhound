@@ -8,12 +8,14 @@ import {
   getCanvasAndContext,
   getMenuElements,
   addVolumeControl,
+  addHelpModalContent,
 } from "./utils/misc";
 import { Game } from "./class/game.class";
 import { soundIcons, volumeIcons } from "./utils/svgIcons";
 
 window.addEventListener("load", function () {
   addVolumeControl("controls");
+  addHelpModalContent("help-modal");
   hideLoadingAndShowMenu("loading", "main-menu");
 
   const { canvas, ctx } = getCanvasAndContext("canvas1") || {};
