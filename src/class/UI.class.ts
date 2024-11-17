@@ -27,15 +27,15 @@ export class UI implements IUI {
     ctx.fillText(`Score: ${this.game.score}`, 20, 50);
     // lives
     for (let index = 0; index < this.game.lives; index++) {
-      ctx.drawImage(this.liveImage, 25 * index + 20, 95, 25, 25);
+      ctx.drawImage(this.liveImage, 25 * index + 20, 65, 25, 25);
     }
     //debug - FPS - TIMER
     if (this.game.debug) {
       //fps
       ctx.font = `${this.fontSize * 0.8}px Arial`;
-      ctx.fillText(`FPS: ${Math.round(1000 / deltaTime)}`, this.game.width - 120, 40);
+      ctx.fillText(`FPS: ${Math.round(1000 / deltaTime)}`, this.game.width - 150, 40);
       //timer
-      ctx.fillText(`Time: ${(this.game.time * 0.001).toFixed(1)}`, this.game.width - 120, 80);
+      ctx.fillText(`Time: ${(this.game.time * 0.001).toFixed(1)}`, this.game.width - 150, 80);
     }
     //game over messages
     if (this.game.isGameOver) {
