@@ -74,6 +74,7 @@ export class MenuMusic extends Sound {
 export class MenuHoverEffect extends Sound {
   constructor() {
     super(getAudioElement("ui-hover-sound"));
+    this.audioFile.muted = false;
     this.audioFile.volume = 0.6;
   }
 
@@ -96,6 +97,7 @@ export class MenuHoverEffect extends Sound {
 export class MenuClickEffect extends Sound {
   constructor() {
     super(getAudioElement("ui-click-sound"));
+    this.audioFile.muted = false;
     this.audioFile.volume = 0.6;
   }
 
@@ -134,13 +136,13 @@ export class GameMusic extends Sound {
 export class GameEffect1 extends Sound {
   constructor() {
     super(getAudioElement("game-effect-1"));
-    this.audioFile.volume = 0.6;
+    this.audioFile.muted = false;
+    this.audioFile.volume = 0.3;
   }
 
-  start(): void {}
-
-  changeVolume(): void {
-    super.changeVolume();
+  toggleMute(): void {
+    const isMuted = (this.audioFile.muted = !this.audioFile.muted);
+    this.audioFile.volume = isMuted ? 0 : 0.3;
   }
 }
 
