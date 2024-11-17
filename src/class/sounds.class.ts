@@ -7,9 +7,13 @@ class Sound implements ISound {
     this.audioFile.muted = true;
     this.audioFile.loop = false;
     this.audioFile.volume = 0;
-    this.volumeState = ["high", "low", "off"];
-    this.currentVolumeState = 0;
+    this.volumeStates = ["high", "low", "off"];
+    this.currentVolumeState = this.volumeStates[0];
   }
+
+  audioFile: HTMLAudioElement;
+  volumeStates: string[];
+  currentVolumeState: string;
 
   start(): void {
     this.audioFile.muted = false;
@@ -24,15 +28,34 @@ class Sound implements ISound {
     this.audioFile.muted = true;
   }
 
-  audioFile: HTMLAudioElement;
-  volumeState: string[];
-  currentVolumeState: number;
+  changeVolume(): void {
+    const currentVolumeIndex = this.volumeStates.indexOf(this.currentVolumeState);
+    const nextVolumeIndex = (currentVolumeIndex + 1) % this.volumeStates.length;
+    this.currentVolumeState = this.volumeStates[nextVolumeIndex];
+
+    switch (this.currentVolumeState) {
+      case "high":
+        this.audioFile.volume = 1;
+        break;
+      case "low":
+        this.audioFile.volume = 0.5;
+        break;
+      case "off":
+        this.audioFile.volume = 0;
+        break;
+    }
+  }
+
+  toggleMute(): void {
+    const isMuted = (this.audioFile.muted = !this.audioFile.muted);
+    this.audioFile.volume = isMuted ? 0 : 0.6;
+  }
 }
 
 export class MenuMusic extends Sound {
   constructor() {
     super(getAudioElement("game-menu-music"));
-    this.audioFile.volume = 0.8;
+    this.audioFile.volume = 0.6;
   }
 
   start() {
@@ -53,6 +76,21 @@ export class MenuHoverEffect extends Sound {
     super(getAudioElement("ui-hover-sound"));
     this.audioFile.volume = 0.6;
   }
+
+  changeVolume(): void {
+    super.changeVolume();
+    switch (this.currentVolumeState) {
+      case "high":
+        this.audioFile.volume = 0.8;
+        break;
+      case "low":
+        this.audioFile.volume = 0.4;
+        break;
+      case "off":
+        this.audioFile.volume = 0;
+        break;
+    }
+  }
 }
 
 export class MenuClickEffect extends Sound {
@@ -60,13 +98,36 @@ export class MenuClickEffect extends Sound {
     super(getAudioElement("ui-click-sound"));
     this.audioFile.volume = 0.6;
   }
+
+  changeVolume(): void {
+    super.changeVolume();
+    switch (this.currentVolumeState) {
+      case "high":
+        this.audioFile.volume = 0.6;
+
+        break;
+      case "low":
+        this.audioFile.volume = 0.2;
+
+        break;
+      case "off":
+        this.audioFile.volume = 0;
+
+        break;
+    }
+  }
 }
 
 export class GameMusic extends Sound {
   constructor() {
     super(getAudioElement("game-bg-music"));
-    this.audioFile.volume = 0.8;
+    this.audioFile.volume = 0.6;
     this.audioFile.loop = true;
+  }
+
+  toggleMute(): void {
+    this.audioFile.volume = this.audioFile.muted ? 0 : 0.6;
+    this.audioFile.muted = !this.audioFile.muted;
   }
 }
 
@@ -76,12 +137,10 @@ export class GameEffect1 extends Sound {
     this.audioFile.volume = 0.6;
   }
 
-  private lastPlayTime = 0;
-  start(): void {
-    const now = performance.now();
-    if (now - this.lastPlayTime < Math.random() * 10000 + 30000) return;
-    this.lastPlayTime = now;
-    super.start();
+  start(): void {}
+
+  changeVolume(): void {
+    super.changeVolume();
   }
 }
 
