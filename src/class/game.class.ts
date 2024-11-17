@@ -98,7 +98,6 @@ export class Game implements IGame {
   update(deltaTime: number) {
     this.time += deltaTime;
     // if (this.time > this.maxTime) this.isGameOver = true;
-    this.gameEffect1.start();
     this.background.update();
     this.player.update(this.input.keys, deltaTime);
     // handle enemies
@@ -110,13 +109,11 @@ export class Game implements IGame {
     this.enemies.forEach((enemy) => enemy.update(deltaTime));
     // handle messages
     this.floatingMessages.forEach((message) => message.update());
-
     // handle particles
     this.particles.forEach((particle) => particle.update());
     if (this.particles.length > this.maxParticles) this.particles = this.particles.slice(0, this.maxParticles);
     // handle collision sprites
     this.collisions.forEach((collision) => collision.update(deltaTime));
-
     // handle filter for arrays
     this.enemies = this.enemies.filter((enemy) => !enemy.markedForDeletion);
     this.particles = this.particles.filter((particle) => !particle.markedForDelection);
