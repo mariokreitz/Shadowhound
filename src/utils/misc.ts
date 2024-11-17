@@ -87,18 +87,25 @@ export function getMenuElements():
       helpButton: HTMLButtonElement;
       volumeControlButton: HTMLButtonElement;
       soundControlButton: HTMLButtonElement;
+      volumeControlMobile: HTMLButtonElement;
     }
   | undefined {
   const startButton = document.getElementById("start-btn") as HTMLButtonElement;
   const helpButton = document.getElementById("help-btn") as HTMLButtonElement;
   const volumeControlButton = document.getElementById("volume-control") as HTMLButtonElement;
   const soundControlButton = document.getElementById("sound-control") as HTMLButtonElement;
+  const volumeControlMobile = document.getElementById("volume-control-mobile") as HTMLButtonElement;
 
-  if (!startButton || !helpButton || !volumeControlButton || !soundControlButton) {
+  if (!startButton || !helpButton || !volumeControlButton || !soundControlButton || !volumeControlMobile) {
+    showError("start-btn");
+    showError("help-btn");
+    showError("volume-control");
+    showError("sound-control");
+    showError("volume-control-mobile");
     return;
   }
 
-  return { startButton, helpButton, volumeControlButton, soundControlButton };
+  return { startButton, helpButton, volumeControlButton, soundControlButton, volumeControlMobile };
 }
 
 /**
@@ -124,15 +131,18 @@ export function addVolumeControl(volumeControlElementId: string): void {
   const volumeControlElement = document.getElementById(volumeControlElementId) as HTMLElement | null;
   if (!volumeControlElement) return;
 
+  const volumeControlButtonMobile: HTMLButtonElement = document.createElement("button");
+  volumeControlButtonMobile.id = "volume-control-mobile";
+  volumeControlButtonMobile.innerHTML = volumeIcons.high;
+  volumeControlElement.appendChild(volumeControlButtonMobile);
+
   const volumeControlButton: HTMLButtonElement = document.createElement("button");
   volumeControlButton.id = "volume-control";
-  volumeControlButton.classList.add("volume-control");
   volumeControlButton.innerHTML = volumeIcons.high;
   volumeControlElement.appendChild(volumeControlButton);
 
   const soundControlButton: HTMLButtonElement = document.createElement("button");
   soundControlButton.id = "sound-control";
-  soundControlButton.classList.add("volume-control");
   soundControlButton.innerHTML = soundIcons.on;
   volumeControlElement.appendChild(soundControlButton);
 }
