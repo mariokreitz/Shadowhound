@@ -1,5 +1,6 @@
 body {
   min-height: 100vh;
+  overflow: hidden;
 }
 
 #main-menu {
@@ -54,7 +55,10 @@ body {
 }
 
 #volume-control,
-#sound-control {
+#sound-control,
+#volume-control-mobile {
+  width: 44px;
+  height: 44px;
   border-radius: 10px;
   display: flex;
   justify-content: center;
@@ -64,6 +68,17 @@ body {
   background: rgba(255, 255, 255, 0.2);
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), -1px -1px 2px rgba(0, 0, 0, 1), 1px -1px 2px rgba(0, 0, 0, 1),
     -1px 1px 2px rgba(0, 0, 0, 1);
+}
+
+#volume-control-mobile {
+  display: none;
+}
+
+#volume-control svg,
+#sound-control svg,
+#volume-control-mobile svg {
+  width: 32px;
+  height: 32px;
 }
 
 #start-btn:not(:disabled):hover,
@@ -84,16 +99,6 @@ body {
   margin-top: 20px;
   display: flex;
   justify-content: space-around;
-}
-
-.volume-control {
-  width: 44px;
-  height: 44px;
-}
-
-.volume-control svg {
-  width: 32px;
-  height: 32px;
 }
 
 #canvas1 {
@@ -141,21 +146,58 @@ body {
   background: rgba(0, 0, 0, 0.1);
 }
 
-@media (max-width: 599px) and (orientation: portrait), (max-width: 899px) and (orientation: landscape) {
+@media only screen and (max-width: 480px),
+  (max-width: 768px) and (orientation: portrait),
+  (max-width: 1024px) and (orientation: portrait) {
   body {
     min-height: 100dvh;
   }
-}
 
-@media (min-width: 600px) and (max-width: 899px) and (orientation: portrait),
-  (min-width: 900px) and (max-width: 1199px) and (orientation: landscape) {
-  body {
-    min-height: 100dvh;
+  #game-title {
+    font-size: clamp(24px, 15vw, 64px);
+  }
+
+  #volume-control {
+    display: none;
+  }
+
+  #volume-control-mobile {
+    display: flex;
   }
 }
 
-@media (min-width: 900px) and (orientation: portrait), (min-width: 1200px) {
+@media only screen and (max-width: 480px) and (orientation: landscape),
+  (max-width: 768px) and (orientation: landscape),
+  (max-width: 1024px) and (orientation: landscape) {
   body {
     min-height: 100dvh;
+  }
+
+  #game-title {
+    font-size: 58px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  #main-menu {
+    gap: unset;
+  }
+
+  #game-menu {
+    margin-top: unset;
+    margin-bottom: unset;
+  }
+
+  #start-btn,
+  #help-btn {
+    font-size: 24px;
+  }
+
+  #volume-control {
+    display: none;
+  }
+
+  #volume-control-mobile {
+    display: flex;
   }
 }
