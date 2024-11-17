@@ -187,11 +187,13 @@ export interface IFloatingMessage {
 }
 
 export interface ISound {
-  audioFile: HTMLAudioElement;
-  volumeState: string[];
-  currentVolumeState: number;
   start(): void;
   stop(): void;
+  changeVolume(): void;
+  toggleMute(): void;
+  audioFile: HTMLAudioElement;
+  volumeStates: string[];
+  currentVolumeState: string;
 }
 
 export type BackgroundConstructorParams = {
