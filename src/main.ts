@@ -13,14 +13,15 @@ import { Game } from "./class/game.class";
 import { soundIcons, volumeIcons } from "./utils/svgIcons";
 
 window.addEventListener("load", function () {
-  hideLoadingAndShowMenu("loading", "main-menu");
   addVolumeControl("controls");
+  hideLoadingAndShowMenu("loading", "main-menu");
 
   const { canvas, ctx } = getCanvasAndContext("canvas1") || {};
   if (!canvas || !ctx) return;
 
-  const { startButton, helpButton, soundControlButton, volumeControlButton } = getMenuElements() || {};
-  if (!startButton || !helpButton || !soundControlButton || !volumeControlButton) return;
+  const { startButton, helpButton, soundControlButton, volumeControlButton, volumeControlMobile } =
+    getMenuElements() || {};
+  if (!startButton || !helpButton || !soundControlButton || !volumeControlButton || !volumeControlMobile) return;
 
   canvas.width = 900;
   canvas.height = 500;
@@ -34,6 +35,14 @@ window.addEventListener("load", function () {
     canvas.style.border = "5px solid black";
   });
 
+  volumeControlMobile.addEventListener("click", () => {
+    game.menuHoverEffect.toggleMute();
+    game.menuClickEffect.toggleMute();
+
+    const isNotMuted = game.menuClickEffect.audioFile.muted;
+    volumeControlMobile.innerHTML = isNotMuted ? volumeIcons.off : volumeIcons.high;
+  });
+
   volumeControlButton.addEventListener("click", () => {
     game.menuHoverEffect.changeVolume();
     game.menuClickEffect.changeVolume();
@@ -45,6 +54,7 @@ window.addEventListener("load", function () {
   soundControlButton.addEventListener("click", () => {
     game.gameMusic.toggleMute();
     game.menuMusic.toggleMute();
+    game.gameEffect1.toggleMute();
 
     const isNotMuted = game.menuMusic.audioFile.muted;
     soundControlButton.innerHTML = isNotMuted ? soundIcons.off : soundIcons.on;
