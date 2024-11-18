@@ -6,16 +6,20 @@
     <meta name="description" content="Shadowhound - An immersive gaming experience" />
     <meta name="keywords" content="Shadowhound, gaming, adventure, action, immersive" />
     <meta name="author" content="Mario Kreitz" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="Shadowhound" />
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
     <title>Shadowhound</title>
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Shadowhound - An Immersive Gaming Experience" />
     <meta property="og:description" content="Dive into the world of Shadowhound, where adventure meets action." />
-    <meta property="og:image" content="./img/og-image.jpg" />
+    <meta property="og:image" content="https://mario-kreitz.dev/shadowhound/screenshot_menu.png" />
     <meta property="og:url" content="https://shadowhound.mario-kreitz.dev/" />
     <meta property="og:type" content="website" />
   </head>
-  <body>
+  <body id="body">
     <div
       id="loading"
       style="
@@ -83,7 +87,7 @@
     <audio id="game-bg-music" src="./audio/game/game-bg-music.mp3"></audio>
     <audio id="game-over-sound" src="./audio/game/game-over-sound.mp3"></audio>
 
-    <div id="help-modal"></div>
+    <div id="help-modal" style="display: none"></div>
 
     <script type="module" src="/src/main.ts"></script>
   </body>
