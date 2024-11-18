@@ -1,6 +1,13 @@
+* {
+  scrollbar-width: thin;
+  scroll-behavior: smooth;
+  scrollbar-color: black;
+}
+
 body {
   min-height: 100vh;
   overflow: hidden;
+  background-color: black;
 }
 
 #main-menu {
@@ -106,8 +113,8 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  max-width: 100%;
   max-height: 100%;
+  max-width: 100%;
   z-index: -1;
 }
 
@@ -117,17 +124,39 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.66);
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: "Creepster";
+  letter-spacing: 0.15em;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), -1px -1px 2px rgba(0, 0, 0, 1), 1px -1px 2px rgba(0, 0, 0, 1),
+    -1px 1px 2px rgba(0, 0, 0, 1);
 }
 
 #help-modal-content {
-  background: white;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  color: whitesmoke;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
-  padding: 20px;
-  width: 300px;
+  padding: 20px 32px 30px 32px;
+  height: 210px;
+  background: linear-gradient(90deg, rgba(121, 9, 9, 0.1) 0%, rgba(121, 9, 9, 0.16) 50%, rgba(121, 9, 9, 0.1) 100%);
+  background-size: 200% 200%;
+  animation: shimmer 5s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: -200% 0%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
 }
 
 #help-modal-content h2 {
@@ -135,15 +164,119 @@ body {
 }
 
 #help-modal-close-btn {
+  color: white;
   background: none;
   border: none;
-  padding: 10px;
   font-size: 16px;
   cursor: pointer;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), -1px -1px 2px rgba(0, 0, 0, 1), 1px -1px 2px rgba(0, 0, 0, 1),
+    -1px 1px 2px rgba(0, 0, 0, 1);
 }
 
 #help-modal-close-btn:hover {
-  background: rgba(0, 0, 0, 0.1);
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.66);
+  animation: spooky-hover 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes spooky-hover {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+.help-modal-keyboard {
+  display: flex;
+  height: 100%;
+  gap: 32px;
+  align-items: center;
+}
+
+.help-modal-keyboard-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: inherit;
+}
+
+#arrowUp:after {
+  position: absolute;
+  content: "jump";
+  top: -18px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+#arrowDown:after {
+  position: absolute;
+  content: "sit / meteor strike";
+  font-size: 12px;
+  font-weight: bold;
+  text-wrap: nowrap;
+  bottom: -18px;
+}
+
+#arrowLeft:after {
+  position: absolute;
+  content: "move left";
+  font-size: 12px;
+  font-weight: bold;
+  text-wrap: nowrap;
+  top: -16px;
+}
+
+#arrowRight:after {
+  position: absolute;
+  content: "move right";
+  font-size: 12px;
+  font-weight: bold;
+  text-wrap: nowrap;
+  top: -16px;
+}
+
+.help-modal-keyboard-column {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.help-modal-keyboard-key {
+  position: relative;
+  height: min-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.help-modal-keyboard-key-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.help-modal-keyboard-key svg {
+  width: 20px;
+  height: 20px;
+}
+.help-modal-keyboard-key svg path {
+  animation: shimmer 1s ease-in-out infinite alternate;
+}
+
+@keyframes shimmer {
+  0% {
+    fill: rgba(255, 255, 255, 0.66);
+  }
+  100% {
+    fill: rgba(255, 255, 255, 0.99);
+  }
 }
 
 @media only screen and (max-width: 480px),
