@@ -184,13 +184,14 @@ function helpModalTemplate() {
         </div>
       </div>
       <div class="help-modal-keyboard-cell">
-        <div style="display: flex; width: 100%; justify-content: end">
+        <div style="display: flex; width: 100%; justify-content: space-between">
+          <h3>Special Keys</h3>
           <button id="help-modal-close-btn" type="button">&#10006;</button>
         </div>
-        <div class="help-modal-keyboard-column">
-          <div class="help-modal-keyboard-key">${keyboardIcons.enter}</div>
-          <div class="help-modal-keyboard-key">${keyboardIcons.d}</div>
-          <div class="help-modal-keyboard-key">${keyboardIcons.f}</div>
+        <div id="help-moda-special-keys" >
+          <div id="d-key" class="help-modal-keyboard-key">${keyboardIcons.d}</div>
+          <div id="f-key" class="help-modal-keyboard-key">${keyboardIcons.f}</div>
+          <div id="enter" class="help-modal-keyboard-key">${keyboardIcons.enter}</div>
         </div>
       </div>
     </div>
