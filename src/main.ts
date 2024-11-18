@@ -10,7 +10,7 @@ import {
   addVolumeControl,
   addHelpModalContent,
   addMobileControl,
-  showMobileControls,
+  toggleMobileControls,
 } from "./utils/misc";
 import { Game } from "./class/game.class";
 import { soundIcons, volumeIcons } from "./utils/svgIcons";
@@ -44,7 +44,7 @@ window.addEventListener("load", function () {
 
   startButton.addEventListener("click", () => {
     game.start();
-    showMobileControls();
+    toggleMobileControls();
     toggleMenu("main-menu");
 
     canvas.style.border = "5px solid black";
