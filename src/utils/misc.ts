@@ -1,5 +1,5 @@
 import { Toast } from "../class/toast.class";
-import { volumeIcons, soundIcons } from "./svgIcons";
+import { volumeIcons, soundIcons, keyboardIcons } from "./svgIcons";
 
 /**
  * Hides the loading screen and shows the menu.
@@ -85,6 +85,7 @@ export function getMenuElements():
   | {
       startButton: HTMLButtonElement;
       helpButton: HTMLButtonElement;
+      helpModalCloseBtn: HTMLButtonElement;
       volumeControlButton: HTMLButtonElement;
       soundControlButton: HTMLButtonElement;
       volumeControlMobile: HTMLButtonElement;
@@ -92,20 +93,29 @@ export function getMenuElements():
   | undefined {
   const startButton = document.getElementById("start-btn") as HTMLButtonElement;
   const helpButton = document.getElementById("help-btn") as HTMLButtonElement;
+  const helpModalCloseBtn = document.getElementById("help-modal-close-btn") as HTMLButtonElement;
   const volumeControlButton = document.getElementById("volume-control") as HTMLButtonElement;
   const soundControlButton = document.getElementById("sound-control") as HTMLButtonElement;
   const volumeControlMobile = document.getElementById("volume-control-mobile") as HTMLButtonElement;
 
-  if (!startButton || !helpButton || !volumeControlButton || !soundControlButton || !volumeControlMobile) {
+  if (
+    !startButton ||
+    !helpButton ||
+    !helpModalCloseBtn ||
+    !volumeControlButton ||
+    !soundControlButton ||
+    !volumeControlMobile
+  ) {
     showError("start-btn");
     showError("help-btn");
+    showError("help-modal-close-btn");
     showError("volume-control");
     showError("sound-control");
     showError("volume-control-mobile");
     return;
   }
 
-  return { startButton, helpButton, volumeControlButton, soundControlButton, volumeControlMobile };
+  return { startButton, helpButton, helpModalCloseBtn, volumeControlButton, soundControlButton, volumeControlMobile };
 }
 
 /**
@@ -145,4 +155,46 @@ export function addVolumeControl(volumeControlElementId: string): void {
   soundControlButton.id = "sound-control";
   soundControlButton.innerHTML = soundIcons.on;
   volumeControlElement.appendChild(soundControlButton);
+}
+
+export function addHelpModalContent(modalContentID: string): void {
+  const modalContentElement = document.getElementById(modalContentID) as HTMLDivElement | null;
+  if (!modalContentElement) {
+    showError(modalContentID);
+    return;
+  }
+
+  modalContentElement.appendChild(helpModalTemplate());
+}
+
+function helpModalTemplate() {
+  const helpModalContentNode = document.createElement("div");
+  helpModalContentNode.id = "help-modal-content";
+  helpModalContentNode.innerHTML = /*html*/ `
+    <div class="help-modal-keyboard">
+      <div class="help-modal-keyboard-cell">
+        <h3>Movement</h3>
+        <div class="help-modal-keyboard-column">
+          <div id="arrowLeft" class="help-modal-keyboard-key">${keyboardIcons.arrowLeft}</div>
+          <div class="help-modal-keyboard-key-container">
+            <div id="arrowUp" class="help-modal-keyboard-key">${keyboardIcons.arrowUp}</div>
+            <div id="arrowDown" class="help-modal-keyboard-key">${keyboardIcons.arrowDown}</div>
+          </div>
+          <div id="arrowRight" class="help-modal-keyboard-key">${keyboardIcons.arrowRight}</div>
+        </div>
+      </div>
+      <div class="help-modal-keyboard-cell">
+        <div style="display: flex; width: 100%; justify-content: end">
+          <button id="help-modal-close-btn" type="button">&#10006;</button>
+        </div>
+        <div class="help-modal-keyboard-column">
+          <div class="help-modal-keyboard-key">${keyboardIcons.enter}</div>
+          <div class="help-modal-keyboard-key">${keyboardIcons.d}</div>
+          <div class="help-modal-keyboard-key">${keyboardIcons.f}</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  return helpModalContentNode;
 }
