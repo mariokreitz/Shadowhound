@@ -1,5 +1,5 @@
 import { IGame, IUI } from "../types/shadowhound";
-import { getImage } from "../utils/misc";
+import { getImage, toggleMobileControls } from "../utils/misc";
 
 export class UI implements IUI {
   constructor(game: IGame) {
@@ -53,6 +53,7 @@ export class UI implements IUI {
         ctx.fillText("Love at first bite?", this.game.width * 0.5, this.game.height * 0.5 - 20);
         ctx.font = `${this.fontSize * 0.7}px ${this.fontFamily}`;
         ctx.fillText("Nope, better luck next time!", this.game.width * 0.5, this.game.height * 0.5 + 20);
+        toggleMobileControls();
       }
     }
     ctx.restore();
