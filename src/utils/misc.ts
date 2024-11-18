@@ -157,18 +157,47 @@ export function addVolumeControl(volumeControlElementId: string): void {
   volumeControlElement.appendChild(soundControlButton);
 }
 
-export function addHelpModalContent(modalContentID: string): void {
-  const modalContentElement = document.getElementById(modalContentID) as HTMLDivElement | null;
+/**
+ * Adds the help modal content to a container element with the given ID.
+ * @param {string} modalContentId - The ID of the container element to add the help modal content to.
+ * @returns {void}
+ */
+export function addHelpModalContent(modalContentId: string): void {
+  const modalContentElement = document.getElementById(modalContentId) as HTMLDivElement | null;
   if (!modalContentElement) {
-    showError(modalContentID);
+    showError(modalContentId);
     return;
   }
 
   modalContentElement.appendChild(helpModalTemplate());
 }
 
-function helpModalTemplate() {
-  const helpModalContentNode = document.createElement("div");
+export function showMobileControls() {
+  const mobileCanvasControlLeft = document.getElementById("mobile-canvas-control-left");
+  const mobileCanvasControlRight = document.getElementById("mobile-canvas-control-right");
+  if (!mobileCanvasControlLeft || !mobileCanvasControlRight) {
+    showError("mobile-canvas-control-left");
+    showError("mobile-canvas-control-right");
+    return;
+  }
+  mobileCanvasControlLeft.style.removeProperty("display");
+  mobileCanvasControlRight.style.removeProperty("display");
+}
+
+/**
+ * Adds the mobile control buttons to the page.
+ */
+export function addMobileControl(): void {
+  document.body.appendChild(mobileControlTemplateLeft());
+  document.body.appendChild(mobileControlTemplateRight());
+}
+
+/**
+ * Creates and returns a strongly typed HTMLDivElement representing the help modal content.
+ * @returns {HTMLDivElement} The help modal content node with the keyboard controls.
+ */
+function helpModalTemplate(): HTMLDivElement {
+  const helpModalContentNode: HTMLDivElement = document.createElement("div");
   helpModalContentNode.id = "help-modal-content";
   helpModalContentNode.innerHTML = /*html*/ `
     <div class="help-modal-keyboard">
@@ -198,4 +227,40 @@ function helpModalTemplate() {
   `;
 
   return helpModalContentNode;
+}
+
+/**
+ * Creates and returns a strongly typed div element representing the mobile control buttons for the left side.
+ * @returns {HTMLDivElement} The mobile control node with buttons for left, up, down, and right controls.
+ */
+function mobileControlTemplateLeft(): HTMLDivElement {
+  const leftMobileControlNode: HTMLDivElement = document.createElement("div");
+  leftMobileControlNode.id = "mobile-canvas-control-left";
+  leftMobileControlNode.classList.add("mobile-canvas-control");
+  leftMobileControlNode.style.display = "none";
+  leftMobileControlNode.innerHTML = /*html*/ `
+    <button id="mobile-left" class="mobile-canvas-button" type="button">L</button>
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <button id="mobile-up" class="mobile-canvas-button" type="button">U</button>
+      <button id="mobile-down" class="mobile-canvas-button" type="button">D</button>
+    </div>
+    <button id="mobile-right" class="mobile-canvas-button" type="button">R</button>
+  `;
+
+  return leftMobileControlNode;
+}
+
+/**
+ * Creates and returns a strongly typed HTMLDivElement representing the mobile control buttons for the right side.
+ * @returns {HTMLDivElement} The mobile control node with a button for special actions.
+ */
+function mobileControlTemplateRight(): HTMLDivElement {
+  const rightMobileControlNode: HTMLDivElement = document.createElement("div");
+  rightMobileControlNode.id = "mobile-canvas-control-right";
+  rightMobileControlNode.classList.add("mobile-canvas-control");
+  rightMobileControlNode.style.display = "none";
+  rightMobileControlNode.innerHTML = /*html*/ `
+    <button id="mobile-enter" class="mobile-canvas-button" type="button">E</button>
+  `;
+  return rightMobileControlNode;
 }
