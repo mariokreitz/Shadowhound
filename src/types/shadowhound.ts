@@ -93,6 +93,7 @@ export interface IPlayer extends IAnimations {
 }
 
 export interface IInputHandler {
+  game: IGame;
   keys: string[];
   addEventListeners(): void;
 }
