@@ -38,5 +38,42 @@ export class InputHandler implements IInputHandler {
       )
         this.keys.splice(this.keys.indexOf(e.key), 1);
     });
+
+    const buttons = ["mobile-up", "mobile-down", "mobile-left", "mobile-right", "mobile-enter"];
+    buttons.forEach((buttonId) => {
+      const button = document.getElementById(buttonId);
+      if (!button) return;
+
+      button.addEventListener("touchstart", () => {
+        const keyMap: { [key: string]: string } = {
+          "mobile-up": "ArrowUp",
+          "mobile-down": "ArrowDown",
+          "mobile-left": "ArrowLeft",
+          "mobile-right": "ArrowRight",
+          "mobile-enter": "Enter",
+        };
+        const mappedKey = keyMap[buttonId];
+        if (mappedKey && this.keys.indexOf(mappedKey) === -1) {
+          this.keys.push(mappedKey);
+        }
+      });
+
+      button.addEventListener("touchend", () => {
+        const keyMap: { [key: string]: string } = {
+          "mobile-up": "ArrowUp",
+          "mobile-down": "ArrowDown",
+          "mobile-left": "ArrowLeft",
+          "mobile-right": "ArrowRight",
+          "mobile-enter": "Enter",
+        };
+        const mappedKey = keyMap[buttonId];
+        if (mappedKey) {
+          const index = this.keys.indexOf(mappedKey);
+          if (index !== -1) {
+            this.keys.splice(index, 1);
+          }
+        }
+      });
+    });
   }
 }
