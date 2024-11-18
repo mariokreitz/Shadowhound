@@ -172,7 +172,7 @@ export function addHelpModalContent(modalContentId: string): void {
   modalContentElement.appendChild(helpModalTemplate());
 }
 
-export function showMobileControls() {
+export function toggleMobileControls() {
   const mobileCanvasControlLeft = document.getElementById("mobile-canvas-control-left");
   const mobileCanvasControlRight = document.getElementById("mobile-canvas-control-right");
   if (!mobileCanvasControlLeft || !mobileCanvasControlRight) {
@@ -180,8 +180,8 @@ export function showMobileControls() {
     showError("mobile-canvas-control-right");
     return;
   }
-  mobileCanvasControlLeft.style.removeProperty("display");
-  mobileCanvasControlRight.style.removeProperty("display");
+  mobileCanvasControlLeft.style.display = mobileCanvasControlLeft.style.display === "none" ? "flex" : "none";
+  mobileCanvasControlRight.style.display = mobileCanvasControlRight.style.display === "none" ? "flex" : "none";
 }
 
 /**
@@ -239,12 +239,12 @@ function mobileControlTemplateLeft(): HTMLDivElement {
   leftMobileControlNode.classList.add("mobile-canvas-control");
   leftMobileControlNode.style.display = "none";
   leftMobileControlNode.innerHTML = /*html*/ `
-    <button id="mobile-left" class="mobile-canvas-button" type="button">L</button>
-    <div style="display: flex; flex-direction: column; gap: 10px">
-      <button id="mobile-up" class="mobile-canvas-button" type="button">U</button>
-      <button id="mobile-down" class="mobile-canvas-button" type="button">D</button>
+    <button id="mobile-left" class="mobile-canvas-button" type="button">${keyboardIcons.arrowLeft}</button>
+    <div style="display: flex; flex-direction: column; gap: 40px">
+      <button id="mobile-up" class="mobile-canvas-button" type="button">${keyboardIcons.arrowUp}</button>
+      <button id="mobile-down" class="mobile-canvas-button" type="button">${keyboardIcons.arrowDown}</button>
     </div>
-    <button id="mobile-right" class="mobile-canvas-button" type="button">R</button>
+    <button id="mobile-right" class="mobile-canvas-button" type="button">${keyboardIcons.arrowRight}</button>
   `;
 
   return leftMobileControlNode;
@@ -260,7 +260,7 @@ function mobileControlTemplateRight(): HTMLDivElement {
   rightMobileControlNode.classList.add("mobile-canvas-control");
   rightMobileControlNode.style.display = "none";
   rightMobileControlNode.innerHTML = /*html*/ `
-    <button id="mobile-enter" class="mobile-canvas-button" type="button">E</button>
+    <button id="mobile-enter" class="mobile-canvas-button" type="button">${keyboardIcons.enter}</button>
   `;
   return rightMobileControlNode;
 }
