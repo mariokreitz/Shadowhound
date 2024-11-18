@@ -21,6 +21,11 @@ export class InputHandler implements IInputHandler {
       )
         this.keys.push(e.key);
       else if (e.key === "d") this.game.debug = !this.game.debug;
+      else if (e.key === "f") {
+        const elem = document.getElementById("canvas1");
+        if (!elem) return;
+        if (elem.requestFullscreen) elem.requestFullscreen();
+      }
     });
 
     window.addEventListener("keyup", (e) => {
