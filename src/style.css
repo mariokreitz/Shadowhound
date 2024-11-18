@@ -145,9 +145,9 @@ body {
   height: 210px;
   background: linear-gradient(90deg, rgba(121, 9, 9, 0.1) 0%, rgba(121, 9, 9, 0.16) 50%, rgba(121, 9, 9, 0.1) 100%);
   background-size: 200% 200%;
-  animation: shimmer 5s ease-in-out infinite;
+  animation: bloodyFlow 5s ease-in-out infinite;
 }
-@keyframes shimmer {
+@keyframes bloodyFlow {
   0% {
     background-position: 0% 0%;
   }
@@ -237,6 +237,42 @@ body {
   top: -16px;
 }
 
+#enter:before {
+  position: absolute;
+  content: "enter";
+  font-size: 12px;
+  font-weight: bold;
+  text-wrap: nowrap;
+  bottom: -18px;
+}
+
+#enter:after {
+  position: absolute;
+  content: "rolling";
+  font-size: 12px;
+  font-weight: bold;
+  text-wrap: nowrap;
+  right: -67px;
+}
+
+#f-key:after {
+  position: absolute;
+  content: "Fullscreen";
+  font-size: 12px;
+  font-weight: bold;
+  text-wrap: nowrap;
+  right: -90px;
+}
+
+#d-key:after {
+  position: absolute;
+  content: "toggle debug";
+  font-size: 12px;
+  font-weight: bold;
+  text-wrap: nowrap;
+  right: -104px;
+}
+
 .help-modal-keyboard-column {
   display: flex;
   justify-content: center;
@@ -270,6 +306,14 @@ body {
   animation: shimmer 1s ease-in-out infinite alternate;
 }
 
+#help-moda-special-keys {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  align-items: baseline;
+}
+
 @keyframes shimmer {
   0% {
     fill: rgba(255, 255, 255, 0.66);
@@ -277,6 +321,17 @@ body {
   100% {
     fill: rgba(255, 255, 255, 0.99);
   }
+}
+
+#rotate-device {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  display: none;
 }
 
 @media only screen and (max-width: 480px),
@@ -296,6 +351,47 @@ body {
 
   #volume-control-mobile {
     display: flex;
+  }
+
+  #rotate-device {
+    display: block;
+  }
+
+  #rotate-device-parent::before {
+    content: "Before you start Rotate Device";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding-top: 20px;
+    text-align: center;
+    line-height: 2;
+    width: 250px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 24px;
+    text-shadow: 1px 1px 2px black, -1px -1px 2px black, 1px -1px 2px black, -1px 1px 2px black;
+    font-family: "Creepster";
+    letter-spacing: 0.125em;
+    z-index: 1;
+  }
+
+  #rotate-device-parent::after {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 20%);
+    content: "";
+    width: 200px;
+    height: 200px;
+    background-image: url("./img/rotate_screen.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 2;
   }
 }
 
@@ -332,5 +428,17 @@ body {
 
   #volume-control-mobile {
     display: flex;
+  }
+
+  #help-moda-special-keys {
+    gap: 16px;
+  }
+
+  #f-key {
+    display: none;
+  }
+
+  #rotate-device {
+    display: none;
   }
 }
