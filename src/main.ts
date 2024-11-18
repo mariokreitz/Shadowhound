@@ -21,9 +21,17 @@ window.addEventListener("load", function () {
   const { canvas, ctx } = getCanvasAndContext("canvas1") || {};
   if (!canvas || !ctx) return;
 
-  const { startButton, helpButton, soundControlButton, volumeControlButton, volumeControlMobile } =
+  const { startButton, helpButton, helpModalCloseBtn, soundControlButton, volumeControlButton, volumeControlMobile } =
     getMenuElements() || {};
-  if (!startButton || !helpButton || !soundControlButton || !volumeControlButton || !volumeControlMobile) return;
+  if (
+    !startButton ||
+    !helpButton ||
+    !helpModalCloseBtn ||
+    !soundControlButton ||
+    !volumeControlButton ||
+    !volumeControlMobile
+  )
+    return;
 
   canvas.width = 900;
   canvas.height = 500;
@@ -35,6 +43,16 @@ window.addEventListener("load", function () {
     game.start();
     toggleMenu("main-menu");
     canvas.style.border = "5px solid black";
+  });
+
+  helpButton.addEventListener("click", () => {
+    const helpModal = document.getElementById("help-modal") as HTMLDivElement | null;
+    if (helpModal) helpModal.style.display = "flex";
+  });
+
+  helpModalCloseBtn.addEventListener("click", () => {
+    const helpModal = document.getElementById("help-modal") as HTMLDivElement | null;
+    if (helpModal) helpModal.style.display = "none";
   });
 
   volumeControlMobile.addEventListener("click", () => {
@@ -62,8 +80,8 @@ window.addEventListener("load", function () {
     soundControlButton.innerHTML = isNotMuted ? soundIcons.off : soundIcons.on;
   });
 
-  [startButton, helpButton, soundControlButton, volumeControlButton].forEach((button) => {
-    if (button.id !== "sound-control" && button.id !== "volume-control") {
+  [startButton, helpButton, soundControlButton, volumeControlButton, helpModalCloseBtn].forEach((button) => {
+    if (button.id !== "sound-control" && button.id !== "volume-control" && button.id !== "help-modal-close-btn") {
       button.addEventListener("mouseover", () => {
         if (button.disabled) return;
         game.menuHoverEffect.start();
