@@ -9,6 +9,8 @@ import {
   getMenuElements,
   addVolumeControl,
   addHelpModalContent,
+  addMobileControl,
+  showMobileControls,
 } from "./utils/misc";
 import { Game } from "./class/game.class";
 import { soundIcons, volumeIcons } from "./utils/svgIcons";
@@ -16,6 +18,7 @@ import { soundIcons, volumeIcons } from "./utils/svgIcons";
 window.addEventListener("load", function () {
   addVolumeControl("controls");
   addHelpModalContent("help-modal");
+  addMobileControl();
   hideLoadingAndShowMenu("loading", "main-menu");
 
   const { canvas, ctx } = getCanvasAndContext("canvas1") || {};
@@ -41,7 +44,9 @@ window.addEventListener("load", function () {
 
   startButton.addEventListener("click", () => {
     game.start();
+    showMobileControls();
     toggleMenu("main-menu");
+
     canvas.style.border = "5px solid black";
   });
 
