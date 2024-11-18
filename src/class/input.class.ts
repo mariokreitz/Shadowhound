@@ -1,4 +1,5 @@
 import { IGame, IInputHandler } from "../types/shadowhound";
+import { showError } from "../utils/misc";
 
 export class InputHandler implements IInputHandler {
   constructor(game: IGame) {
@@ -42,7 +43,10 @@ export class InputHandler implements IInputHandler {
     const buttons = ["mobile-up", "mobile-down", "mobile-left", "mobile-right", "mobile-enter"];
     buttons.forEach((buttonId) => {
       const button = document.getElementById(buttonId);
-      if (!button) return;
+      if (!button) {
+        showError(buttonId);
+        return;
+      }
 
       button.addEventListener("touchstart", () => {
         const keyMap: { [key: string]: string } = {
