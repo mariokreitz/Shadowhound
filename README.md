@@ -101,16 +101,15 @@ The following features are still under development and not yet available in this
 ### ✅ Completed:
 
 - **Landing Page**: The basic structure is set up!
-- **Menu**: Almost complete – only the "Help" modal remains.
+- **Menu**: The menu is now fully implemented and functional!
 - **Sounds & Effects**: Basic background music and click sounds are implemented.
+- **Mobile View & Controls**: The mobile version and controls are now working, allowing you to play on mobile devices.
 
 ### 🔧 Still to Come:
 
-- **Finish Menu**: Complete the "Help" modal.
 - **Documentation**: Detailed documentation is coming soon.
 - **Endboss**: The final boss is still under development.
 - **Advanced Settings**: More settings, such as difficulty level, will be added.
-- **Mobile View & Controls**: Mobile compatibility and controls are still in progress.
 
 ---
 
