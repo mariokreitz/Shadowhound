@@ -136,4 +136,15 @@ export class Player implements IPlayer {
       }
     });
   }
+
+  reset(): void {
+    this.x = 0;
+    this.y = this.game.height - this.height - this.game.groundMargin;
+    this.vy = 0;
+    this.speed = 0;
+    this.frameX = 0;
+    this.frameY = 0;
+    this.maxFrame = 0;
+    this.setState(0, 0);
+  }
 }
