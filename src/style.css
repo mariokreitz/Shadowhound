@@ -6,7 +6,6 @@
 
 body {
   min-height: 100vh;
-  overflow: hidden;
   background-color: black;
 }
 
@@ -237,15 +236,6 @@ body {
   top: -16px;
 }
 
-#enter:before {
-  position: absolute;
-  content: "enter";
-  font-size: 12px;
-  font-weight: bold;
-  text-wrap: nowrap;
-  bottom: -18px;
-}
-
 #enter:after {
   position: absolute;
   content: "rolling";
@@ -330,11 +320,17 @@ body {
 }
 
 #mobile-canvas-control-right {
-  width: 66px;
-  height: 66px;
+  width: fit-content;
   top: 50%;
-  right: 0px;
+  right: 20px;
   transform: translate(0, -50%);
+}
+
+#mobile-canvas-control-exit {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
 }
 
 .mobile-canvas-button {
@@ -388,14 +384,15 @@ body {
   (max-width: 768px) and (orientation: portrait),
   (max-width: 1024px) and (orientation: portrait) {
   body {
-    min-height: 100dvh;
+    min-height: calc(100dvh + 1px);
   }
 
   #game-title {
     font-size: clamp(24px, 15vw, 64px);
   }
 
-  .mobile-canvas-control {
+  .mobile-canvas-control,
+  #mobile-canvas-control-exit {
     display: none;
   }
 
@@ -453,7 +450,7 @@ body {
   (max-width: 768px) and (orientation: landscape),
   (max-width: 1024px) and (orientation: landscape) {
   body {
-    min-height: 100dvh;
+    min-height: calc(100dvh + 1px);
   }
 
   #game-title {
@@ -484,15 +481,17 @@ body {
     display: flex;
   }
 
-  .mobile-canvas-control {
+  .mobile-canvas-control,
+  #mobile-canvas-control-exit {
     display: flex;
   }
 
   #help-moda-special-keys {
-    gap: 16px;
+    margin-bottom: 60px;
   }
 
-  #f-key {
+  #f-key,
+  #d-key {
     display: none;
   }
 
