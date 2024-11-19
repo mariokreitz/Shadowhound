@@ -1,5 +1,5 @@
 import { Toast } from "../class/toast.class";
-import { volumeIcons, soundIcons, keyboardIcons } from "./svgIcons";
+import { volumeIcons, soundIcons, keyboardIcons, exitIcons } from "./svgIcons";
 
 /**
  * Hides the loading screen and shows the menu.
@@ -172,22 +172,53 @@ export function addHelpModalContent(modalContentId: string): void {
   modalContentElement.appendChild(helpModalTemplate());
 }
 
-export function toggleMobileControls() {
-  const mobileCanvasControlLeft = document.getElementById("mobile-canvas-control-left");
-  const mobileCanvasControlRight = document.getElementById("mobile-canvas-control-right");
-  if (!mobileCanvasControlLeft || !mobileCanvasControlRight) {
-    showError("mobile-canvas-control-left");
-    showError("mobile-canvas-control-right");
-    return;
-  }
-  mobileCanvasControlLeft.style.display = mobileCanvasControlLeft.style.display === "none" ? "flex" : "none";
-  mobileCanvasControlRight.style.display = mobileCanvasControlRight.style.display === "none" ? "flex" : "none";
+/**
+ * Displays the mobile control buttons on the canvas by setting their display style to "flex".
+ * If either of the control elements are not found, the function will return without making changes.
+ */
+export function showMobileControls() {
+  const [mobileCanvasControlLeftElement, mobileCanvasControlRightElement, mobileCanvasControlExitElement] =
+    getMobileCanvasControlElements();
+
+  if (!mobileCanvasControlLeftElement || !mobileCanvasControlRightElement || !mobileCanvasControlExitElement) return;
+
+  mobileCanvasControlLeftElement.style.removeProperty("display");
+  mobileCanvasControlRightElement.style.removeProperty("display");
+  mobileCanvasControlExitElement.style.removeProperty("display");
+}
+
+/**
+ * Hides the mobile control buttons if they exist.
+ * @returns {void}
+ */
+export function hideMobileControls(): void {
+  const [mobileCanvasControlLeftElement, mobileCanvasControlRightElement, mobileCanvasControlExitElement] =
+    getMobileCanvasControlElements();
+
+  if (!mobileCanvasControlLeftElement || !mobileCanvasControlRightElement || !mobileCanvasControlExitElement) return;
+
+  mobileCanvasControlLeftElement.style.display = "none";
+  mobileCanvasControlRightElement.style.display = "none";
+  mobileCanvasControlExitElement.style.display = "none";
+}
+
+/**
+ * Retrieves the mobile control elements from the DOM.
+ * @returns {Array<HTMLDivElement | null, HTMLDivElement | null, HTMLButtonElement | null>} - An array with the left, right, and exit mobile control elements, or [null, null, null] if any element is not found.
+ */
+function getMobileCanvasControlElements(): [HTMLDivElement | null, HTMLDivElement | null, HTMLButtonElement | null] {
+  return [
+    document.getElementById("mobile-canvas-control-left") as HTMLDivElement | null,
+    document.getElementById("mobile-canvas-control-right") as HTMLDivElement | null,
+    document.getElementById("mobile-canvas-control-exit") as HTMLButtonElement | null,
+  ];
 }
 
 /**
  * Adds the mobile control buttons to the page.
  */
 export function addMobileControl(): void {
+  document.body.appendChild(mobileControlTemplateExit());
   document.body.appendChild(mobileControlTemplateLeft());
   document.body.appendChild(mobileControlTemplateRight());
 }
@@ -263,4 +294,14 @@ function mobileControlTemplateRight(): HTMLDivElement {
     <button id="mobile-enter" class="mobile-canvas-button" type="button">${keyboardIcons.enter}</button>
   `;
   return rightMobileControlNode;
+}
+
+function mobileControlTemplateExit(): HTMLButtonElement {
+  const exitMobileControlNode: HTMLButtonElement = document.createElement("button");
+  exitMobileControlNode.id = "mobile-canvas-control-exit";
+  exitMobileControlNode.classList.add("mobile-canvas-button");
+  exitMobileControlNode.style.display = "none";
+  exitMobileControlNode.innerHTML = exitIcons.walkinPerson;
+
+  return exitMobileControlNode;
 }
