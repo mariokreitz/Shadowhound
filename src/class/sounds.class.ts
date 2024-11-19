@@ -133,7 +133,7 @@ export class GameMusic extends Sound {
   }
 }
 
-export class GameEffect1 extends Sound {
+export class PlayerDiesSoon extends Sound {
   constructor() {
     super(getAudioElement("game-effect-1"));
     this.audioFile.muted = false;
@@ -146,8 +146,10 @@ export class GameEffect1 extends Sound {
   }
 }
 
-export class PlayerSound extends Sound {
+export class PlayerDead extends Sound {
   constructor() {
-    super(getAudioElement("test"));
+    super(getAudioElement("character-die-sound"));
+    this.audioFile.muted = false;
+    this.audioFile.volume = 0.5;
   }
 }
