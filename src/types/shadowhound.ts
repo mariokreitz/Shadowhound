@@ -1,5 +1,6 @@
 export interface IGame {
   UI: IUI;
+  canvas: HTMLCanvasElement;
   lives: number;
   debug: boolean;
   score: number;
@@ -16,6 +17,7 @@ export interface IGame {
   time: number;
   maxTime: number;
   isGameOver: boolean;
+  isGameReset: boolean;
   lastTime: number;
   background: IBackground;
   player: IPlayer;
@@ -34,6 +36,8 @@ export interface IGame {
   draw(ctx: CanvasRenderingContext2D, deltaTime: number): void;
   addEnemy(): void;
   start(): void;
+  stop(): void;
+  reset(): void;
   animate(timestamp: number): void;
 }
 
@@ -80,7 +84,12 @@ export interface IPlayer extends IAnimations {
   weight: number;
   vy: number;
   image: HTMLImageElement;
+  frameX: number;
+  frameY: number;
   maxFrame: number;
+  fps: number;
+  frameInterval: number;
+  frameTimer: number;
   speed: number;
   maxSpeed: number;
   jumpForce: number;
@@ -90,6 +99,8 @@ export interface IPlayer extends IAnimations {
   draw(ctx: CanvasRenderingContext2D): void;
   onGround(): boolean;
   setState(state: number, speed: number): void;
+  checkCollisions(): void;
+  reset(): void;
 }
 
 export interface IInputHandler {
