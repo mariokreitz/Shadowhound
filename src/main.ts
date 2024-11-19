@@ -92,7 +92,7 @@ window.addEventListener("load", function () {
   soundControlButton.addEventListener("click", () => {
     game.gameMusic.toggleMute();
     game.menuMusic.toggleMute();
-    game.gameEffect1.toggleMute();
+    game.playerDiesSoon.toggleMute();
 
     const isNotMuted = game.menuMusic.audioFile.muted;
     soundControlButton.innerHTML = isNotMuted ? soundIcons.off : soundIcons.on;
