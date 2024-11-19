@@ -26,6 +26,9 @@ export class InputHandler implements IInputHandler {
         const elem = document.getElementById("canvas1");
         if (!elem) return;
         if (elem.requestFullscreen) elem.requestFullscreen();
+      } else if (e.key === " ") {
+        this.game.stop();
+        this.game.reset();
       }
     });
 
@@ -40,7 +43,14 @@ export class InputHandler implements IInputHandler {
         this.keys.splice(this.keys.indexOf(e.key), 1);
     });
 
-    const buttons = ["mobile-up", "mobile-down", "mobile-left", "mobile-right", "mobile-enter"];
+    const buttons = [
+      "mobile-up",
+      "mobile-down",
+      "mobile-left",
+      "mobile-right",
+      "mobile-enter",
+      "mobile-canvas-control-exit",
+    ];
     buttons.forEach((buttonId) => {
       const button = document.getElementById(buttonId);
       if (!button) {
@@ -55,8 +65,14 @@ export class InputHandler implements IInputHandler {
           "mobile-left": "ArrowLeft",
           "mobile-right": "ArrowRight",
           "mobile-enter": "Enter",
+          "mobile-canvas-control-exit": " ",
         };
         const mappedKey = keyMap[buttonId];
+        if (mappedKey === " ") {
+          this.game.stop();
+          this.game.reset();
+        }
+
         if (mappedKey && this.keys.indexOf(mappedKey) === -1) {
           this.keys.push(mappedKey);
         }
@@ -69,6 +85,7 @@ export class InputHandler implements IInputHandler {
           "mobile-left": "ArrowLeft",
           "mobile-right": "ArrowRight",
           "mobile-enter": "Enter",
+          "mobile-canvas-control-exit": " ",
         };
         const mappedKey = keyMap[buttonId];
         if (mappedKey) {
