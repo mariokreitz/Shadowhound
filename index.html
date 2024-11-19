@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <meta name="description" content="Shadowhound - An immersive gaming experience" />
     <meta name="keywords" content="Shadowhound, gaming, adventure, action, immersive" />
     <meta name="author" content="Mario Kreitz" />
@@ -94,5 +94,10 @@
     /></span>
 
     <script type="module" src="/src/main.ts"></script>
+    <script>
+      window.addEventListener("orientationchange", function () {
+        window.scrollTo(0, 1);
+      });
+    </script>
   </body>
 </html>
