@@ -61,6 +61,14 @@ export class UI implements IUI {
         ctx.font = `${this.fontSize * 0.7}px ${this.fontFamily}`;
         ctx.fillText("Nope, better luck next time!", this.game.width * 0.5, this.game.height * 0.5 + 20);
         hideMobileControls();
+        const intervalId = setInterval(() => {
+          this.game.stop();
+          this.game.reset();
+          this.game.isGameOver = false;
+          ctx.clearRect(0, 0, this.game.width, this.game.height);
+          toggleMenu("main-menu");
+          clearInterval(intervalId);
+        }, 3000);
       }
     }
     ctx.restore();
