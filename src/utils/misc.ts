@@ -1,5 +1,11 @@
 import { Toast } from "../class/toast.class";
-import { volumeIcons, soundIcons, keyboardIcons, exitIcons } from "./svgIcons";
+import { volumeIcons, soundIcons } from "./svgIcons";
+import {
+  helpModalTemplate,
+  mobileControlTemplateExit,
+  mobileControlTemplateLeft,
+  mobileControlTemplateRight,
+} from "./templates";
 
 /**
  * Hides the loading screen and shows the menu.
@@ -85,6 +91,7 @@ export function getMenuElements():
   | {
       startButton: HTMLButtonElement;
       helpButton: HTMLButtonElement;
+      exitButton: HTMLButtonElement;
       helpModalCloseBtn: HTMLButtonElement;
       volumeControlButton: HTMLButtonElement;
       soundControlButton: HTMLButtonElement;
@@ -93,6 +100,7 @@ export function getMenuElements():
   | undefined {
   const startButton = document.getElementById("start-btn") as HTMLButtonElement;
   const helpButton = document.getElementById("help-btn") as HTMLButtonElement;
+  const exitButton = document.getElementById("mobile-canvas-control-exit") as HTMLButtonElement;
   const helpModalCloseBtn = document.getElementById("help-modal-close-btn") as HTMLButtonElement;
   const volumeControlButton = document.getElementById("volume-control") as HTMLButtonElement;
   const soundControlButton = document.getElementById("sound-control") as HTMLButtonElement;
@@ -104,10 +112,12 @@ export function getMenuElements():
     !helpModalCloseBtn ||
     !volumeControlButton ||
     !soundControlButton ||
-    !volumeControlMobile
+    !volumeControlMobile ||
+    !exitButton
   ) {
     showError("start-btn");
     showError("help-btn");
+    showError("mobile-canvas-control-exit");
     showError("help-modal-close-btn");
     showError("volume-control");
     showError("sound-control");
@@ -115,7 +125,15 @@ export function getMenuElements():
     return;
   }
 
-  return { startButton, helpButton, helpModalCloseBtn, volumeControlButton, soundControlButton, volumeControlMobile };
+  return {
+    startButton,
+    helpButton,
+    exitButton,
+    helpModalCloseBtn,
+    volumeControlButton,
+    soundControlButton,
+    volumeControlMobile,
+  };
 }
 
 /**
@@ -221,87 +239,4 @@ export function addMobileControl(): void {
   document.body.appendChild(mobileControlTemplateExit());
   document.body.appendChild(mobileControlTemplateLeft());
   document.body.appendChild(mobileControlTemplateRight());
-}
-
-/**
- * Creates and returns a strongly typed HTMLDivElement representing the help modal content.
- * @returns {HTMLDivElement} The help modal content node with the keyboard controls.
- */
-function helpModalTemplate(): HTMLDivElement {
-  const helpModalContentNode: HTMLDivElement = document.createElement("div");
-  helpModalContentNode.id = "help-modal-content";
-  helpModalContentNode.innerHTML = /*html*/ `
-    <div class="help-modal-keyboard">
-      <div class="help-modal-keyboard-cell">
-        <h3>Movement</h3>
-        <div class="help-modal-keyboard-column">
-          <div id="arrowLeft" class="help-modal-keyboard-key">${keyboardIcons.arrowLeft}</div>
-          <div class="help-modal-keyboard-key-container">
-            <div id="arrowUp" class="help-modal-keyboard-key">${keyboardIcons.arrowUp}</div>
-            <div id="arrowDown" class="help-modal-keyboard-key">${keyboardIcons.arrowDown}</div>
-          </div>
-          <div id="arrowRight" class="help-modal-keyboard-key">${keyboardIcons.arrowRight}</div>
-        </div>
-      </div>
-      <div class="help-modal-keyboard-cell">
-        <div style="display: flex; width: 100%; justify-content: space-between">
-          <h3>Special Keys</h3>
-          <button id="help-modal-close-btn" type="button">&#10006;</button>
-        </div>
-        <div id="help-moda-special-keys" >
-          <div id="d-key" class="help-modal-keyboard-key">${keyboardIcons.d}</div>
-          <div id="f-key" class="help-modal-keyboard-key">${keyboardIcons.f}</div>
-          <div id="enter" class="help-modal-keyboard-key">${keyboardIcons.enter}</div>
-        </div>
-      </div>
-    </div>
-  `;
-
-  return helpModalContentNode;
-}
-
-/**
- * Creates and returns a strongly typed div element representing the mobile control buttons for the left side.
- * @returns {HTMLDivElement} The mobile control node with buttons for left, up, down, and right controls.
- */
-function mobileControlTemplateLeft(): HTMLDivElement {
-  const leftMobileControlNode: HTMLDivElement = document.createElement("div");
-  leftMobileControlNode.id = "mobile-canvas-control-left";
-  leftMobileControlNode.classList.add("mobile-canvas-control");
-  leftMobileControlNode.style.display = "none";
-  leftMobileControlNode.innerHTML = /*html*/ `
-    <button id="mobile-left" class="mobile-canvas-button" type="button">${keyboardIcons.arrowLeft}</button>
-    <div style="display: flex; flex-direction: column; gap: 40px">
-      <button id="mobile-up" class="mobile-canvas-button" type="button">${keyboardIcons.arrowUp}</button>
-      <button id="mobile-down" class="mobile-canvas-button" type="button">${keyboardIcons.arrowDown}</button>
-    </div>
-    <button id="mobile-right" class="mobile-canvas-button" type="button">${keyboardIcons.arrowRight}</button>
-  `;
-
-  return leftMobileControlNode;
-}
-
-/**
- * Creates and returns a strongly typed HTMLDivElement representing the mobile control buttons for the right side.
- * @returns {HTMLDivElement} The mobile control node with a button for special actions.
- */
-function mobileControlTemplateRight(): HTMLDivElement {
-  const rightMobileControlNode: HTMLDivElement = document.createElement("div");
-  rightMobileControlNode.id = "mobile-canvas-control-right";
-  rightMobileControlNode.classList.add("mobile-canvas-control");
-  rightMobileControlNode.style.display = "none";
-  rightMobileControlNode.innerHTML = /*html*/ `
-    <button id="mobile-enter" class="mobile-canvas-button" type="button">${keyboardIcons.enter}</button>
-  `;
-  return rightMobileControlNode;
-}
-
-function mobileControlTemplateExit(): HTMLButtonElement {
-  const exitMobileControlNode: HTMLButtonElement = document.createElement("button");
-  exitMobileControlNode.id = "mobile-canvas-control-exit";
-  exitMobileControlNode.classList.add("mobile-canvas-button");
-  exitMobileControlNode.style.display = "none";
-  exitMobileControlNode.innerHTML = exitIcons.walkinPerson;
-
-  return exitMobileControlNode;
 }
