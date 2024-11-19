@@ -24,15 +24,23 @@ window.addEventListener("load", function () {
   const { canvas, ctx } = getCanvasAndContext("canvas1") || {};
   if (!canvas || !ctx) return;
 
-  const { startButton, helpButton, helpModalCloseBtn, soundControlButton, volumeControlButton, volumeControlMobile } =
-    getMenuElements() || {};
+  const {
+    startButton,
+    helpButton,
+    exitButton,
+    helpModalCloseBtn,
+    soundControlButton,
+    volumeControlButton,
+    volumeControlMobile,
+  } = getMenuElements() || {};
   if (
     !startButton ||
     !helpButton ||
     !helpModalCloseBtn ||
     !soundControlButton ||
     !volumeControlButton ||
-    !volumeControlMobile
+    !volumeControlMobile ||
+    !exitButton
   )
     return;
 
@@ -48,6 +56,11 @@ window.addEventListener("load", function () {
     toggleMenu("main-menu");
 
     canvas.style.border = "5px solid black";
+  });
+
+  exitButton.addEventListener("click", () => {
+    game.stop();
+    game.reset();
   });
 
   helpButton.addEventListener("click", () => {
