@@ -27,9 +27,10 @@ export class Game implements IGame {
   private static readonly DEFAULT_MAX_TIME = 60000;
   private static readonly DEFAULT_LIVES = 5;
 
-  constructor(width: number, height: number, ctx: CanvasRenderingContext2D) {
-    this.width = width;
-    this.height = height;
+  constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+    this.canvas = canvas;
+    this.width = canvas.width;
+    this.height = canvas.height;
     this.ctx = ctx;
     this.groundMargin = Game.DEFAULT_GROUNDMARGIN;
     this.speed = Game.DEFAULT_SPEED;
@@ -58,12 +59,14 @@ export class Game implements IGame {
     this.maxTime = Game.DEFAULT_MAX_TIME;
     this.lastTime = 0;
     this.isGameOver = false;
+    this.isGameReset = false;
     this.player.currentState = this.player.states[0];
     this.player.currentState.enter();
     this.maxParticles = Game.DEFAULT_MAX_PARTICLES;
   }
 
   UI: IUI;
+  canvas: HTMLCanvasElement;
   lives: number;
   debug: boolean;
   score: number;
@@ -80,6 +83,7 @@ export class Game implements IGame {
   time: number;
   maxTime: number;
   isGameOver: boolean;
+  isGameReset: boolean;
   lastTime: number;
   background: IBackground;
   player: IPlayer;
@@ -140,9 +144,27 @@ export class Game implements IGame {
   }
 
   start() {
+    this.isGameReset = false;
     this.animate(0);
     this.menuMusic.stop();
     this.gameMusic.start();
+  }
+
+  stop() {
+    this.gameMusic.stop();
+    this.menuMusic.start();
+  }
+
+  reset() {
+    this.lives = Game.DEFAULT_LIVES;
+    this.score = 0;
+    this.enemies = [];
+    this.particles = [];
+    this.collisions = [];
+    this.floatingMessages = [];
+    this.player.reset();
+    this.isGameReset = true;
+    this.canvas.style.border = "none";
   }
 
   animate(timestamp: number) {
@@ -151,6 +173,6 @@ export class Game implements IGame {
     this.ctx.clearRect(0, 0, this.width, this.height);
     this.update(deltaTime);
     this.draw(this.ctx, deltaTime);
-    if (!this.isGameOver) requestAnimationFrame(this.animate.bind(this));
+    if (!this.isGameOver && !this.isGameReset) requestAnimationFrame(this.animate.bind(this));
   }
 }
