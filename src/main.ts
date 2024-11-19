@@ -10,7 +10,7 @@ import {
   addVolumeControl,
   addHelpModalContent,
   addMobileControl,
-  toggleMobileControls,
+  showMobileControls,
 } from "./utils/misc";
 import { Game } from "./class/game.class";
 import { soundIcons, volumeIcons } from "./utils/svgIcons";
@@ -39,12 +39,12 @@ window.addEventListener("load", function () {
   canvas.width = 900;
   canvas.height = 500;
 
-  const game = new Game(canvas.width, canvas.height, ctx);
+  const game = new Game(canvas, ctx);
   game.menuMusic.start();
 
   startButton.addEventListener("click", () => {
     game.start();
-    toggleMobileControls();
+    showMobileControls();
     toggleMenu("main-menu");
 
     canvas.style.border = "5px solid black";
