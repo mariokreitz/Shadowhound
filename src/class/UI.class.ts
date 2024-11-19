@@ -1,5 +1,5 @@
 import { IGame, IUI } from "../types/shadowhound";
-import { getImage, toggleMobileControls } from "../utils/misc";
+import { getImage, hideMobileControls, toggleMenu } from "../utils/misc";
 
 export class UI implements IUI {
   constructor(game: IGame) {
@@ -37,6 +37,13 @@ export class UI implements IUI {
       //timer
       ctx.fillText(`Time: ${(this.game.time * 0.001).toFixed(1)}`, this.game.width - 150, 80);
     }
+    //game reset
+    if (this.game.isGameReset) {
+      hideMobileControls();
+      toggleMenu("main-menu");
+      ctx.clearRect(0, 0, this.game.width, this.game.height);
+    }
+
     //game over messages
     if (this.game.isGameOver) {
       ctx.textAlign = "center";
@@ -53,7 +60,7 @@ export class UI implements IUI {
         ctx.fillText("Love at first bite?", this.game.width * 0.5, this.game.height * 0.5 - 20);
         ctx.font = `${this.fontSize * 0.7}px ${this.fontFamily}`;
         ctx.fillText("Nope, better luck next time!", this.game.width * 0.5, this.game.height * 0.5 + 20);
-        toggleMobileControls();
+        hideMobileControls();
       }
     }
     ctx.restore();
