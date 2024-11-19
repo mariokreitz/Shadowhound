@@ -327,7 +327,6 @@ body {
 }
 
 #mobile-canvas-control-exit {
-  display: none;
   position: fixed;
   bottom: 20px;
   left: 20px;
