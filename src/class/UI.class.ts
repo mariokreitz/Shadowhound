@@ -57,9 +57,12 @@ export class UI implements IUI {
           this.game.height * 0.5 + 20
         );
       } else {
+        ctx.save();
+        ctx.shadowColor = "rgba(192, 0, 0, 0.8)";
         ctx.fillText("Love at first bite?", this.game.width * 0.5, this.game.height * 0.5 - 20);
         ctx.font = `${this.fontSize * 0.7}px ${this.fontFamily}`;
         ctx.fillText("Nope, better luck next time!", this.game.width * 0.5, this.game.height * 0.5 + 20);
+        ctx.restore();
         hideMobileControls();
         const intervalId = setInterval(() => {
           this.game.stop();
@@ -68,7 +71,7 @@ export class UI implements IUI {
           ctx.clearRect(0, 0, this.game.width, this.game.height);
           toggleMenu("main-menu");
           clearInterval(intervalId);
-        }, 3000);
+        }, 3250);
       }
     }
     ctx.restore();
