@@ -130,8 +130,12 @@ export class Player implements IPlayer {
         } else {
           this.setState(6, 0);
           this.game.lives--;
-          if (this.game.lives === 2) this.game.gameEffect1.start();
-          if (this.game.lives <= 0) this.game.isGameOver = true;
+          if (this.game.lives === 2) this.game.playerDiesSoon.start();
+          if (this.game.lives <= 0) {
+            this.game.playerDiesSoon.stop();
+            this.game.playerDead.start();
+            this.game.isGameOver = true;
+          }
         }
       }
     });
