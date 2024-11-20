@@ -26,6 +26,7 @@
         position: absolute;
         top: 50%;
         left: 50%;
+        z-index: 9999;
         transform: translate(-50%, -50%);
         background-color: rgba(0, 0, 0, 0.7);
         padding: 20px 30px;
@@ -58,6 +59,16 @@
         <button id="start-btn">Start Game</button>
         <button id="help-btn">Help</button>
         <div id="controls"></div>
+        <a href="https://github.com/mariokreitz/Shadowhound" target="_blank" rel="noopener noreferrer">v1.2.0</a>
+      </div>
+      <div id="dev-notice">under development</div>
+      <div id="social-media-links">
+        <a href="https://www.linkedin.com/in/mario-kreitz/" target="_blank" rel="noopener noreferrer">
+          <img src="./img/socials/linkedin-brands-solid.svg" alt="LinkedIn" style="width: 24px; height: 24px" />
+        </a>
+        <a href="https://github.com/mariokreitz" target="_blank" rel="noopener noreferrer">
+          <img src="./img/socials/square-github-brands-solid.svg" alt="GitHub" style="width: 24px; height: 24px" />
+        </a>
       </div>
     </div>
 
@@ -91,7 +102,19 @@
     <div id="help-modal" style="display: none"></div>
 
     <span id="rotate-device-parent"
-      ><img id="rotate-device" src="./img/background/background_page.jpg" alt="game background"
+      ><img
+        id="rotate-device"
+        src="./img/background/background_page.jpg"
+        alt="game background"
+        style="
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 100vw;
+          height: 100vh;
+          object-fit: cover;
+          transform: translate(-50%, -50%);
+        "
     /></span>
 
     <script type="module" src="/src/main.ts"></script>
