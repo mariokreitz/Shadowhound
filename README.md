@@ -4,7 +4,7 @@
 
 **Shadowhound** is an immersive side-scrolling, jump-and-run adventure game where players control a small black dog navigating a dark, mysterious forest. Defeat monsters with special abilities, earn points, and explore a world crafted in an atmospheric monochrome palette of black, gray, and white.
 
-![screenshot](./screenshot_menu.png)
+![screenshot](./screenshot_newmenu.png)
 
 ---
 
@@ -35,7 +35,7 @@
 
 Take control of **Shadowhound**, a small, agile black dog braving the shadows of a dark forest. Avoid obstacles, battle enemies, and earn points as you progress through increasingly challenging levels. Your goal? Master the shadows and aim for a high score!
 
-![screenshot](./screenshot.png)
+![screenshot](./screenshot_game.png)
 
 ---
 
