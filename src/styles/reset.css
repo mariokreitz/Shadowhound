@@ -279,3 +279,15 @@ textarea {
 template {
   display: none;
 }
+
+/**
+ * Reset for anchor (a) elements
+ *
+ * @remarks
+ * - Ensures that the text-decoration property is set to none.
+ * - Ensures that the color property is set to inherit.
+ */
+a {
+  text-decoration: none;
+  color: inherit;
+}
