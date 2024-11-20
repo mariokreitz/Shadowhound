@@ -119,4 +119,17 @@ window.addEventListener("load", function () {
       game.menuClickEffect.start();
     });
   });
+
+  window.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") {
+      game.gameMusic.stop();
+      game.menuMusic.stop();
+      game.menuHoverEffect.stop();
+      game.menuClickEffect.stop();
+      game.playerDiesSoon.stop();
+    } else {
+      game.gameMusic.start();
+      game.menuMusic.start();
+    }
+  });
 });
