@@ -49,6 +49,38 @@ export class Dust extends Particle {
   }
 }
 
+export class FireBall extends Particle {
+  constructor(game: IGame, x: number, y: number, angle: number) {
+    super(game);
+    this.size = 10;
+    this.x = x;
+    this.y = y;
+    this.speedX = Math.cos(angle) * 5;
+    this.speedY = Math.sin(angle) * 5;
+    this.color = "rgba(0, 0, 0, 0.7)";
+  }
+
+  draw(ctx: CanvasRenderingContext2D): void {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = this.color;
+    ctx.fill();
+    ctx.strokeStyle = "rgba(150, 0, 0, 0.5)";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  update() {
+    super.update();
+    this.size = 15;
+    if (this.x < 0 || this.x > this.game.width || this.y < 0 || this.y > this.game.height) {
+      this.markedForDelection = true;
+    }
+  }
+}
+
 export class Splash extends Particle {
   constructor(game: IGame, x: number, y: number) {
     super(game);
