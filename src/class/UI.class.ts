@@ -64,6 +64,7 @@ export class UI implements IUI {
           game.isGameOver = false;
           ctx.clearRect(0, 0, width, height);
           toggleMenu("main-menu");
+          hideMobileControls();
           clearInterval(intervalId);
         }, 3250);
       } else {
@@ -79,6 +80,7 @@ export class UI implements IUI {
           game.isGameOver = false;
           ctx.clearRect(0, 0, width, height);
           toggleMenu("main-menu");
+          hideMobileControls();
           clearInterval(intervalId);
         }, 3250);
       }
