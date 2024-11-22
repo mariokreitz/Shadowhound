@@ -9,6 +9,8 @@ enum states {
   ROLLING = 4,
   DIVING = 5,
   HIT = 6,
+  STANDING = 7,
+  DEAD = 8,
 }
 
 class State implements IState {
@@ -32,7 +34,8 @@ export class Sitting extends State implements IStateAction {
   }
 
   handleInput(input: string[]) {
-    if (input.includes("ArrowLeft") || input.includes("ArrowRight")) this.game.player.setState(states.RUNNING, 1);
+    if (input.includes("ArrowUp")) this.game.player.setState(7, 0);
+    else if (input.includes("ArrowLeft") || input.includes("ArrowRight")) this.game.player.setState(states.RUNNING, 1);
     else if (input.includes("Enter")) this.game.player.setState(states.ROLLING, 2);
   }
 }
@@ -176,4 +179,37 @@ export class Hit extends State implements IStateAction {
     else if (this.game.player.frameX >= 10 && !this.game.player.onGround())
       this.game.player.setState(states.FALLING, 1);
   }
+}
+
+export class Standing extends State implements IStateAction {
+  constructor(game: IGame) {
+    super("STANDING", game);
+  }
+
+  enter() {
+    this.game.player.frameX = 0;
+    this.game.player.maxFrame = 6;
+    this.game.player.frameY = 0;
+  }
+
+  handleInput(input: string[]) {
+    if (input.includes("ArrowDown")) this.game.player.setState(states.SITTING, 0);
+    else if (input.includes("ArrowRight") || input.includes("ArrowLeft")) this.game.player.setState(states.RUNNING, 1);
+    else if (input.includes("Enter")) this.game.player.setState(states.ROLLING, 2);
+  }
+}
+
+export class Dead extends State implements IStateAction {
+  constructor(game: IGame) {
+    super("DEAD", game);
+  }
+
+  enter() {
+    this.game.player.frameX = 0;
+    this.game.player.maxFrame = 11;
+    this.game.player.frameY = 8;
+    this.game.player.vy = 0;
+  }
+
+  handleInput() {}
 }
