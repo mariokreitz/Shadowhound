@@ -1,5 +1,6 @@
-import { ICollisionAnimation, IGame } from "../types/shadowhound";
+import { ICollisionAnimation, IGame, ISound } from "../types/shadowhound";
 import { getImage } from "../utils/misc";
+import { Explosion } from "./sounds.class";
 
 export class CollisionAnimation implements ICollisionAnimation {
   constructor(game: IGame, x: number, y: number) {
@@ -19,6 +20,8 @@ export class CollisionAnimation implements ICollisionAnimation {
     this.frameTimer = 0;
     this.maxFrame = 4;
     this.markedForDelection = false;
+    this.sound = new Explosion();
+    this.sound.start();
   }
 
   game: IGame;
@@ -37,6 +40,7 @@ export class CollisionAnimation implements ICollisionAnimation {
   frameTimer: number;
   maxFrame: number;
   markedForDelection: boolean;
+  sound: ISound;
 
   draw(ctx: CanvasRenderingContext2D) {
     ctx.drawImage(
