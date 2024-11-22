@@ -23,7 +23,7 @@ export class Game implements IGame {
   private static readonly DEFAULT_MAX_SPEED = 3;
   private static readonly CHANCE_TO_SPAWN_GROUNDENEMY = 0.5;
   private static readonly DEFAULT_MAX_PARTICLES = 200;
-  private static readonly DEFAULT_NEED_SCORE = 4;
+  private static readonly DEFAULT_MIN_SCORE = 4;
   private static readonly DEFAULT_MAX_TIME = 60000;
   private static readonly DEFAULT_LIVES = 5;
 
@@ -35,7 +35,7 @@ export class Game implements IGame {
     this.groundMargin = Game.DEFAULT_GROUNDMARGIN;
     this.speed = Game.DEFAULT_SPEED;
     this.lives = Game.DEFAULT_LIVES;
-    this.minScore = Game.DEFAULT_NEED_SCORE;
+    this.minScore = Game.DEFAULT_MIN_SCORE;
     this.maxSpeed = Game.DEFAULT_MAX_SPEED;
     this.maxTime = Game.DEFAULT_MAX_TIME;
     this.maxParticles = Game.DEFAULT_MAX_PARTICLES;
