@@ -1,8 +1,9 @@
 import { getImage } from "../utils/misc";
 import { IGame, IPlayer, IStateAction } from "../types/shadowhound";
-import { Sitting, Running, Jumping, Falling, Rolling, Diving, Hit } from "./playerState.class";
+import { Sitting, Running, Jumping, Falling, Rolling, Diving, Hit, Standing, Dead } from "./playerState.class";
 import { CollisionAnimation } from "./collisionAnimation.class";
 import { FloatingMessage } from "./floatingMessages.class";
+import { Boss } from "./enemies.class";
 
 export class Player implements IPlayer {
   private static readonly DEFAULT_WEIGHT = 1;
@@ -36,8 +37,12 @@ export class Player implements IPlayer {
       new Rolling(this.game),
       new Diving(this.game),
       new Hit(this.game),
+      new Standing(this.game),
+      new Dead(this.game),
     ];
     this.currentState = null;
+    this.isDead = false;
+    this.playerHit = false;
   }
 
   game: IGame;
@@ -59,6 +64,8 @@ export class Player implements IPlayer {
   jumpForce: number;
   states: IStateAction[];
   currentState: IStateAction | null;
+  isDead: boolean;
+  playerHit: boolean;
 
   update(input: string[], deltaTime: number): void {
     this.checkCollisions();
@@ -83,7 +90,10 @@ export class Player implements IPlayer {
     if (this.frameTimer > this.frameInterval) {
       this.frameTimer = 0;
       if (this.frameX < this.maxFrame) this.frameX++;
-      else this.frameX = 0;
+      else {
+        this.frameX = 0;
+        if (this.isDead) this.game.isGameOver = true;
+      }
     } else this.frameTimer += deltaTime;
   }
 
@@ -114,27 +124,59 @@ export class Player implements IPlayer {
 
   checkCollisions() {
     this.game.enemies.forEach((enemy) => {
-      if (
-        enemy.x < this.x + this.width &&
-        enemy.x + enemy.width > this.x &&
-        enemy.y < this.y + this.height &&
-        enemy.y + enemy.height > this.y
-      ) {
-        enemy.markedForDeletion = true;
-        this.game.collisions.push(
-          new CollisionAnimation(this.game, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5)
-        );
-        if (this.currentState === this.states[4] || this.currentState === this.states[5]) {
-          this.game.score++;
-          this.game.floatingMessages.push(new FloatingMessage("+1", enemy.x, enemy.y, 100, 50));
-        } else {
-          this.setState(6, 0);
-          this.game.lives--;
-          if (this.game.lives === 2) this.game.playerDiesSoon.start();
-          if (this.game.lives <= 0) {
-            this.game.playerDiesSoon.stop();
-            this.game.playerDead.start();
-            this.game.isGameOver = true;
+      if (enemy instanceof Boss) {
+        if (
+          enemy.x < this.x + this.width &&
+          enemy.x + enemy.width > this.x &&
+          enemy.y < this.y + this.height &&
+          enemy.y + enemy.height > this.y
+        ) {
+          if (this.currentState === this.states[4] || this.currentState === this.states[5]) {
+            enemy.lives--;
+            if (enemy.lives <= 0) {
+              enemy.markedForDeletion = true;
+              this.game.collisions.push(
+                new CollisionAnimation(this.game, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5)
+              );
+            }
+          } else {
+            if (!this.playerHit) {
+              this.game.collisions.push(
+                new CollisionAnimation(this.game, this.x + this.width * 0.5, this.y + this.height * 0.5)
+              );
+              this.setState(6, 0);
+              this.game.lives--;
+              this.playerHit = true;
+              setTimeout(() => {
+                this.playerHit = false;
+              }, 1000);
+            }
+          }
+        }
+      } else {
+        if (
+          enemy.x < this.x + this.width &&
+          enemy.x + enemy.width > this.x &&
+          enemy.y < this.y + this.height &&
+          enemy.y + enemy.height > this.y
+        ) {
+          enemy.markedForDeletion = true;
+          this.game.collisions.push(
+            new CollisionAnimation(this.game, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5)
+          );
+          if (this.currentState === this.states[4] || this.currentState === this.states[5]) {
+            this.game.score++;
+            this.game.floatingMessages.push(new FloatingMessage("+1", enemy.x, enemy.y, 100, 50));
+          } else {
+            this.setState(6, 0);
+            this.game.lives--;
+            if (this.game.lives === 2) this.game.playerDiesSoon.start();
+            if (this.game.lives <= 0) {
+              this.game.playerDiesSoon.stop();
+              this.game.player.setState(8, 0);
+              this.game.playerDead.start();
+              this.isDead = true;
+            }
           }
         }
       }
@@ -142,6 +184,7 @@ export class Player implements IPlayer {
   }
 
   reset(): void {
+    this.isDead = false;
     this.x = 0;
     this.y = this.game.height - this.height - this.game.groundMargin;
     this.vy = 0;
