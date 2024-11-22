@@ -23,11 +23,11 @@ export class UI implements IUI {
     ctx.font = `${this.fontSize}px ${this.fontFamily}`;
     ctx.textAlign = "left";
     ctx.fillStyle = this.game.fontColor;
-    //score
-    ctx.fillText(`Score: ${this.game.score}`, 20, 50);
+    //debug score
+    if (this.game.debug) ctx.fillText(`Score: ${this.game.score}`, 20, 85);
     // lives
     for (let index = 0; index < this.game.lives; index++) {
-      ctx.drawImage(this.liveImage, 25 * index + 20, 65, 25, 25);
+      ctx.drawImage(this.liveImage, 25 * index + 20, 20, 25, 25);
     }
     //debug - FPS - TIMER
     if (this.game.debug) {
