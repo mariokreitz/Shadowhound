@@ -211,5 +211,7 @@ export class Dead extends State implements IStateAction {
     this.game.player.vy = 0;
   }
 
-  handleInput() {}
+  handleInput(input: string[]) {
+    if (input.includes("ArrowLeft") || input.includes("ArrowRight")) return;
+  }
 }
