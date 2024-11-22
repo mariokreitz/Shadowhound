@@ -48,7 +48,7 @@ export class UI implements IUI {
     if (this.game.isGameOver) {
       ctx.textAlign = "center";
       ctx.font = `${this.fontSize * 2}px ${this.fontFamily}`;
-      if (this.game.score > this.game.minScore) {
+      if (this.game.score >= this.game.minScore && this.game.lives > 0) {
         ctx.save();
         ctx.shadowColor = "rgba(192, 0, 0, 0.8)";
         ctx.fillText("Boo-yah", this.game.width * 0.5, this.game.height * 0.5 - 20);
