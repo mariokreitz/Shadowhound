@@ -141,11 +141,13 @@ export class Boss extends FlyingEnemy {
     this.attackTimer = 0;
     this.attackInterval = 1000;
     this.lives = 5;
+    this.hit = false;
   }
 
   attackTimer: number;
   attackInterval: number;
   lives: number;
+  hit: boolean;
 
   update(deltaTime: number): void {
     super.update(deltaTime);
