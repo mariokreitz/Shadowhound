@@ -13,7 +13,7 @@ import {
 import { Background } from "./background.class";
 import { InputHandler } from "./input.class";
 import { Player } from "./player.class";
-import { FlyingEnemy, ClimbingEnemy, GroundEnemy } from "./enemies.class";
+import { FlyingEnemy, ClimbingEnemy, GroundEnemy, Boss } from "./enemies.class";
 import { PlayerDiesSoon, GameMusic, MenuMusic, MenuHoverEffect, MenuClickEffect, PlayerDead } from "./sounds.class";
 import { UI } from "./UI.class";
 
@@ -23,7 +23,7 @@ export class Game implements IGame {
   private static readonly DEFAULT_MAX_SPEED = 3;
   private static readonly CHANCE_TO_SPAWN_GROUNDENEMY = 0.5;
   private static readonly DEFAULT_MAX_PARTICLES = 200;
-  private static readonly DEFAULT_NEED_SCORE = 40;
+  private static readonly DEFAULT_NEED_SCORE = 4;
   private static readonly DEFAULT_MAX_TIME = 60000;
   private static readonly DEFAULT_LIVES = 5;
 
@@ -62,7 +62,7 @@ export class Game implements IGame {
     this.time = 0;
     this.lastTime = 0;
     this.fontColor = "black";
-    this.player.currentState = this.player.states[0];
+    this.player.currentState = this.player.states[7];
     this.player.currentState.enter();
   }
 
@@ -106,10 +106,15 @@ export class Game implements IGame {
     // if (this.time > this.maxTime) this.isGameOver = true;
     this.background.update();
     this.player.update(this.input.keys, deltaTime);
-    // handle enemies
-    if (this.enemyTimer > this.enemyInterval) {
+    //handle enemies
+    if (this.score < this.minScore && this.enemyTimer > this.enemyInterval) {
       this.addEnemy();
       this.enemyTimer = 0;
+    } else if (this.score >= this.minScore && this.enemyTimer > this.enemyInterval) {
+      this.addBoss();
+      this.enemyTimer = 0;
+      const boss = this.enemies.find((enemy) => enemy instanceof Boss) as Boss;
+      if (boss) boss.attack();
     } else this.enemyTimer += deltaTime;
 
     this.enemies.forEach((enemy) => enemy.update(deltaTime));
@@ -143,6 +148,12 @@ export class Game implements IGame {
     if (this.speed > 0 && Math.random() < Game.CHANCE_TO_SPAWN_GROUNDENEMY) this.enemies.push(new GroundEnemy(this));
     else if (this.speed > 0) this.enemies.push(new ClimbingEnemy(this));
     this.enemies.push(new FlyingEnemy(this));
+  }
+
+  addBoss() {
+    if (!this.enemies.some((enemy) => enemy instanceof Boss)) {
+      this.enemies.push(new Boss(this));
+    }
   }
 
   start() {
