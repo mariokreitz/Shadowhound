@@ -73,7 +73,6 @@ To try **Shadowhound** locally:
 - **Special Move**: `Enter`
 - **Debug Mode**: `D`
 - **Fullscreen Mode**: `F`
-- **Restart Game**: `Space` (desktop) or tap (mobile)
 
 ---
 
@@ -104,11 +103,10 @@ The following features are still under development and not yet available in this
 - **Menu**: The menu is now fully implemented and functional!
 - **Sounds & Effects**: Basic background music and click sounds are implemented.
 - **Mobile View & Controls**: The mobile version and controls are now working, allowing you to play on mobile devices.
-
-### 🔧 Still to Come:
-
 - **Documentation**: Detailed documentation is coming soon.
 - **Endboss**: The final boss is still under development.
+
+### 🔧 Still to Come:
 - **Advanced Settings**: More settings, such as difficulty level, will be added.
 
 ---
