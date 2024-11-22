@@ -60,7 +60,13 @@ export interface IEnemy extends IAnimations {
   speedX: number;
   speedY: number;
   maxFrame: number;
+  frameX: number;
+  frameY: number;
+  fps: number;
+  frameInterval: number;
+  frameTimer: number;
   markedForDeletion: boolean;
+  lives: number;
   update(deltaTime: number): void;
   draw(ctx: CanvasRenderingContext2D): void;
 }
@@ -74,6 +80,12 @@ export interface IFlyingEnemy extends IEnemy {
 export interface IClimbingEnemy extends IEnemy {
   update(deltaTime: number): void;
   draw(ctx: CanvasRenderingContext2D): void;
+}
+
+export interface IBoss extends IEnemy {
+  attackTimer: number;
+  attackInterval: number;
+  hit: boolean;
 }
 
 export interface IPlayer extends IAnimations {
@@ -183,6 +195,12 @@ export interface ICollisionAnimation extends IAnimations {
   x: number;
   maxFrame: number;
   markedForDelection: boolean;
+  frameX: number;
+  frameY: number;
+  fps: number;
+  frameInterval: number;
+  frameTimer: number;
+  sound: ISound;
   draw(ctx: CanvasRenderingContext2D): void;
   update(deltaTime: number): void;
 }

@@ -15,72 +15,69 @@ export class UI implements IUI {
   liveImage: HTMLImageElement;
 
   draw(ctx: CanvasRenderingContext2D, deltaTime: number) {
+    const { game, fontSize, fontFamily, liveImage } = this;
+    const { width, height, fontColor, lives, score, isGameOver, isGameReset } = game;
+
     ctx.save();
     ctx.shadowOffsetX = 2;
     ctx.shadowOffsetY = 2;
     ctx.shadowColor = "white";
     ctx.shadowBlur = 0;
-    ctx.font = `${this.fontSize}px ${this.fontFamily}`;
+    ctx.font = `${fontSize}px ${fontFamily}`;
     ctx.textAlign = "left";
-    ctx.fillStyle = this.game.fontColor;
-    //debug score
-    if (this.game.debug) ctx.fillText(`Score: ${this.game.score}`, 20, 85);
+    ctx.fillStyle = fontColor;
+
+    // debug UI
+    if (game.debug) {
+      const fps = Math.round(1000 / deltaTime);
+      ctx.fillText(`FPS: ${fps}`, game.width - 130, 60);
+      ctx.fillText(`Time: ${(game.time / 1000).toFixed(1)}`, game.width - 130, 90);
+      ctx.fillText(`Score: ${score}`, game.width - 130, 120);
+    }
+
     // lives
-    for (let index = 0; index < this.game.lives; index++) {
-      ctx.drawImage(this.liveImage, 25 * index + 20, 20, 25, 25);
+    for (let index = 0; index < lives; index++) {
+      ctx.drawImage(liveImage, 25 * index + 20, 20, 25, 25);
     }
-    //debug - FPS - TIMER
-    if (this.game.debug) {
-      //fps
-      ctx.font = `${this.fontSize * 0.8}px Arial`;
-      ctx.fillText(`FPS: ${Math.round(1000 / deltaTime)}`, this.game.width - 150, 40);
-      //timer
-      ctx.fillText(`Time: ${(this.game.time * 0.001).toFixed(1)}`, this.game.width - 150, 80);
-    }
+
     //game reset
-    if (this.game.isGameReset) {
+    if (isGameReset) {
       hideMobileControls();
       toggleMenu("main-menu");
-      ctx.clearRect(0, 0, this.game.width, this.game.height);
+      ctx.clearRect(0, 0, width, height);
     }
 
     //game over messages
-    if (this.game.isGameOver) {
+    if (isGameOver) {
       ctx.textAlign = "center";
-      ctx.font = `${this.fontSize * 2}px ${this.fontFamily}`;
-      if (this.game.score >= this.game.minScore && this.game.lives > 0) {
+      ctx.font = `${fontSize * 2}px ${fontFamily}`;
+      if (score >= game.minScore && lives > 0) {
         ctx.save();
         ctx.shadowColor = "rgba(192, 0, 0, 0.8)";
-        ctx.fillText("Boo-yah", this.game.width * 0.5, this.game.height * 0.5 - 20);
-        ctx.font = `${this.fontSize * 0.7}px ${this.fontFamily}`;
-        ctx.fillText(
-          "What are creatures of the night afraid of? YOU!!",
-          this.game.width * 0.5,
-          this.game.height * 0.5 + 20
-        );
+        ctx.fillText("Boo-yah", width * 0.5, height * 0.5 - 20);
+        ctx.font = `${fontSize * 0.7}px ${fontFamily}`;
+        ctx.fillText("What are creatures of the night afraid of? YOU!!", width * 0.5, height * 0.5 + 20);
         ctx.restore();
-        hideMobileControls();
         const intervalId = setInterval(() => {
-          this.game.stop();
-          this.game.reset();
-          this.game.isGameOver = false;
-          ctx.clearRect(0, 0, this.game.width, this.game.height);
+          game.stop();
+          game.reset();
+          game.isGameOver = false;
+          ctx.clearRect(0, 0, width, height);
           toggleMenu("main-menu");
           clearInterval(intervalId);
         }, 3250);
       } else {
         ctx.save();
         ctx.shadowColor = "rgba(192, 0, 0, 0.8)";
-        ctx.fillText("Love at first bite?", this.game.width * 0.5, this.game.height * 0.5 - 20);
-        ctx.font = `${this.fontSize * 0.7}px ${this.fontFamily}`;
-        ctx.fillText("Nope, better luck next time!", this.game.width * 0.5, this.game.height * 0.5 + 20);
+        ctx.fillText("Love at first bite?", width * 0.5, height * 0.5 - 20);
+        ctx.font = `${fontSize * 0.7}px ${fontFamily}`;
+        ctx.fillText("Nope, better luck next time!", width * 0.5, height * 0.5 + 20);
         ctx.restore();
-        hideMobileControls();
         const intervalId = setInterval(() => {
-          this.game.stop();
-          this.game.reset();
-          this.game.isGameOver = false;
-          ctx.clearRect(0, 0, this.game.width, this.game.height);
+          game.stop();
+          game.reset();
+          game.isGameOver = false;
+          ctx.clearRect(0, 0, width, height);
           toggleMenu("main-menu");
           clearInterval(intervalId);
         }, 3250);

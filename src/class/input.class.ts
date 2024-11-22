@@ -36,11 +36,7 @@ export class InputHandler implements IInputHandler {
   addEventListeners(): void {
     window.addEventListener("keydown", (e) => {
       if (
-        (e.key === "ArrowDown" ||
-          e.key === "ArrowUp" ||
-          e.key === "ArrowLeft" ||
-          e.key === "ArrowRight" ||
-          e.key === "Enter") &&
+        (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "ArrowLeft" || e.key === "ArrowRight" || e.key === "Enter") &&
         this.keys.indexOf(e.key) === -1
       )
         this.keys.push(e.key);
@@ -56,24 +52,11 @@ export class InputHandler implements IInputHandler {
     });
 
     window.addEventListener("keyup", (e) => {
-      if (
-        e.key === "ArrowDown" ||
-        e.key === "ArrowUp" ||
-        e.key === "ArrowLeft" ||
-        e.key === "ArrowRight" ||
-        e.key === "Enter"
-      )
+      if (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "ArrowLeft" || e.key === "ArrowRight" || e.key === "Enter")
         this.keys.splice(this.keys.indexOf(e.key), 1);
     });
 
-    const buttons = [
-      "mobile-up",
-      "mobile-down",
-      "mobile-left",
-      "mobile-right",
-      "mobile-enter",
-      "mobile-canvas-control-exit",
-    ];
+    const buttons = ["mobile-up", "mobile-down", "mobile-left", "mobile-right", "mobile-enter", "mobile-canvas-control-exit"];
     buttons.forEach((buttonId) => {
       const button = document.getElementById(buttonId);
       if (!button) {
