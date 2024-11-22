@@ -32,8 +32,8 @@
         padding: 20px 30px;
         border-radius: 10px;
         color: white;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
-          'Open Sans', 'Helvetica Neue', sans-serif;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+          'Helvetica Neue', sans-serif;
       ">
       <h2>Loading...</h2>
     </div>
@@ -59,9 +59,12 @@
         <button id="start-btn">Start Game</button>
         <button id="help-btn">Help</button>
         <div id="controls"></div>
-        <a href="https://github.com/mariokreitz/Shadowhound" target="_blank" rel="noopener noreferrer">v1.2.0</a>
+        <div style="display: flex; justify-content: center; gap: 40px">
+          <a href="https://github.com/mariokreitz/Shadowhound" target="_blank" rel="noopener noreferrer">v1.3.0</a>
+          <a href="./imprint.html" target="_blank" rel="noopener noreferrer">IMprint</a>
+        </div>
       </div>
-      <div id="dev-notice">under development</div>
+      <div id="dev-notice" style="display: none">under development</div>
       <div id="social-media-links">
         <a href="https://www.linkedin.com/in/mario-kreitz/" target="_blank" rel="noopener noreferrer">
           <img src="./img/socials/linkedin-brands-solid.svg" alt="LinkedIn" style="width: 24px; height: 24px" />
@@ -84,11 +87,7 @@
     <img style="display: none" id="enemy-fly" src="./img/enemies/flying/enemy_fly.png" alt="enemy_fly" />
     <img style="display: none" id="enemy-plant" src="./img/enemies/ground/enemy_plant.png" alt="enemy_plant" />
     <img style="display: none" id="enemy-bat-2" src="./img/enemies/flying/enemy_bat_2.png" alt="enemy_bat_2" />
-    <img
-      style="display: none"
-      id="enemy-spider-big"
-      src="./img/enemies/ceiling/enemy_spider_big.png"
-      alt="enemy_spider_big" />
+    <img style="display: none" id="enemy-spider-big" src="./img/enemies/ceiling/enemy_spider_big.png" alt="enemy_spider_big" />
     <img style="display: none" id="fire" src="./img/particles/fire.png" alt="fire" />
     <img style="display: none" id="collision" src="./img/particles/boom.png" alt="collision" />
 
@@ -108,15 +107,7 @@
         id="rotate-device"
         src="./img/background/background_page.jpg"
         alt="game background"
-        style="
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          width: 100vw;
-          height: 100vh;
-          object-fit: cover;
-          transform: translate(-50%, -50%);
-        "
+        style="position: absolute; top: 50%; left: 50%; width: 100vw; height: 100vh; object-fit: cover; transform: translate(-50%, -50%)"
     /></span>
 
     <script type="module" src="/src/main.ts"></script>
