@@ -71,6 +71,7 @@ export class Player implements IPlayer {
     this.checkCollisions();
     if (this.currentState) this.currentState.handleInput(input);
     else return;
+    if (this.currentState === this.states[7]) return;
     //horizontal movement
     this.x += this.speed;
     if (input.includes("ArrowRight") && this.currentState !== this.states[6]) this.speed = this.maxSpeed;
@@ -127,9 +128,19 @@ export class Player implements IPlayer {
 
     const handleBossCollision = (enemy: Boss, isDivingOrRolling: boolean) => {
       if (isDivingOrRolling) {
-        enemy.lives--;
+        if (!enemy.hit) {
+          enemy.lives--;
+          this.game.collisions.push(
+            new CollisionAnimation(this.game, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5)
+          );
+          enemy.hit = true;
+          setTimeout(() => {
+            enemy.hit = false;
+          }, 1000);
+        }
         if (enemy.lives <= 0) {
           markEnemyForDeletion(enemy);
+          this.game.isGameOver = true;
         }
       } else {
         handlePlayerHit();
