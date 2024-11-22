@@ -1,5 +1,5 @@
 import { getImage } from "../utils/misc";
-import { IGame, IPlayer, IStateAction } from "../types/shadowhound";
+import { IEnemy, IGame, IPlayer, IStateAction } from "../types/shadowhound";
 import { Sitting, Running, Jumping, Falling, Rolling, Diving, Hit, Standing, Dead } from "./playerState.class";
 import { CollisionAnimation } from "./collisionAnimation.class";
 import { FloatingMessage } from "./floatingMessages.class";
@@ -123,61 +123,69 @@ export class Player implements IPlayer {
   }
 
   checkCollisions() {
-    this.game.enemies.forEach((enemy) => {
-      if (enemy instanceof Boss) {
-        if (
-          enemy.x < this.x + this.width &&
-          enemy.x + enemy.width > this.x &&
-          enemy.y < this.y + this.height &&
-          enemy.y + enemy.height > this.y
-        ) {
-          if (this.currentState === this.states[4] || this.currentState === this.states[5]) {
-            enemy.lives--;
-            if (enemy.lives <= 0) {
-              enemy.markedForDeletion = true;
-              this.game.collisions.push(
-                new CollisionAnimation(this.game, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5)
-              );
-            }
-          } else {
-            if (!this.playerHit) {
-              this.game.collisions.push(
-                new CollisionAnimation(this.game, this.x + this.width * 0.5, this.y + this.height * 0.5)
-              );
-              this.setState(6, 0);
-              this.game.lives--;
-              this.playerHit = true;
-              setTimeout(() => {
-                this.playerHit = false;
-              }, 1000);
-            }
-          }
+    const isDivingOrRolling = this.currentState === this.states[4] || this.currentState === this.states[5];
+
+    const handleBossCollision = (enemy: Boss, isDivingOrRolling: boolean) => {
+      if (isDivingOrRolling) {
+        enemy.lives--;
+        if (enemy.lives <= 0) {
+          markEnemyForDeletion(enemy);
         }
       } else {
-        if (
-          enemy.x < this.x + this.width &&
-          enemy.x + enemy.width > this.x &&
-          enemy.y < this.y + this.height &&
-          enemy.y + enemy.height > this.y
-        ) {
-          enemy.markedForDeletion = true;
-          this.game.collisions.push(
-            new CollisionAnimation(this.game, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5)
-          );
-          if (this.currentState === this.states[4] || this.currentState === this.states[5]) {
-            this.game.score++;
-            this.game.floatingMessages.push(new FloatingMessage("+1", enemy.x, enemy.y, 100, 50));
-          } else {
-            this.setState(6, 0);
-            this.game.lives--;
-            if (this.game.lives === 2) this.game.playerDiesSoon.start();
-            if (this.game.lives <= 0) {
-              this.game.playerDiesSoon.stop();
-              this.game.player.setState(8, 0);
-              this.game.playerDead.start();
-              this.isDead = true;
-            }
-          }
+        handlePlayerHit();
+      }
+    };
+
+    const handleRegularEnemyCollision = (enemy: IEnemy, isDivingOrRolling: boolean) => {
+      markEnemyForDeletion(enemy);
+      if (isDivingOrRolling) {
+        this.game.score++;
+        this.game.floatingMessages.push(new FloatingMessage("+1", enemy.x, enemy.y, 100, 50));
+      } else {
+        handlePlayerHit();
+      }
+    };
+
+    const markEnemyForDeletion = (enemy: IEnemy) => {
+      enemy.markedForDeletion = true;
+      this.game.collisions.push(
+        new CollisionAnimation(this.game, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5)
+      );
+    };
+
+    const handlePlayerHit = () => {
+      if (!this.playerHit) {
+        this.game.collisions.push(
+          new CollisionAnimation(this.game, this.x + this.width * 0.5, this.y + this.height * 0.5)
+        );
+        this.setState(6, 0);
+        this.game.lives--;
+        this.playerHit = true;
+        setTimeout(() => {
+          this.playerHit = false;
+        }, 1000);
+        if (this.game.lives === 2) this.game.playerDiesSoon.start();
+        if (this.game.lives <= 0) {
+          this.game.playerDiesSoon.stop();
+          this.game.player.setState(8, 0);
+          this.game.playerDead.start();
+          this.isDead = true;
+        }
+      }
+    };
+
+    this.game.enemies.forEach((enemy) => {
+      const isOverlapping =
+        enemy.x < this.x + this.width &&
+        enemy.x + enemy.width > this.x &&
+        enemy.y < this.y + this.height &&
+        enemy.y + enemy.height > this.y;
+
+      if (isOverlapping) {
+        if (enemy instanceof Boss) {
+          handleBossCollision(enemy, isDivingOrRolling);
+        } else {
+          handleRegularEnemyCollision(enemy, isDivingOrRolling);
         }
       }
     });
