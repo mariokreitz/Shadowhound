@@ -4,6 +4,7 @@ import { Sitting, Running, Jumping, Falling, Rolling, Diving, Hit, Standing, Dea
 import { CollisionAnimation } from "./collisionAnimation.class";
 import { FloatingMessage } from "./floatingMessages.class";
 import { Boss } from "./enemies.class";
+import { FireBall } from "./particles.class";
 
 export class Player implements IPlayer {
   private static readonly DEFAULT_WEIGHT = 1;
@@ -197,6 +198,21 @@ export class Player implements IPlayer {
           handleBossCollision(enemy, isDivingOrRolling);
         } else {
           handleRegularEnemyCollision(enemy, isDivingOrRolling);
+        }
+      }
+    });
+
+    this.game.particles.forEach((particle) => {
+      if (particle instanceof FireBall) {
+        const isOverlapping =
+          particle.x < this.x + this.width &&
+          particle.x + particle.size > this.x &&
+          particle.y < this.y + this.height &&
+          particle.y + particle.size > this.y;
+
+        if (isOverlapping) {
+          handlePlayerHit();
+          particle.markedForDelection = true;
         }
       }
     });
