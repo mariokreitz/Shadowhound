@@ -153,3 +153,11 @@ export class PlayerDead extends Sound {
     this.audioFile.volume = 0.5;
   }
 }
+
+export class Explosion extends Sound {
+  constructor() {
+    super(getAudioElement("game-explosion"));
+    this.audioFile.muted = false;
+    this.audioFile.volume = 0.3;
+  }
+}
