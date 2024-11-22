@@ -120,16 +120,16 @@ window.addEventListener("load", function () {
     });
   });
 
-  window.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "hidden") {
-      game.gameMusic.stop();
-      game.menuMusic.stop();
-      game.menuHoverEffect.stop();
-      game.menuClickEffect.stop();
-      game.playerDiesSoon.stop();
-    } else {
-      game.gameMusic.start();
-      game.menuMusic.start();
-    }
+  window.addEventListener("blur", () => {
+    game.gameMusic.stop();
+    game.menuMusic.stop();
+    game.menuHoverEffect.stop();
+    game.menuClickEffect.stop();
+    game.playerDiesSoon.stop();
+  });
+
+  window.addEventListener("focus", () => {
+    game.gameMusic.start();
+    game.menuMusic.start();
   });
 });
