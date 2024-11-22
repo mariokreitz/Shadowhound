@@ -1,15 +1,38 @@
 import { IGame, IInputHandler } from "../types/shadowhound";
 import { showError } from "../utils/misc";
 
+/**
+ * Handles all user input for the game.
+ *
+ * @class InputHandler
+ * @implements {IInputHandler}
+ */
 export class InputHandler implements IInputHandler {
+  /**
+   * The game object.
+   * @type {IGame}
+   */
+  game: IGame;
+  /**
+   * An array of keys that are currently pressed.
+   * @type {string[]}
+   */
+  keys: string[];
+
+  /**
+   * Constructor for the InputHandler class.
+   *
+   * @param {IGame} game The game object.
+   */
   constructor(game: IGame) {
     this.game = game;
     this.keys = [];
     this.addEventListeners();
   }
-  game: IGame;
-  keys: string[];
 
+  /**
+   * Adds event listeners to the window for keydown and keyup events.
+   */
   addEventListeners(): void {
     window.addEventListener("keydown", (e) => {
       if (
