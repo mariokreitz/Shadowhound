@@ -21,7 +21,6 @@ export class CollisionAnimation implements ICollisionAnimation {
     this.maxFrame = 4;
     this.markedForDelection = false;
     this.sound = new Explosion();
-    this.sound.start();
   }
 
   game: IGame;
@@ -58,6 +57,7 @@ export class CollisionAnimation implements ICollisionAnimation {
 
   update(deltaTime: number) {
     this.x -= this.game.speed;
+    if (this.frameX === 0) this.sound.start();
     if (this.frameTimer > this.frameInterval) {
       this.frameX++;
       this.frameTimer = 0;
