@@ -1,6 +1,6 @@
 import { IClimbingEnemy, IEnemy, IFlyingEnemy, IGame } from "../types/shadowhound";
 import { getImage } from "../utils/misc";
-import { Dust, FireBall } from "./particles.class";
+import { FireBall } from "./particles.class";
 
 class Enemy implements IEnemy {
   constructor(game: IGame) {
@@ -19,6 +19,7 @@ class Enemy implements IEnemy {
     this.frameInterval = 1000 / this.fps;
     this.frameTimer = 0;
     this.markedForDeletion = false;
+    this.lives = 1;
   }
   game: IGame;
   height: number;
@@ -35,6 +36,7 @@ class Enemy implements IEnemy {
   frameInterval: number;
   frameTimer: number;
   markedForDeletion: boolean;
+  lives: number;
 
   update(deltaTime: number): void {
     this.x -= this.speedX + this.game.speed;
