@@ -66,7 +66,7 @@ export class FireBall extends Particle {
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.fillStyle = this.color;
     ctx.fill();
-    ctx.strokeStyle = "rgba(150, 0, 0, 0.5)";
+    ctx.strokeStyle = "rgba(240, 240, 240, 0.5)";
     ctx.lineWidth = 2;
     ctx.stroke();
     ctx.restore();
