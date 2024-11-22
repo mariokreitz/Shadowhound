@@ -1,5 +1,6 @@
 import { IClimbingEnemy, IEnemy, IFlyingEnemy, IGame } from "../types/shadowhound";
 import { getImage } from "../utils/misc";
+import { Dust, FireBall } from "./particles.class";
 
 class Enemy implements IEnemy {
   constructor(game: IGame) {
@@ -125,5 +126,36 @@ export class ClimbingEnemy extends Enemy implements IClimbingEnemy {
     ctx.moveTo(this.x + this.width / 2, 0);
     ctx.lineTo(this.x + this.width / 2, this.y + 50);
     ctx.stroke();
+  }
+}
+
+export class Boss extends FlyingEnemy {
+  constructor(game: IGame) {
+    super(game);
+    this.width = 238;
+    this.height = 167;
+    this.maxFrame = 7;
+    this.image = getImage("enemy-bat-2");
+    this.attackTimer = 0;
+    this.attackInterval = 1000;
+    this.lives = 5;
+  }
+
+  attackTimer: number;
+  attackInterval: number;
+  lives: number;
+
+  update(deltaTime: number): void {
+    super.update(deltaTime);
+    if (this.x < this.game.width - this.width - 50) this.x = this.game.width - this.width - 50;
+    else this.speedX = 0;
+  }
+
+  attack() {
+    const playerCenterX = this.game.player.x + this.game.player.width / 2;
+    const playerCenterY = this.game.player.y + this.game.player.height / 2;
+    const angle = Math.atan2(playerCenterY - (this.y + this.height / 2), this.x + this.width - playerCenterX);
+    const fireball = new FireBall(this.game, this.x + this.width / 2, this.y + this.height, -angle);
+    this.game.particles.push(fireball);
   }
 }
