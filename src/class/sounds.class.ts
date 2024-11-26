@@ -315,3 +315,11 @@ export class Explosion extends Sound {
     this.audioFile.volume = 0.3;
   }
 }
+
+export class Heal extends Sound {
+  constructor() {
+    super(getAudioElement("character-heal-sound"));
+    this.audioFile.muted = false;
+    this.audioFile.volume = 0.3;
+  }
+}
