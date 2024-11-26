@@ -116,7 +116,7 @@ export class Background implements IBackground {
       game: this.game,
       width: this.width,
       height: this.height,
-      speedModifier: 0.4,
+      speedModifier: 0.5,
       image: this.layer4Image,
     });
     this.layer5 = new Layer({
