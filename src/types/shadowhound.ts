@@ -17,6 +17,7 @@ export interface IGame {
   menuMusic: ISound;
   menuHoverEffect: ISound;
   menuClickEffect: ISound;
+  scoreUp: ISound;
   gameMusic: ISound;
   playerDiesSoon: ISound;
   playerDead: ISound;
