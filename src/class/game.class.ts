@@ -9,10 +9,12 @@ import {
   ICollisionAnimation,
   IFloatingMessage,
   ISound,
+  ICollectable,
 } from "./../types/shadowhound";
 import { Background } from "./background.class";
 import { InputHandler } from "./input.class";
 import { Player } from "./player.class";
+import { DogHead, Heart } from "./collectables.class";
 import { FlyingEnemy, ClimbingEnemy, GroundEnemy, Boss } from "./enemies.class";
 import { PlayerDiesSoon, GameMusic, MenuMusic, MenuHoverEffect, MenuClickEffect, PlayerDead } from "./sounds.class";
 import { UI } from "./UI.class";
@@ -61,7 +63,9 @@ export class Game implements IGame {
   private static readonly DEFAULT_GROUNDMARGIN = 40;
   private static readonly DEFAULT_SPEED = 0;
   private static readonly DEFAULT_MAX_SPEED = 3;
-  private static readonly CHANCE_TO_SPAWN_GROUNDENEMY = 0.5;
+  //1 is equal to 100%
+  private static readonly CHANCE_TO_SPAWN_GROUNDENEMY = 0.5; //this is 50%
+  private static readonly CHANCE_TO_SPAWN_COLLECTABLE = 0.3; // this is 30%
   private static readonly DEFAULT_MAX_PARTICLES = 200;
   private static readonly DEFAULT_MIN_SCORE = 30;
   private static readonly DEFAULT_MAX_TIME = 60000;
@@ -97,6 +101,7 @@ export class Game implements IGame {
     this.enemies = [];
     this.particles = [];
     this.collisions = [];
+    this.collectables = [];
     this.floatingMessages = [];
     this.debug = false;
     this.isGameOver = false;
@@ -136,6 +141,7 @@ export class Game implements IGame {
   particles: IParticle[];
   collisions: ICollisionAnimation[];
   floatingMessages: IFloatingMessage[];
+  collectables: ICollectable[];
   debug: boolean;
   isGameOver: boolean;
   isGameReset: boolean;
@@ -154,6 +160,10 @@ export class Game implements IGame {
   update(deltaTime: number) {
     this.time += deltaTime;
     this.background.update();
+    // handle collectables
+    if (this.enemyTimer > this.enemyInterval && !this.enemies.find((enemy) => enemy instanceof Boss)) this.addCollectable();
+    this.collectables.forEach((item) => item.update());
+    // handle player update
     this.player.update(this.input.keys, deltaTime);
     //handle enemies
     if (this.score < this.minScore && this.enemyTimer > this.enemyInterval) {
@@ -167,18 +177,48 @@ export class Game implements IGame {
     } else this.enemyTimer += deltaTime;
 
     this.enemies.forEach((enemy) => enemy.update(deltaTime));
+
     // handle particles
     this.particles.forEach((particle) => particle.update());
     if (this.particles.length > this.maxParticles) this.particles = this.particles.slice(0, this.maxParticles);
     // handle collision sprites
     this.collisions.forEach((collision) => collision.update(deltaTime));
-
+    // handle floating messages
     this.floatingMessages.forEach((message) => message.update());
     // handle filter for arrays
     this.enemies = this.enemies.filter((enemy) => !enemy.markedForDeletion);
     this.particles = this.particles.filter((particle) => !particle.markedForDelection);
     this.collisions = this.collisions.filter((collision) => !collision.markedForDelection);
     this.floatingMessages = this.floatingMessages.filter((message) => !message.markedForDeletion);
+    this.collectables = this.collectables.filter((item) => !item.markedForDeletion);
+
+    // array debugging
+    if (this.debug) this.debugArrays();
+  }
+
+  /**
+   * Logs the game objects to the console for debugging purposes.
+   * This will log the current state of the game objects to the console.
+   * The logged objects include enemies, particles, collision sprites, floating messages, and collectables.
+   */
+  debugArrays() {
+    console.groupCollapsed("Game Debug");
+    console.groupCollapsed("Enemies");
+    console.table(this.enemies, ["x", "y", "speedX", "speedY", "markedForDeletion"]);
+    console.groupEnd();
+    console.groupCollapsed("Particles");
+    console.table(this.particles, ["x", "y", "speedX", "speedY", "markedForDelection"]);
+    console.groupEnd();
+    console.groupCollapsed("Collision Sprites");
+    console.table(this.collisions, ["x", "y", "frameX", "frameY", "markedForDelection"]);
+    console.groupEnd();
+    console.groupCollapsed("Floating Messages");
+    console.table(this.floatingMessages, ["x", "y", "text", "markedForDeletion"]);
+    console.groupEnd();
+    console.groupCollapsed("Collectables");
+    console.table(this.collectables, ["x", "y", "width", "height", "markedForDeletion"]);
+    console.groupEnd();
+    console.groupEnd();
   }
 
   /**
@@ -190,24 +230,24 @@ export class Game implements IGame {
   draw(ctx: CanvasRenderingContext2D, deltaTime: number): void {
     this.background.draw(ctx);
     this.player.draw(ctx);
-    this.enemies.forEach((enemy) => {
-      enemy.draw(ctx);
-    });
+    this.collectables.forEach((item) => item.draw(ctx));
+    this.enemies.forEach((enemy) => enemy.draw(ctx));
     this.particles.forEach((particle) => particle.draw(ctx));
     this.collisions.forEach((collision) => collision.draw(ctx));
     this.floatingMessages.forEach((message) => message.draw(ctx));
     this.UI.draw(ctx, deltaTime);
   }
 
+  /**
+   * Adds an enemy to the game.
+   * The type of enemy is randomly selected, but is influenced by the current speed of the game.
+   * If the speed is greater than 0 and a random number is less than Game.CHANCE_TO_SPAWN_GROUNDENEMY, a GroundEnemy is spawned.
+   * If the speed is greater than 0 and the random number is not less than Game.CHANCE_TO_SPAWN_GROUNDENEMY, a ClimbingEnemy is spawned.
+   * Otherwise, a FlyingEnemy is spawned.
+   */
   addEnemy() {
     if (this.speed > 0 && Math.random() < Game.CHANCE_TO_SPAWN_GROUNDENEMY) this.enemies.push(new GroundEnemy(this));
-    /**
-     * Adds an enemy to the game.
-     * The type of enemy is randomly selected, but is influenced by the current speed of the game.
-     * If the speed is greater than 0 and a random number is less than Game.CHANCE_TO_SPAWN_GROUNDENEMY, a GroundEnemy is spawned.
-     * If the speed is greater than 0 and the random number is not less than Game.CHANCE_TO_SPAWN_GROUNDENEMY, a ClimbingEnemy is spawned.
-     * Otherwise, a FlyingEnemy is spawned.
-     */ else if (this.speed > 0) this.enemies.push(new ClimbingEnemy(this));
+    else if (this.speed > 0) this.enemies.push(new ClimbingEnemy(this));
     this.enemies.push(new FlyingEnemy(this));
   }
 
@@ -217,6 +257,16 @@ export class Game implements IGame {
    */
   addBoss() {
     if (!this.enemies.some((enemy) => enemy instanceof Boss)) this.enemies.push(new Boss(this));
+  }
+
+  /**
+   * Adds a collectable item to the game if the speed is greater than 0 and a random number is less than Game.CHANCE_TO_SPAWN_COLLECTABLE.
+   * The type of collectable item is randomly selected, but is influenced by the current speed of the game.
+   * If the speed is greater than 0 and a random number is less than Game.CHANCE_TO_SPAWN_COLLECTABLE, a DogHead is spawned.
+   */
+  addCollectable() {
+    if (this.speed > 0 && Math.random() < Game.CHANCE_TO_SPAWN_COLLECTABLE) this.collectables.push(new DogHead(this));
+    if (this.lives < 3 && !this.collectables.some((item) => item instanceof Heart)) this.collectables.push(new Heart(this));
   }
 
   /**
