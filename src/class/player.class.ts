@@ -5,6 +5,7 @@ import { CollisionAnimation } from "./collisionAnimation.class";
 import { FloatingMessage } from "./floatingMessages.class";
 import { Boss } from "./enemies.class";
 import { FireBall } from "./particles.class";
+import { DogHead, Heart } from "./collectables.class";
 
 /**
  * The Player class implements the IPlayer interface and provides a service for the game character.
@@ -229,8 +230,6 @@ export class Player implements IPlayer {
     const handleRegularEnemyCollision = (enemy: IEnemy, isDivingOrRolling: boolean) => {
       markEnemyForDeletion(enemy);
       if (isDivingOrRolling) {
-        this.game.score++;
-        this.game.floatingMessages.push(new FloatingMessage("+1", enemy.x, enemy.y, 100, 80));
       } else {
         handlePlayerHit();
       }
@@ -255,7 +254,6 @@ export class Player implements IPlayer {
      */
     const handlePlayerHit = () => {
       if (!this.playerHit) {
-        this.game.collisions.push(new CollisionAnimation(this.game, this.x + this.width * 0.5, this.y + this.height * 0.5));
         this.setState(6, 0);
         this.game.lives--;
         this.playerHit = true;
@@ -284,6 +282,22 @@ export class Player implements IPlayer {
           handleBossCollision(enemy, isDivingOrRolling);
         } else {
           handleRegularEnemyCollision(enemy, isDivingOrRolling);
+        }
+      }
+    });
+
+    this.game.collectables.forEach((item) => {
+      const isOverlapping =
+        item.x < this.x + this.width && item.x + item.width > this.x && item.y < this.y + this.height && item.y + item.height > this.y;
+
+      if (isOverlapping) {
+        if (item instanceof DogHead) {
+          item.markedForDeletion = true;
+          this.game.score++;
+          this.game.floatingMessages.push(new FloatingMessage("+1", item.x, item.y, 100, 80));
+        } else if (item instanceof Heart) {
+          item.markedForDeletion = true;
+          this.game.lives++;
         }
       }
     });
