@@ -204,6 +204,7 @@ export class Player implements IPlayer {
         if (!enemy.hit) {
           enemy.lives--;
           this.game.collisions.push(new CollisionAnimation(this.game, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5));
+          this.game.collisionSound.start();
           enemy.hit = true;
           setTimeout(() => {
             enemy.hit = false;
@@ -230,6 +231,7 @@ export class Player implements IPlayer {
     const handleRegularEnemyCollision = (enemy: IEnemy, isDivingOrRolling: boolean) => {
       markEnemyForDeletion(enemy);
       if (isDivingOrRolling) {
+        this.game.collisionSound.start();
       } else {
         handlePlayerHit();
       }
@@ -255,6 +257,7 @@ export class Player implements IPlayer {
     const handlePlayerHit = () => {
       if (!this.playerHit) {
         this.setState(6, 0);
+        this.game.collisionSound.start();
         this.game.lives--;
         this.playerHit = true;
         setTimeout(() => {
@@ -296,6 +299,7 @@ export class Player implements IPlayer {
           this.game.score++;
           this.game.floatingMessages.push(new FloatingMessage("+1", item.x, item.y, 100, 80));
         } else if (item instanceof Heart) {
+          this.game.playerHeal.start();
           item.markedForDeletion = true;
           this.game.lives++;
         }
