@@ -39,6 +39,12 @@ export class Player implements IPlayer {
   private static readonly DEFAULT_FPS = 20;
 
   /**
+   * The default cooldown interval in milliseconds.
+   * @constant {number}
+   */
+  private static readonly DEFAULT_COOLDOWN_INTERVAL = 2000;
+
+  /**
    * Initializes a new instance of the Player class.
    * @param {IGame} game The game object.
    */
@@ -47,6 +53,7 @@ export class Player implements IPlayer {
     this.jumpForce = Player.DEFAULT_JUMP_FORCE;
     this.weight = Player.DEFAULT_WEIGHT;
     this.maxSpeed = Player.DEFAULT_MAX_SPEED;
+    this.rollingCooldownInterval = Player.DEFAULT_COOLDOWN_INTERVAL;
     this.game = game;
     this.width = 100;
     this.height = 91.3;
@@ -74,6 +81,7 @@ export class Player implements IPlayer {
     this.currentState = null;
     this.isDead = false;
     this.playerHit = false;
+    this.rollingCooldown = 0;
   }
 
   game: IGame;
@@ -97,6 +105,8 @@ export class Player implements IPlayer {
   currentState: IStateAction | null;
   isDead: boolean;
   playerHit: boolean;
+  rollingCooldown: number;
+  rollingCooldownInterval: number;
 
   /**
    * Updates the player.
@@ -106,6 +116,7 @@ export class Player implements IPlayer {
    */
   update(input: string[], deltaTime: number): void {
     this.checkCollisions();
+
     if (this.currentState) this.currentState.handleInput(input);
     else return;
     if (this.currentState === this.states[7]) return;
