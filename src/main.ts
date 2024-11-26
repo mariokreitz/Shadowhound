@@ -88,6 +88,7 @@ window.addEventListener("load", function () {
     game.playerDiesSoon.toggleMute();
     game.collisionSound.toggleMute();
     game.playerHeal.toggleMute();
+    game.scoreUp.toggleMute();
 
     const isNotMuted = game.menuMusic.audioFile.muted;
     soundControlButton.innerHTML = isNotMuted ? soundIcons.off : soundIcons.on;
