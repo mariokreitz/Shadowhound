@@ -34,11 +34,22 @@ export class UI implements IUI {
       ctx.fillText(`Time: ${(game.time / 1000).toFixed(1)}`, game.width - 130, 90);
     }
 
-    // lives and score
+    // lives, score and cooldown UI
     for (let index = 0; index < lives; index++) {
       ctx.drawImage(liveImage, 35 * index + 20, 20, 25, 25);
     }
     ctx.fillText(`Score: ${score}`, 20, 80);
+    const cooldownBarWidth = 100;
+    const cooldownBarHeight = 10;
+    const cooldownBarX = 20;
+    const cooldownBarY = 100;
+    const cooldownPercentage = game.player.onCooldown ? game.player.rollingCooldown / game.player.rollingCooldownInterval : 0;
+    // Draw cooldown background
+    ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
+    ctx.fillRect(cooldownBarX, cooldownBarY, cooldownBarWidth, cooldownBarHeight);
+    // Draw cooldown bar
+    ctx.fillStyle = "rgba(0, 128, 255, 0.8)";
+    ctx.fillRect(cooldownBarX, cooldownBarY, cooldownBarWidth * cooldownPercentage, cooldownBarHeight);
 
     //game reset
     if (isGameReset) {
