@@ -65,9 +65,9 @@ export class Game implements IGame {
   private static readonly DEFAULT_MAX_SPEED = 3;
   //1 is equal to 100%
   private static readonly CHANCE_TO_SPAWN_GROUNDENEMY = 0.5; //this is 50%
-  private static readonly CHANCE_TO_SPAWN_COLLECTABLE = 0.3; // this is 30%
+  private static readonly CHANCE_TO_SPAWN_COLLECTABLE = 0.5; // this is 50%
   private static readonly DEFAULT_MAX_PARTICLES = 200;
-  private static readonly DEFAULT_MIN_SCORE = 30;
+  private static readonly DEFAULT_MIN_SCORE = 10;
   private static readonly DEFAULT_MAX_TIME = 60000;
   private static readonly DEFAULT_LIVES = 5;
 
