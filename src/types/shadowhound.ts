@@ -128,6 +128,7 @@ export interface IPlayer extends IAnimations {
   rollingCooldown: number;
   rollingCooldownInterval: number;
   currentState: IStateAction | null;
+  onCooldown: boolean;
   update(input: string[], deltaTime: number): void;
   draw(ctx: CanvasRenderingContext2D): void;
   onGround(): boolean;
