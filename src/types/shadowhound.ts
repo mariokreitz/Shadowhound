@@ -123,6 +123,10 @@ export interface IPlayer extends IAnimations {
   maxSpeed: number;
   jumpForce: number;
   states: IStateAction[];
+  isDead: boolean;
+  playerHit: boolean;
+  rollingCooldown: number;
+  rollingCooldownInterval: number;
   currentState: IStateAction | null;
   update(input: string[], deltaTime: number): void;
   draw(ctx: CanvasRenderingContext2D): void;
