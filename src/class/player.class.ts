@@ -295,6 +295,7 @@ export class Player implements IPlayer {
 
       if (isOverlapping) {
         if (item instanceof DogHead) {
+          this.game.scoreUp.start();
           item.markedForDeletion = true;
           this.game.score++;
           this.game.floatingMessages.push(new FloatingMessage("+1", item.x, item.y, 100, 80));
