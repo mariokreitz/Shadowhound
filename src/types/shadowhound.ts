@@ -88,6 +88,18 @@ export interface IBoss extends IEnemy {
   hit: boolean;
 }
 
+export interface ICollectable {
+  game: IGame;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  image: HTMLImageElement;
+  markedForDeletion: boolean;
+  draw(ctx: CanvasRenderingContext2D): void;
+  update(): void;
+}
+
 export interface IPlayer extends IAnimations {
   game: IGame;
   width: number;
