@@ -16,7 +16,7 @@ import { InputHandler } from "./input.class";
 import { Player } from "./player.class";
 import { DogHead, Heart } from "./collectables.class";
 import { FlyingEnemy, ClimbingEnemy, GroundEnemy, Boss } from "./enemies.class";
-import { PlayerDiesSoon, GameMusic, MenuMusic, MenuHoverEffect, MenuClickEffect, PlayerDead } from "./sounds.class";
+import { PlayerDiesSoon, GameMusic, MenuMusic, MenuHoverEffect, MenuClickEffect, PlayerDead, Explosion, Heal } from "./sounds.class";
 import { UI } from "./UI.class";
 
 /**
@@ -97,7 +97,9 @@ export class Game implements IGame {
     this.menuClickEffect = new MenuClickEffect();
     this.gameMusic = new GameMusic();
     this.playerDiesSoon = new PlayerDiesSoon();
+    this.collisionSound = new Explosion();
     this.playerDead = new PlayerDead();
+    this.playerHeal = new Heal();
     this.enemies = [];
     this.particles = [];
     this.collisions = [];
@@ -137,6 +139,8 @@ export class Game implements IGame {
   gameMusic: ISound;
   playerDiesSoon: ISound;
   playerDead: ISound;
+  collisionSound: ISound;
+  playerHeal: ISound;
   enemies: IEnemy[];
   particles: IParticle[];
   collisions: ICollisionAnimation[];

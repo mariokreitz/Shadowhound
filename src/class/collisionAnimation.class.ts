@@ -1,6 +1,5 @@
-import { ICollisionAnimation, IGame, ISound } from "../types/shadowhound";
+import { ICollisionAnimation, IGame } from "../types/shadowhound";
 import { getImage } from "../utils/misc";
-import { Explosion } from "./sounds.class";
 
 /**
  * Collision animation class.
@@ -50,7 +49,6 @@ export class CollisionAnimation implements ICollisionAnimation {
     this.frameTimer = 0;
     this.maxFrame = 4;
     this.markedForDelection = false;
-    this.sound = new Explosion();
   }
 
   game: IGame;
@@ -69,7 +67,6 @@ export class CollisionAnimation implements ICollisionAnimation {
   fps: number;
   frameInterval: number;
   frameTimer: number;
-  sound: ISound;
 
   /**
    * Draws the collision animation.
@@ -97,7 +94,6 @@ export class CollisionAnimation implements ICollisionAnimation {
    */
   update(deltaTime: number) {
     this.x -= this.game.speed;
-    if (this.frameX === 0) this.sound.start();
     if (this.frameTimer > this.frameInterval) {
       this.frameX++;
       this.frameTimer = 0;
