@@ -24,6 +24,7 @@ export interface IGame {
   particles: IParticle[];
   collisions: ICollisionAnimation[];
   floatingMessages: IFloatingMessage[];
+  collectables: ICollectable[];
   debug: boolean;
   isGameOver: boolean;
   isGameReset: boolean;
