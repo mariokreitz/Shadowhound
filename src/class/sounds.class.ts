@@ -323,3 +323,11 @@ export class Heal extends Sound {
     this.audioFile.volume = 0.3;
   }
 }
+
+export class ScoreUp extends Sound {
+  constructor() {
+    super(getAudioElement("game-score-up"));
+    this.audioFile.muted = false;
+    this.audioFile.volume = 0.3;
+  }
+}
