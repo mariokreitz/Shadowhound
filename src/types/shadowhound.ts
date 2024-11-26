@@ -20,6 +20,8 @@ export interface IGame {
   gameMusic: ISound;
   playerDiesSoon: ISound;
   playerDead: ISound;
+  collisionSound: ISound;
+  playerHeal: ISound;
   enemies: IEnemy[];
   particles: IParticle[];
   collisions: ICollisionAnimation[];
@@ -213,7 +215,6 @@ export interface ICollisionAnimation extends IAnimations {
   fps: number;
   frameInterval: number;
   frameTimer: number;
-  sound: ISound;
   draw(ctx: CanvasRenderingContext2D): void;
   update(deltaTime: number): void;
 }
