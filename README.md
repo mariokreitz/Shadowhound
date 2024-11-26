@@ -16,22 +16,15 @@
 - [🎛️ Controls](#-controls)  
 - [💻 Development](#-development)  
 - [⚠️ Missing Features (WIP)](#-missing-features-wip)  
-- [📜 Documentation](#-documentation)  
 - [📜 License](#-license)  
+- [🙏 Credits](#-credits)  
 
 ---  
 
 ## 🌟 Features  
 
 - **🖤 Atmospheric Setting**: A shadowy forest rendered in black, gray, and white, immersing players in an eerie, mysterious environment.  
-- **⚔️ Endboss**: Challenge the epic final boss introduced in the latest update!  
-- **🏆 Score System**: Track your performance with the new scoring system.  
-- **❤️ Player Lives UI**: Monitor your remaining lives with the new lives tracker.  
-- **🔋 Cooldown Bar**: Visualize your special ability’s cooldown with the new UI element.  
-- **🎵 Immersive Sounds**: New sound effects for collectables, abilities, and gameplay interactions.  
-- **✨ New Collectables**:  
-  - **DogHeads**: Boost your score by collecting them!  
-  - **Hearts**: Restore lives with these pick-ups.  
+- **⚔️ Endboss**: Challenge the epic final boss in the latest update!  
 - **🔍 Debug Mode**: Toggle hitboxes, FPS, and other debug details to assist in development.  
 - **🖥️ Fullscreen Mode**: Play in fullscreen for a more immersive experience.  
 - **📱 Mobile Compatibility**: Optimized for both desktop and mobile; mobile users can jump and play with simplified controls.  
@@ -106,14 +99,13 @@ Shadowhound is developed with:
 
 - **Landing Page**: The basic structure is set up!  
 - **Menu**: Fully implemented and functional!  
-- **Sounds & Effects**: Background music, collectable sounds, and ability effects are implemented.  
+- **Sounds & Effects**: Basic background music and click sounds are implemented.  
 - **Mobile View & Controls**: Mobile compatibility and controls are now fully working.  
 - **Endboss**: The final boss is now available and ready to challenge players.  
-- **Score System & Lives Tracker**: New UI for score and lives tracking.  
 
 ### 🔧 Still to Come:  
 
-- **Advanced Settings**: More customizable settings, such as difficulty levels, are planned for future updates.  
+- **Advanced Settings**: More settings, such as difficulty levels, will be added in future updates.  
 
 ---  
 
@@ -128,5 +120,12 @@ For detailed documentation and guides, visit the official **[Shadowhound Docs](h
 This project is open-source and available under the MIT License. See the [LICENSE](LICENSE) file for more details.  
 
 ---  
+
+## 🙏 Credits
+
+- **Inspired by**: [Franks Laboratory](https://www.youtube.com/@Frankslaboratory) – for the motivation and inspiration to dive into game development and bring **Shadowhound** to life.
+- **Art & Sprites**: A big thank you to [Bevouliin](https://bevouliin.com/) for the amazing art and sprites that helped shape the visual experience of the game.
+
+---
 
 Enjoy exploring the shadows in **Shadowhound**! 🌲🐾  
