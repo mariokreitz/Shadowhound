@@ -24,15 +24,8 @@ window.addEventListener("load", function () {
   const { canvas, ctx } = getCanvasAndContext("canvas1") || {};
   if (!canvas || !ctx) return;
 
-  const {
-    startButton,
-    helpButton,
-    exitButton,
-    helpModalCloseBtn,
-    soundControlButton,
-    volumeControlButton,
-    volumeControlMobile,
-  } = getMenuElements() || {};
+  const { startButton, helpButton, exitButton, helpModalCloseBtn, soundControlButton, volumeControlButton, volumeControlMobile } =
+    getMenuElements() || {};
   if (
     !startButton ||
     !helpButton ||
@@ -93,6 +86,8 @@ window.addEventListener("load", function () {
     game.gameMusic.toggleMute();
     game.menuMusic.toggleMute();
     game.playerDiesSoon.toggleMute();
+    game.collisionSound.toggleMute();
+    game.playerHeal.toggleMute();
 
     const isNotMuted = game.menuMusic.audioFile.muted;
     soundControlButton.innerHTML = isNotMuted ? soundIcons.off : soundIcons.on;
