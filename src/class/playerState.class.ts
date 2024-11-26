@@ -83,7 +83,9 @@ export class Sitting extends State implements IStateAction {
    */
   handleInput(input: string[]) {
     if (input.includes("ArrowLeft") || input.includes("ArrowRight")) this.game.player.setState(states.RUNNING, 1);
-    else if (input.includes("Enter")) this.game.player.setState(states.ROLLING, 2);
+
+    if (this.game.player.onCooldown) return;
+    if (input.includes("Enter")) this.game.player.setState(states.ROLLING, 2);
   }
 }
 
@@ -120,9 +122,12 @@ export class Running extends State implements IStateAction {
     this.game.particles.unshift(
       new Dust(this.game, this.game.player.x + this.game.player.width * 0.6, this.game.player.y + this.game.player.height)
     );
+
     if (input.includes("ArrowDown")) this.game.player.setState(states.SITTING, 0);
     else if (input.includes("ArrowUp")) this.game.player.setState(states.JUMPING, 1);
-    else if (input.includes("Enter")) this.game.player.setState(states.ROLLING, 2);
+
+    if (this.game.player.onCooldown) return;
+    if (input.includes("Enter")) this.game.player.setState(states.ROLLING, 2);
   }
 }
 
@@ -158,8 +163,10 @@ export class Jumping extends State implements IStateAction {
    */
   handleInput(input: string[]) {
     if (this.game.player.vy > this.game.player.weight) this.game.player.setState(states.FALLING, 1);
-    else if (input.includes("Enter")) this.game.player.setState(states.ROLLING, 2);
     else if (input.includes("ArrowDown")) this.game.player.setState(states.DIVING, 0);
+
+    if (this.game.player.onCooldown) return;
+    if (input.includes("Enter")) this.game.player.setState(states.ROLLING, 2);
   }
 }
 
@@ -231,6 +238,12 @@ export class Rolling extends State implements IStateAction {
     this.game.particles.unshift(
       new Fire(this.game, this.game.player.x + this.game.player.width * 0.5, this.game.player.y + this.game.player.height * 0.5)
     );
+    this.game.player.rollingCooldown += 1;
+    if (this.game.player.rollingCooldown > this.game.player.rollingCooldownInterval) {
+      this.game.player.setState(states.RUNNING, 1);
+      this.game.player.onCooldown = true;
+    }
+
     if (!input.includes("Enter") && this.game.player.onGround()) this.game.player.setState(states.RUNNING, 1);
     else if (!input.includes("Enter") && !this.game.player.onGround()) this.game.player.setState(states.FALLING, 1);
     else if (input.includes("Enter") && input.includes("ArrowUp") && this.game.player.onGround())
