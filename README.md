@@ -4,7 +4,7 @@
 
 **Shadowhound** is an immersive side-scrolling, jump-and-run adventure game where players control a small black dog navigating a dark, mysterious forest. Defeat monsters with special abilities, earn points, and explore a world crafted in an atmospheric monochrome palette of black, gray, and white.  
 
-![screenshot](./screenshot_newmenu.png)  
+![screenshot](./screenshot_menu.png)  
 
 ---  
 
@@ -16,6 +16,7 @@
 - [🎛️ Controls](#-controls)  
 - [💻 Development](#-development)  
 - [⚠️ Missing Features (WIP)](#-missing-features-wip)  
+- [📜 Documentation](#-documentation)  
 - [📜 License](#-license)  
 
 ---  
@@ -23,7 +24,14 @@
 ## 🌟 Features  
 
 - **🖤 Atmospheric Setting**: A shadowy forest rendered in black, gray, and white, immersing players in an eerie, mysterious environment.  
-- **⚔️ Endboss**: Challenge the epic final boss in the latest update!  
+- **⚔️ Endboss**: Challenge the epic final boss introduced in the latest update!  
+- **🏆 Score System**: Track your performance with the new scoring system.  
+- **❤️ Player Lives UI**: Monitor your remaining lives with the new lives tracker.  
+- **🔋 Cooldown Bar**: Visualize your special ability’s cooldown with the new UI element.  
+- **🎵 Immersive Sounds**: New sound effects for collectables, abilities, and gameplay interactions.  
+- **✨ New Collectables**:  
+  - **DogHeads**: Boost your score by collecting them!  
+  - **Hearts**: Restore lives with these pick-ups.  
 - **🔍 Debug Mode**: Toggle hitboxes, FPS, and other debug details to assist in development.  
 - **🖥️ Fullscreen Mode**: Play in fullscreen for a more immersive experience.  
 - **📱 Mobile Compatibility**: Optimized for both desktop and mobile; mobile users can jump and play with simplified controls.  
@@ -98,13 +106,14 @@ Shadowhound is developed with:
 
 - **Landing Page**: The basic structure is set up!  
 - **Menu**: Fully implemented and functional!  
-- **Sounds & Effects**: Basic background music and click sounds are implemented.  
+- **Sounds & Effects**: Background music, collectable sounds, and ability effects are implemented.  
 - **Mobile View & Controls**: Mobile compatibility and controls are now fully working.  
 - **Endboss**: The final boss is now available and ready to challenge players.  
+- **Score System & Lives Tracker**: New UI for score and lives tracking.  
 
 ### 🔧 Still to Come:  
 
-- **Advanced Settings**: More settings, such as difficulty levels, will be added in future updates.  
+- **Advanced Settings**: More customizable settings, such as difficulty levels, are planned for future updates.  
 
 ---  
 
