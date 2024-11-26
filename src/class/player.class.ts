@@ -350,6 +350,8 @@ export class Player implements IPlayer {
    */
   reset(): void {
     this.isDead = false;
+    this.onCooldown = false;
+    this.rollingCooldown = 0;
     this.x = 0;
     this.y = this.game.height - this.height - this.game.groundMargin;
     this.vy = 0;

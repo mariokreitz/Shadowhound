@@ -1,7 +1,21 @@
 import { IGame, IUI } from "../types/shadowhound";
 import { getImage, hideMobileControls, toggleMenu } from "../utils/misc";
 
+/**
+ * The UI class implements the IUI interface and provides a service for rendering the game user interface.
+ *
+ * @class
+ * @implements {IUI}
+ */
 export class UI implements IUI {
+  /**
+   * Initializes a new instance of the UI class.
+   *
+   * @param {IGame} game - The game object.
+   * @property {number} fontSize - The font size for the UI text.
+   * @property {string} fontFamily - The font family for the UI text.
+   * @property {HTMLImageElement} liveImage - The image element for the lives display.
+   */
   constructor(game: IGame) {
     this.game = game;
     this.fontSize = 30;
@@ -14,6 +28,12 @@ export class UI implements IUI {
   fontFamily: string;
   liveImage: HTMLImageElement;
 
+  /**
+   * Renders the game user interface.
+   *
+   * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+   * @param {number} deltaTime - The time difference between the current frame and the last frame.
+   */
   draw(ctx: CanvasRenderingContext2D, deltaTime: number) {
     const { game, fontSize, fontFamily, liveImage } = this;
     const { width, height, fontColor, lives, score, isGameOver, isGameReset } = game;
@@ -50,7 +70,7 @@ export class UI implements IUI {
     // Draw cooldown bar
     ctx.fillStyle = "rgba(0, 128, 255, 0.8)";
     ctx.fillRect(cooldownBarX, cooldownBarY, cooldownBarWidth * cooldownPercentage, cooldownBarHeight);
-
+    ctx.fillStyle = fontColor;
     //game reset
     if (isGameReset) {
       hideMobileControls();

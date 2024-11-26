@@ -297,10 +297,14 @@ export class PlayerDead extends Sound {
 }
 
 /**
- * Toggles the mute state of the player's death sound.
+ * Class that represents the explosion sound.
  *
- * If the sound is currently muted, this method will unmute it and set the volume to 0.5.
- * If the sound is not muted, this method will mute it and set the volume to 0.
+ * @class Explosion
+ * @extends Sound
+ * @property {HTMLAudioElement} audioFile - The audio element for the explosion sound.
+ * @property {boolean} muted - A flag that indicates if the sound is muted.
+ * @property {number} volume - The volume of the sound.
+ * @method toggleMute - Toggles the mute state of the sound.
  */
 export class Explosion extends Sound {
   /**
@@ -316,7 +320,23 @@ export class Explosion extends Sound {
   }
 }
 
+/**
+ * Class that represents the heal sound.
+ *
+ * @class Heal
+ * @extends Sound
+ * @property {HTMLAudioElement} audioFile - The audio element for the heal sound.
+ * @property {boolean} muted - A flag that indicates if the sound is muted.
+ * @property {number} volume - The volume of the sound.
+ * @method toggleMute - Toggles the mute state of the sound.
+ */
 export class Heal extends Sound {
+  /**
+   * Initializes the Heal sound.
+   *
+   * Retrieves the "character-heal-sound" audio element using the `getAudioElement` function.
+   * Sets the audio element's muted property to false and its volume to 0.3.
+   */
   constructor() {
     super(getAudioElement("character-heal-sound"));
     this.audioFile.muted = false;
@@ -324,7 +344,23 @@ export class Heal extends Sound {
   }
 }
 
+/**
+ * Class that represents the score up sound.
+ *
+ * @class ScoreUp
+ * @extends Sound
+ * @property {HTMLAudioElement} audioFile - The audio element for the score up sound.
+ * @property {boolean} muted - A flag that indicates if the sound is muted.
+ * @property {number} volume - The volume of the sound.
+ * @method toggleMute - Toggles the mute state of the sound.
+ */
 export class ScoreUp extends Sound {
+  /**
+   * Initializes the ScoreUp sound.
+   *
+   * Retrieves the "game-score-up" audio element using the `getAudioElement` function.
+   * Sets the audio element's muted property to false and its volume to 0.3.
+   */
   constructor() {
     super(getAudioElement("game-score-up"));
     this.audioFile.muted = false;

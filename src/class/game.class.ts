@@ -30,59 +30,86 @@ import {
 import { UI } from "./UI.class";
 
 /**
- * Game class for the game.
+ * The main game class.
  *
  * @class Game
  * @implements {IGame}
- * @property {HTMLCanvasElement} canvas - The canvas element.
- * @property {number} width - The width of the canvas.
- * @property {number} height - The height of the canvas.
- * @property {CanvasRenderingContext2D} ctx - The canvas context.
- * @property {number} groundMargin - The ground margin.
- * @property {number} speed - The speed of the game.
- * @property {number} lives - The lives of the player.
- * @property {number} minScore - The minimum score to spawn a boss.
- * @property {number} maxSpeed - The maximum speed of the game.
- * @property {number} maxTime - The maximum time of the game.
- * @property {number} maxParticles - The maximum number of particles.
- * @property {IBackground} background - The background object.
- * @property {IPlayer} player - The player object.
- * @property {IInputHandler} input - The input handler object.
- * @property {IUI} UI - The UI object.
- * @property {ISound} menuMusic - The menu music object.
- * @property {ISound} menuHoverEffect - The menu hover effect object.
- * @property {ISound} menuClickEffect - The menu click effect object.
- * @property {ISound} gameMusic - The game music object.
- * @property {ISound} playerDiesSoon - The player dies soon sound object.
- * @property {ISound} playerDead - The player dead sound object.
- * @property {IEnemy[]} enemies - The enemies array.
- * @property {IParticle[]} particles - The particles array.
- * @property {ICollisionAnimation[]} collisions - The collisions array.
- * @property {IFloatingMessage[]} floatingMessages - The floating messages array.
- * @property {boolean} debug - The debug flag.
- * @property {boolean} isGameOver - The game over flag.
- * @property {boolean} isGameReset - The game reset flag.
- * @property {number} enemyTimer - The enemy timer.
- * @property {number} enemyInterval - The enemy interval.
- * @property {number} score - The score of the player.
- * @property {number} time - The time of the game.
- * @property {number} lastTime - The last time of the game.
- * @property {string} fontColor - The font color.
  */
 export class Game implements IGame {
-  private static readonly DEFAULT_GROUNDMARGIN = 40;
-  private static readonly DEFAULT_SPEED = 0;
-  private static readonly DEFAULT_MAX_SPEED = 3;
-  //1 is equal to 100%
-  private static readonly CHANCE_TO_SPAWN_GROUNDENEMY = 0.5; //this is 50%
-  private static readonly CHANCE_TO_SPAWN_COLLECTABLE = 0.5; // this is 50%
-  private static readonly DEFAULT_MAX_PARTICLES = 200;
-  private static readonly DEFAULT_MIN_SCORE = 10;
-  private static readonly DEFAULT_MAX_TIME = 60000;
-  private static readonly DEFAULT_LIVES = 5;
+  /**
+   * The default ground margin.
+   * @constant
+   * @type {number}
+   * @default 40
+   */
+  private static readonly DEFAULT_GROUNDMARGIN: number = 40;
 
   /**
-   * Constructor for the Game class.
+   * The default speed.
+   * @constant
+   * @type {number}
+   * @default 0
+   */
+  private static readonly DEFAULT_SPEED: number = 0;
+
+  /**
+   * The default maximum speed.
+   * @constant
+   * @type {number}
+   * @default 3
+   */
+  private static readonly DEFAULT_MAX_SPEED: number = 3;
+
+  /**
+   * The chance to spawn a ground enemy.
+   * @constant
+   * @type {number}
+   * @default 0.5
+   */
+  private static readonly CHANCE_TO_SPAWN_GROUNDENEMY: number = 0.5; //this is 50%
+
+  /**
+   * The chance to spawn a collectable.
+   * @constant
+   * @type {number}
+   * @default 0.5
+   */
+  private static readonly CHANCE_TO_SPAWN_COLLECTABLE: number = 0.5; // this is 50%
+
+  /**
+   * The default maximum number of particles.
+   * @constant
+   * @type {number}
+   * @default 200
+   */
+  private static readonly DEFAULT_MAX_PARTICLES: number = 200;
+
+  /**
+   * The default minimum score.
+   * @constant
+   * @type {number}
+   * @default 10
+   */
+  private static readonly DEFAULT_MIN_SCORE: number = 10;
+
+  /**
+   * The default maximum time.
+   * @constant
+   * @type {number}
+   * @default 60000
+   */
+  private static readonly DEFAULT_MAX_TIME: number = 60000;
+
+  /**
+   * The default number of lives.
+   * @constant
+   * @type {number}
+   * @default 5
+   */
+  private static readonly DEFAULT_LIVES: number = 5;
+
+  /**
+   * The constructor for the Game class.
    * @param {HTMLCanvasElement} canvas - The canvas element.
    * @param {CanvasRenderingContext2D} ctx - The canvas context.
    */
@@ -169,9 +196,16 @@ export class Game implements IGame {
   fontColor: string;
 
   /**
-   * Updates the game.
+   * Updates the game state.
    *
-   * @param {number} deltaTime - The delta time.
+   * @param {number} deltaTime - The time elapsed since the last update.
+   *
+   * This function updates various game elements based on the elapsed time.
+   * It increments the game time and updates the background, collectables, player,
+   * enemies, particles, collision sprites, and floating messages. It handles
+   * spawning collectables, adding enemies or bosses based on the score, and
+   * managing enemy attacks. It also limits the number of particles, filters out
+   * marked-for-deletion entities, and provides debugging output if enabled.
    */
   update(deltaTime: number) {
     this.time += deltaTime;
@@ -316,6 +350,7 @@ export class Game implements IGame {
     this.enemies = [];
     this.particles = [];
     this.collisions = [];
+    this.collectables = [];
     this.floatingMessages = [];
     this.player.reset();
     this.isGameReset = true;
