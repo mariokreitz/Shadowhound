@@ -32,13 +32,13 @@ export class UI implements IUI {
       const fps = Math.round(1000 / deltaTime);
       ctx.fillText(`FPS: ${fps}`, game.width - 130, 60);
       ctx.fillText(`Time: ${(game.time / 1000).toFixed(1)}`, game.width - 130, 90);
-      ctx.fillText(`Score: ${score}`, game.width - 130, 120);
     }
 
-    // lives
+    // lives and score
     for (let index = 0; index < lives; index++) {
-      ctx.drawImage(liveImage, 25 * index + 20, 20, 25, 25);
+      ctx.drawImage(liveImage, 35 * index + 20, 20, 25, 25);
     }
+    ctx.fillText(`Score: ${score}`, 20, 80);
 
     //game reset
     if (isGameReset) {

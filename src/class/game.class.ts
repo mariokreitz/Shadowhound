@@ -172,6 +172,8 @@ export class Game implements IGame {
     if (this.particles.length > this.maxParticles) this.particles = this.particles.slice(0, this.maxParticles);
     // handle collision sprites
     this.collisions.forEach((collision) => collision.update(deltaTime));
+
+    this.floatingMessages.forEach((message) => message.update());
     // handle filter for arrays
     this.enemies = this.enemies.filter((enemy) => !enemy.markedForDeletion);
     this.particles = this.particles.filter((particle) => !particle.markedForDelection);
@@ -193,6 +195,7 @@ export class Game implements IGame {
     });
     this.particles.forEach((particle) => particle.draw(ctx));
     this.collisions.forEach((collision) => collision.draw(ctx));
+    this.floatingMessages.forEach((message) => message.draw(ctx));
     this.UI.draw(ctx, deltaTime);
   }
 

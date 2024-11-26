@@ -230,7 +230,7 @@ export class Player implements IPlayer {
       markEnemyForDeletion(enemy);
       if (isDivingOrRolling) {
         this.game.score++;
-        this.game.floatingMessages.push(new FloatingMessage("+1", enemy.x, enemy.y, 100, 50));
+        this.game.floatingMessages.push(new FloatingMessage("+1", enemy.x, enemy.y, 100, 80));
       } else {
         handlePlayerHit();
       }
